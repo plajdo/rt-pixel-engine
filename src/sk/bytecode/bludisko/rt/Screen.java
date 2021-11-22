@@ -1,5 +1,7 @@
 package sk.bytecode.bludisko.rt;
 
+import org.jetbrains.annotations.NotNull;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
@@ -9,10 +11,9 @@ class Screen {
     private final static Dimension WINDOW_SIZE = new Dimension(640, 480);
     private final static float FRAME_TIME = 1000f / 24f;
 
-    private Canvas canvas;
-    private JFrame frame;
+    private final Canvas canvas;
+    private final JFrame frame;
 
-    private Runnable graphicsThread;
     private boolean running;
 
     // MARK: - Initialize
@@ -45,7 +46,7 @@ class Screen {
 
     public void start() {
         this.running = true;
-        this.graphicsThread = () -> {
+        Runnable graphicsThread = () -> {
             try {
                 startRenderCycle();
             } catch (InterruptedException e) {
@@ -53,7 +54,7 @@ class Screen {
             }
 
         };
-        this.graphicsThread.run();
+        graphicsThread.run();
 
     }
 
@@ -97,7 +98,7 @@ class Screen {
 
     }
 
-    private void clearScreen(Graphics graphics) {
+    private void clearScreen(@NotNull Graphics graphics) {
         graphics.setColor(Color.BLACK);
         graphics.fillRect(0, 0, WINDOW_SIZE.width, WINDOW_SIZE.height);
 
