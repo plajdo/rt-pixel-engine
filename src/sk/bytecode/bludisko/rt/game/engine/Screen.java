@@ -1,20 +1,24 @@
-package sk.bytecode.bludisko.rt;
+package sk.bytecode.bludisko.rt.game.engine;
 
 import org.jetbrains.annotations.NotNull;
+import sk.bytecode.bludisko.rt.game.world.GameWorld;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 
-class Screen {
+public final class Screen {
 
     private final static Dimension WINDOW_SIZE = new Dimension(640, 480);
-    private final static float FRAME_TIME = 1000f / 24f;
+    private final static int FRAMERATE = 24;
+    private final static float FRAME_TIME = 1000f / FRAMERATE;
 
     private final Canvas canvas;
     private final JFrame frame;
 
     private boolean running;
+
+    private GameWorld gameWorld = new GameWorld();
 
     // MARK: - Initialize
 
@@ -24,7 +28,6 @@ class Screen {
 
         this.setupCanvas();
         this.setupFrame();
-
 
     }
 
@@ -42,13 +45,13 @@ class Screen {
 
     }
 
-    // MARK: - Render thread
+    // MARK: - Game thread
 
     public void start() {
         this.running = true;
         Runnable graphicsThread = () -> {
             try {
-                startRenderCycle();
+                startGameCycle();
             } catch (InterruptedException e) {
                 System.err.println(e.getLocalizedMessage());
             }
@@ -58,22 +61,33 @@ class Screen {
 
     }
 
-    private void startRenderCycle() throws InterruptedException {
+    private void startGameCycle() throws InterruptedException {
 
         long lastFrameTime = 0;
         while(running) {
             long currentTime = System.currentTimeMillis();
 
-            if(currentTime - lastFrameTime > FRAME_TIME) {
+            float deltaMilliseconds = currentTime - lastFrameTime;
+            if(deltaMilliseconds > FRAME_TIME) {
                 lastFrameTime = System.currentTimeMillis();
+
+                float deltaSeconds = deltaMilliseconds * 0.001f;
+                tick(deltaSeconds);
                 drawFrame();
 
             } else {
-                Thread.sleep((long)FRAME_TIME / 2);
+                synchronized (this) {
+                    wait((long)FRAME_TIME / 2);
+                }
+
             }
 
         }
 
+    }
+
+    private void tick(float delta) {
+        gameWorld.tick(delta);
     }
 
     private void drawFrame() {
@@ -92,6 +106,8 @@ class Screen {
 
         Graphics graphics = bufferStrategy.getDrawGraphics();
         clearScreen(graphics);
+
+        gameWorld.draw(graphics);
 
         graphics.dispose();
         bufferStrategy.show();

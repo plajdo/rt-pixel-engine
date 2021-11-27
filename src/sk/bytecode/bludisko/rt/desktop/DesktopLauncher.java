@@ -1,4 +1,6 @@
-package sk.bytecode.bludisko.rt;
+package sk.bytecode.bludisko.rt.desktop;
+
+import sk.bytecode.bludisko.rt.game.engine.Screen;
 
 public class DesktopLauncher {
 
