@@ -2,7 +2,6 @@ package sk.bytecode.bludisko.rt.game.engine;
 
 import sk.bytecode.bludisko.rt.game.math.MathUtils;
 import sk.bytecode.bludisko.rt.game.math.Vector2;
-import sk.bytecode.bludisko.rt.game.world.GameWorld;
 
 public class Camera2 {
 

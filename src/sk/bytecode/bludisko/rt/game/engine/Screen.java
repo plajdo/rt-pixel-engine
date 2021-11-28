@@ -1,7 +1,6 @@
 package sk.bytecode.bludisko.rt.game.engine;
 
 import org.jetbrains.annotations.NotNull;
-import sk.bytecode.bludisko.rt.game.world.GameWorld;
 
 import javax.swing.*;
 import java.awt.*;

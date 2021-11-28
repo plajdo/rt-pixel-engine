@@ -1,11 +1,8 @@
-package sk.bytecode.bludisko.rt.game.world;
+package sk.bytecode.bludisko.rt.game.engine;
 
-import sk.bytecode.bludisko.rt.game.engine.Camera2;
-import sk.bytecode.bludisko.rt.game.engine.Ray;
 import sk.bytecode.bludisko.rt.game.math.Vector2;
 
 import java.awt.*;
-import java.util.Vector;
 
 public final class GameWorld {
 
@@ -45,6 +42,8 @@ public final class GameWorld {
         float fieldOfView = 66f;
 
         this.camera = new Camera2(cameraPosition, cameraDirection, fieldOfView, 640);
+
+        new MapManager("no");
 
     }
 
