@@ -134,19 +134,20 @@ class SerializationTest {
         var s = new Serializer();
 
         class SomeData {
-            @Serializable
-            int x = 0;
-            @Serializable
-            float y = 3.24f;
-            @Serializable
-            String z = "Hello";
+            @Serializable boolean bool = false;
+            @Serializable byte b = 100;
+            @Serializable short s = 30000;
+            @Serializable char ch = 'a';
+            @Serializable int i = 56;
+            @Serializable long l = 18556789798212L;
+            @Serializable float y = -1.24f;
+            @Serializable double d = 3.141592656357989;
+            @Serializable String z = "Hello";
         }
 
         class Test {
-            @Serializable
-            SomeData data = new SomeData();
-            @Serializable
-            int[][] arr = new int[][]{{1, 2, 3}, {1, 2}};
+            @Serializable SomeData data = new SomeData();
+            @Serializable String[][] arr = new String[][]{{"ahoj", "h"}, {"ok", "lorem ipsum..."}};
         }
 
         var result = s.serialize(new Test());

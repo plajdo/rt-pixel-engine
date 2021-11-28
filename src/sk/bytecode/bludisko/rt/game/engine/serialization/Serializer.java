@@ -5,8 +5,6 @@ import sk.bytecode.bludisko.rt.game.engine.serialization.tags.*;
 import java.io.NotSerializableException;
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;
-import java.rmi.ServerError;
-import java.util.ArrayList;
 import java.util.function.BiConsumer;
 
 public class Serializer {
@@ -29,21 +27,40 @@ public class Serializer {
     }
 
     private Tag serializePrimitiveTypes(Object obj) {
-        if(obj instanceof String) {
+        if (obj instanceof Number) {
+            if(obj instanceof Integer) {
+                return new IntTag((Integer) obj);
+
+            } else if (obj instanceof Float) {
+                return new FloatTag((Float) obj);
+
+            } else if (obj instanceof Long) {
+                return new LongTag((Long) obj);
+
+            } else if (obj instanceof Double) {
+                return new DoubleTag((Double) obj);
+
+            } else if (obj instanceof Byte) {
+                return new ByteTag((Byte) obj);
+
+            } else if (obj instanceof Short) {
+                return new ShortTag((Short) obj);
+            }
+
+        } else if(obj instanceof String) {
             return new StringTag((String) obj);
 
-        } else if(obj instanceof Integer) {
-            return new IntTag((Integer) obj);
+        } else if (obj instanceof Boolean) {
+            return new BooleanTag((Boolean) obj);
 
-        } else if (obj instanceof Float) {
-            return new FloatTag((Float) obj);
-
+        } else if (obj instanceof Character) {
+            return new CharTag((Character) obj);
         }
 
         return null;
     }
 
-    private Tag serializeObjectTypes(Object obj) throws NotSerializableException {
+    private Tag serializeObjectTypes(Object obj) {
         var wrapperTag = new ObjectTag(obj.getClass());
 
         forAnnotatedFieldsIn(obj.getClass(), (annotation, field) -> {
@@ -52,11 +69,11 @@ public class Serializer {
                 wrapperTag.addChildren(this.serialize(fieldValue));
 
             } catch(IllegalAccessException e) {
-                System.err.println("Skipping serialization of " + obj.toString() + " due to exception:");
+                System.err.println("Skipping serialization of " + obj + " due to exception:");
                 System.err.println(e.getLocalizedMessage());
 
             } catch(NotSerializableException e) {
-                System.err.println("Cannot serialize " + obj.toString() + ".");
+                System.err.println("Cannot serialize " + obj + ".");
                 System.err.println(e.getLocalizedMessage());
 
             }

@@ -2,23 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b56b9792-09b5-4a62-8384-5317f301f33f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/Map.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/MapManager.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/serialization/BinaryTag.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/serialization/Serializable.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/serialization/Serializer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/serialization/tags/FloatTag.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/serialization/tags/IntTag.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/serialization/tags/ObjectTag.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/serialization/tags/StringTag.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/serialization/tags/Tag.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/serialization/tags/TerminatorTag.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/SerializationTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/serialization/Deserializer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/serialization/tags/BooleanTag.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/serialization/tags/ByteTag.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/serialization/tags/CharTag.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/serialization/tags/DoubleTag.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/serialization/tags/LongTag.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/serialization/tags/ShortTag.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bludisko_rt.iml" beforeDir="false" afterPath="$PROJECT_DIR$/bludisko_rt.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/Camera2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/Camera2.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/Screen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/Screen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/world/GameWorld.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/GameWorld.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/serialization/Serializable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/serialization/Serializable.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/serialization/Serializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/serialization/Serializer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/serialization/tags/ObjectTag.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/serialization/tags/ObjectTag.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/SerializationTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/SerializationTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -178,7 +173,7 @@
       <workItem from="1638054631658" duration="113000" />
       <workItem from="1638054754190" duration="264000" />
       <workItem from="1638055972053" duration="888000" />
-      <workItem from="1638102012867" duration="22145000" />
+      <workItem from="1638102012867" duration="24505000" />
     </task>
     <servers />
   </component>

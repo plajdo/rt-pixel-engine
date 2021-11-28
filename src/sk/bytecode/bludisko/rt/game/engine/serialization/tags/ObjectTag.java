@@ -21,29 +21,28 @@ public final class ObjectTag extends Tag<Class<?>> {
 
     @Override
     protected byte id() {
+        if(this.data.isArray()) return 11;
         return 10;
     }
 
     @Override
     protected int length() {
-        return 2;
+        return 2; // Header & terminator tags
     }
 
     @Override
     public byte[] byteData() {
-        final ArrayList<byte[]> tags = new ArrayList<>(subtags.size());
+        final ArrayList<byte[]> tagBytes = new ArrayList<>(subtags.size());
 
-        subtags.forEach((tag) -> {
-            tags.add(tag.byteData());
-        });
+        subtags.forEach((tag) -> tagBytes.add(tag.byteData()));
 
-        int size = tags.stream().mapToInt(b -> b.length).sum();
-        size = size + 2;
+        int size = tagBytes.stream().mapToInt(b -> b.length).sum();
+        size = size + this.length();
 
         var mergedTags = ByteBuffer.allocate(size);
 
         mergedTags.put(this.id());
-        tags.forEach(mergedTags::put);
+        tagBytes.forEach(mergedTags::put);
         mergedTags.put(new TerminatorTag().byteData());
 
         return mergedTags.array();
