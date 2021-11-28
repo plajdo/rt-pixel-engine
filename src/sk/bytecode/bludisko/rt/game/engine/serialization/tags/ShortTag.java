@@ -2,7 +2,7 @@ package sk.bytecode.bludisko.rt.game.engine.serialization.tags;
 
 import java.nio.ByteBuffer;
 
-public class ShortTag extends Tag<Short> {
+public final class ShortTag extends Tag<Short> {
 
 
     public ShortTag(Short data) {

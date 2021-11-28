@@ -2,7 +2,7 @@ package sk.bytecode.bludisko.rt.game.engine.serialization.tags;
 
 import java.nio.ByteBuffer;
 
-public class LongTag extends Tag<Long> {
+public final class LongTag extends Tag<Long> {
 
     public LongTag(Long data) {
         super(data);

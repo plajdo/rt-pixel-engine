@@ -2,14 +2,14 @@ package sk.bytecode.bludisko.rt.game.engine.serialization;
 
 import sk.bytecode.bludisko.rt.game.engine.serialization.tags.*;
 
-import java.io.NotSerializableException;
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.util.function.BiConsumer;
 
 public class Serializer {
 
-    public Tag serialize(Object obj) throws NotSerializableException {
+    public Tag serialize(Object obj) {
         var result = serializePrimitiveTypes(obj);
         if(result != null) {
             return result;
@@ -71,13 +71,7 @@ public class Serializer {
             } catch(IllegalAccessException e) {
                 System.err.println("Skipping serialization of " + obj + " due to exception:");
                 System.err.println(e.getLocalizedMessage());
-
-            } catch(NotSerializableException e) {
-                System.err.println("Cannot serialize " + obj + ".");
-                System.err.println(e.getLocalizedMessage());
-
             }
-
         });
 
         return wrapperTag;
@@ -88,7 +82,7 @@ public class Serializer {
         return obj.getClass().isArray();
     }
 
-    private Tag serializeArray(Object obj) throws NotSerializableException {
+    private Tag serializeArray(Object obj) {
         int length = Array.getLength(obj);
         var wrapperTag = new ObjectTag(obj.getClass());
 

@@ -2,18 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b56b9792-09b5-4a62-8384-5317f301f33f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/serialization/Deserializer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/serialization/tags/BooleanTag.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/serialization/tags/ByteTag.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/serialization/tags/CharTag.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/serialization/tags/DoubleTag.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/serialization/tags/LongTag.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/serialization/tags/ShortTag.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/serialization/Serializable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/serialization/Serializable.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/serialization/Serializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/serialization/Serializer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/serialization/tags/ObjectTag.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/serialization/tags/ObjectTag.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/SerializationTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/SerializationTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/serialization/tags/BooleanTag.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/serialization/tags/BooleanTag.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/serialization/tags/ByteTag.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/serialization/tags/ByteTag.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/serialization/tags/CharTag.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/serialization/tags/CharTag.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/serialization/tags/DoubleTag.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/serialization/tags/DoubleTag.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/serialization/tags/FloatTag.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/serialization/tags/FloatTag.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/serialization/tags/LongTag.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/serialization/tags/LongTag.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/serialization/tags/ShortTag.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/serialization/tags/ShortTag.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/serialization/tags/StringTag.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/serialization/tags/StringTag.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/serialization/tags/TerminatorTag.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/serialization/tags/TerminatorTag.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,12 +58,15 @@
     <key name="CreateTestDialog.Recents.Supers">
       <recent name="" />
     </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Github\bludisko_rt\src\sk\bytecode\bludisko\rt\game\engine\serialization\tags" />
+    </key>
     <key name="CreateTestDialog.RecentsKey">
       <recent name="test" />
       <recent name="sk.bytecode.bludisko.rt.game.engine.serialization.tags" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.SerializationTest.testSerializer">
+  <component name="RunManager" selected="JUnit.SerializationTest">
     <configuration name="DesktopLauncher" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="sk.bytecode.bludisko.rt.desktop.DesktopLauncher" />
       <module name="bludisko_rt" />
@@ -74,17 +76,6 @@
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
-      <option name="arquillianRunConfiguration">
-        <value>
-          <option name="containerStateName" value="" />
-        </value>
-      </option>
-      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -100,22 +91,6 @@
       <option name="PACKAGE_NAME" value="test" />
       <option name="MAIN_CLASS_NAME" value="test.SerializationTest" />
       <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="SerializationTest.createClassTag" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="bludisko_rt" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="test.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="test" />
-      <option name="MAIN_CLASS_NAME" value="test.SerializationTest" />
-      <option name="METHOD_NAME" value="createClassTag" />
-      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -152,13 +127,29 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="SerializationTest.writeStringTag" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="bludisko_rt" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="test.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="test" />
+      <option name="MAIN_CLASS_NAME" value="test.SerializationTest" />
+      <option name="METHOD_NAME" value="writeStringTag" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.SerializationTest.testSerializer" />
         <item itemvalue="JUnit.SerializationTest" />
+        <item itemvalue="JUnit.SerializationTest.writeStringTag" />
+        <item itemvalue="JUnit.SerializationTest.testSerializer" />
         <item itemvalue="Application.DesktopLauncher" />
         <item itemvalue="JUnit.SerializationTest.writeIntTag" />
-        <item itemvalue="JUnit.SerializationTest.createClassTag" />
       </list>
     </recent_temporary>
   </component>
@@ -173,7 +164,8 @@
       <workItem from="1638054631658" duration="113000" />
       <workItem from="1638054754190" duration="264000" />
       <workItem from="1638055972053" duration="888000" />
-      <workItem from="1638102012867" duration="24505000" />
+      <workItem from="1638102012867" duration="28028000" />
+      <workItem from="1638171793535" duration="2420000" />
     </task>
     <servers />
   </component>

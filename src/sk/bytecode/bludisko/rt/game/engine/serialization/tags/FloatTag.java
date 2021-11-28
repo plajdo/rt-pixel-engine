@@ -2,7 +2,7 @@ package sk.bytecode.bludisko.rt.game.engine.serialization.tags;
 
 import java.nio.ByteBuffer;
 
-public class FloatTag extends Tag<Float> {
+public final class FloatTag extends Tag<Float> {
 
     public FloatTag(Float data) {
         super(data);

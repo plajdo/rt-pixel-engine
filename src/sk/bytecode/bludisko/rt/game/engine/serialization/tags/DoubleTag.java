@@ -2,7 +2,7 @@ package sk.bytecode.bludisko.rt.game.engine.serialization.tags;
 
 import java.nio.ByteBuffer;
 
-public class DoubleTag extends Tag<Double> {
+public final class DoubleTag extends Tag<Double> {
 
     public DoubleTag(Double data) {
         super(data);

@@ -1,6 +1,6 @@
 package sk.bytecode.bludisko.rt.game.engine.serialization.tags;
 
-public class TerminatorTag extends Tag<Object> {
+public final class TerminatorTag extends Tag<Object> {
 
     public TerminatorTag() {
         super(null);

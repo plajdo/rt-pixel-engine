@@ -2,7 +2,7 @@ package sk.bytecode.bludisko.rt.game.engine.serialization.tags;
 
 import java.nio.ByteBuffer;
 
-public class BooleanTag extends Tag<Boolean> {
+public final class BooleanTag extends Tag<Boolean> {
 
     public BooleanTag(Boolean data) {
         super(data);

@@ -5,6 +5,8 @@ import sk.bytecode.bludisko.rt.game.engine.serialization.tags.Tag;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
+@Deprecated
+// TODO: remove
 public class BinaryTag {
 
     private final ByteArrayOutputStream outputStream;

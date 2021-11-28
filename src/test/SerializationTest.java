@@ -29,13 +29,10 @@ class SerializationTest {
         var inputx = random.nextInt(Integer.MAX_VALUE);
 
         var tag = new IntTag(inputx);
-        var bt = new BinaryTag();
-        var os = bt.getOutputStream();
 
-        bt.write(tag);
+        var output = tag.byteData();
 
-        // var output = os.toByteArray();
-        // System.out.println(Arrays.toString(output));
+        System.out.println(Arrays.toString(output));
 
     }
 
@@ -48,13 +45,9 @@ class SerializationTest {
 
         tag.addChildren(tg1, tg2, tg3);
 
-        var bt = new BinaryTag();
-        var os = bt.getOutputStream();
-        bt.write(tag);
-
-        var output = os.toByteArray();
+        var output = tag.byteData();
         var strout = Arrays.toString(output);
-        // System.out.println(strout);
+        System.out.println(strout);
 
         assert strout.equals("[10, 3, 0, 0, 0, 5, 3, 0, 0, 0, 7, 3, 0, 0, 0, 15, 0]");
 
@@ -72,13 +65,9 @@ class SerializationTest {
         tg3.addChildren(tg4);
         tag.addChildren(tg1, tg2, tg3, tg5);
 
-        var bt = new BinaryTag();
-        var os = bt.getOutputStream();
-        bt.write(tag);
-
-        var output = os.toByteArray();
+        var output = tag.byteData();
         var strout = Arrays.toString(output);
-        // System.out.println(strout);
+        System.out.println(strout);
 
         assert strout.equals("[10, 3, 0, 0, 0, 5, 3, 0, 0, 0, 7, 10, 3, 0, 0, 0, 15, 0, 3, 0, 0, 0, 6, 0]");
 
@@ -88,13 +77,9 @@ class SerializationTest {
     void writeStringTag() throws IOException {
         var tag = new StringTag("čínske znaky™");
 
-        var bt = new BinaryTag();
-        var os = bt.getOutputStream();
-        bt.write(tag);
-
-        var output = os.toByteArray();
+        var output = tag.byteData();
         var strout = Arrays.toString(output);
-        // System.out.println(strout);
+        System.out.println(strout);
 
         assert strout.equals("[8, 3, 0, 0, 0, 17, -60, -115, -61, -83, 110, 115, 107, 101, 32, 122, 110, 97, 107, " +
                 "121, -30, -124, -94]");
@@ -121,10 +106,10 @@ class SerializationTest {
 
         var output = os.toByteArray();
         var strout = Arrays.toString(output);
-        // System.out.println(strout);
+        System.out.println(strout);
 
-        assert strout.equals("[10, 10, 3, 0, 0, 0, 1, 3, 0, 0, 0, 2, 3, 0, 0, 0, 3, 0, " +
-                "10, 3, 0, 0, 0, 4, 3, 0, 0, 0, 5, 3, 0, 0, 0, 6, 0, 10, 3, 0, 0, 0, 7, " +
+        assert strout.equals("[11, 11, 3, 0, 0, 0, 1, 3, 0, 0, 0, 2, 3, 0, 0, 0, 3, 0, " +
+                "11, 3, 0, 0, 0, 4, 3, 0, 0, 0, 5, 3, 0, 0, 0, 6, 0, 11, 3, 0, 0, 0, 7, " +
                 "3, 0, 0, 0, 8, 3, 0, 0, 0, 9, 0, 0]");
 
     }
