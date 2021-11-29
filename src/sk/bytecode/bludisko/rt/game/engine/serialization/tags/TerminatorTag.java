@@ -7,12 +7,12 @@ public final class TerminatorTag extends Tag<Object> {
     }
 
     @Override
-    protected byte id() {
+    public byte id() {
         return 0;
     }
 
     @Override
-    protected int length() {
+    public int length() {
         return 1;
     }
 

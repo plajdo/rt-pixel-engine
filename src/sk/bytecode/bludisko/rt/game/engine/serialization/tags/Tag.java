@@ -8,8 +8,8 @@ public abstract class Tag<T> {
         this.data = data;
     }
 
-    protected abstract byte id();
-    protected abstract int length();
+    public abstract byte id();
+    public abstract int length();
 
     public T get() {
         return data;

@@ -22,12 +22,12 @@ public final class StringTag extends Tag<String> {
     }
 
     @Override
-    protected byte id() {
+    public byte id() {
         return 8;
     }
 
     @Override
-    protected int length() {
+    public int length() {
         return this.stringBytes.length + this.lengthTag.length() + 1;
     }
 

@@ -9,12 +9,12 @@ public final class LongTag extends Tag<Long> {
     }
 
     @Override
-    protected byte id() {
+    public byte id() {
         return 4;
     }
 
     @Override
-    protected int length() {
+    public int length() {
         return 8 + 1;
     }
 

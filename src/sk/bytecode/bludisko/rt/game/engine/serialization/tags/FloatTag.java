@@ -9,12 +9,12 @@ public final class FloatTag extends Tag<Float> {
     }
 
     @Override
-    protected byte id() {
+    public byte id() {
         return 5;
     }
 
     @Override
-    protected int length() {
+    public int length() {
         return 4 + 1;
     }
 

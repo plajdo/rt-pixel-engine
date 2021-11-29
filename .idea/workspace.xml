@@ -1,18 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="b56b9792-09b5-4a62-8384-5317f301f33f" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/runConfigurations.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/DeserializationTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bludisko_rt.iml" beforeDir="false" afterPath="$PROJECT_DIR$/bludisko_rt.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/serialization/BinaryTag.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/serialization/Deserializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/serialization/Deserializer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/serialization/Serializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/serialization/Serializer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/serialization/tags/BooleanTag.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/serialization/tags/BooleanTag.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/serialization/tags/ByteTag.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/serialization/tags/ByteTag.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/serialization/tags/CharTag.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/serialization/tags/CharTag.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/serialization/tags/DoubleTag.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/serialization/tags/DoubleTag.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/serialization/tags/FloatTag.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/serialization/tags/FloatTag.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/serialization/tags/IntTag.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/serialization/tags/IntTag.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/serialization/tags/LongTag.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/serialization/tags/LongTag.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/serialization/tags/ObjectTag.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/serialization/tags/ObjectTag.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/serialization/tags/ShortTag.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/serialization/tags/ShortTag.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/serialization/tags/StringTag.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/serialization/tags/StringTag.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/serialization/tags/Tag.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/serialization/tags/Tag.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/serialization/tags/TerminatorTag.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/serialization/tags/TerminatorTag.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/SerializationTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/SerializationTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,12 +37,21 @@
       <list>
         <option value="Interface" />
         <option value="JUnit5 Test Class" />
+        <option value="Enum" />
         <option value="Class" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
   </component>
   <component name="ProjectId" id="21WQzoyXcmwZh7e9WCUBowlYY2d" />
   <component name="ProjectViewState">
@@ -43,6 +65,7 @@
     <property name="Repository.Attach.Sources" value="false" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit5" />
@@ -53,6 +76,11 @@
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2954023" />
+    <property name="settings.editor.selected.configurable" value="preferences.updates" />
   </component>
   <component name="RecentsManager">
     <key name="CreateTestDialog.Recents.Supers">
@@ -66,16 +94,66 @@
       <recent name="sk.bytecode.bludisko.rt.game.engine.serialization.tags" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.SerializationTest">
-    <configuration name="DesktopLauncher" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="sk.bytecode.bludisko.rt.desktop.DesktopLauncher" />
+  <component name="RunManager" selected="JUnit.DeserializationTest">
+    <configuration name="DeserializationTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="bludisko_rt" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="sk.bytecode.bludisko.rt.desktop.*" />
+          <option name="PATTERN" value="test.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
+      <option name="PACKAGE_NAME" value="test" />
+      <option name="MAIN_CLASS_NAME" value="test.DeserializationTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="DeserializationTest.deserialize2DArray" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="bludisko_rt" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="test.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="test" />
+      <option name="MAIN_CLASS_NAME" value="test.DeserializationTest" />
+      <option name="METHOD_NAME" value="deserialize2DArray" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="DeserializationTest.deserializeArray" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="bludisko_rt" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="test.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="test" />
+      <option name="MAIN_CLASS_NAME" value="test.DeserializationTest" />
+      <option name="METHOD_NAME" value="deserializeArray" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="DeserializationTest.deserializeComplexObject" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="bludisko_rt" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="test.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="test" />
+      <option name="MAIN_CLASS_NAME" value="test.DeserializationTest" />
+      <option name="METHOD_NAME" value="deserializeComplexObject" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -95,61 +173,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="SerializationTest.testSerializer" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="bludisko_rt" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="test.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="test" />
-      <option name="MAIN_CLASS_NAME" value="test.SerializationTest" />
-      <option name="METHOD_NAME" value="testSerializer" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="SerializationTest.writeIntTag" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="bludisko_rt" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="test.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="test" />
-      <option name="MAIN_CLASS_NAME" value="test.SerializationTest" />
-      <option name="METHOD_NAME" value="writeIntTag" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="SerializationTest.writeStringTag" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="bludisko_rt" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="test.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="test" />
-      <option name="MAIN_CLASS_NAME" value="test.SerializationTest" />
-      <option name="METHOD_NAME" value="writeStringTag" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.DeserializationTest" />
         <item itemvalue="JUnit.SerializationTest" />
-        <item itemvalue="JUnit.SerializationTest.writeStringTag" />
-        <item itemvalue="JUnit.SerializationTest.testSerializer" />
-        <item itemvalue="Application.DesktopLauncher" />
-        <item itemvalue="JUnit.SerializationTest.writeIntTag" />
+        <item itemvalue="JUnit.DeserializationTest.deserializeComplexObject" />
+        <item itemvalue="JUnit.DeserializationTest.deserialize2DArray" />
+        <item itemvalue="JUnit.DeserializationTest.deserializeArray" />
       </list>
     </recent_temporary>
   </component>
@@ -165,7 +195,10 @@
       <workItem from="1638054754190" duration="264000" />
       <workItem from="1638055972053" duration="888000" />
       <workItem from="1638102012867" duration="28028000" />
-      <workItem from="1638171793535" duration="2420000" />
+      <workItem from="1638171793535" duration="5056000" />
+      <workItem from="1638217359245" duration="116000" />
+      <workItem from="1638217559437" duration="31000" />
+      <workItem from="1638217641446" duration="11628000" />
     </task>
     <servers />
   </component>
@@ -183,5 +216,9 @@
       </map>
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>

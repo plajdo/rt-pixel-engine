@@ -13,20 +13,23 @@ public final class ObjectTag extends Tag<Class<?>> {
 
         this.subtags = new ArrayList<>();
 
+        var classNameTag = new StringTag(data.getName());
+        this.addChildren(classNameTag);
+
     }
 
     public void addChildren(Tag<?>... children) {
-        subtags.addAll(Arrays.asList(children));
+        this.subtags.addAll(Arrays.asList(children));
     }
 
     @Override
-    protected byte id() {
+    public byte id() {
         if(this.data.isArray()) return 11;
         return 10;
     }
 
     @Override
-    protected int length() {
+    public int length() {
         return 2; // Header & terminator tags
     }
 
@@ -34,7 +37,7 @@ public final class ObjectTag extends Tag<Class<?>> {
     public byte[] byteData() {
         final ArrayList<byte[]> tagBytes = new ArrayList<>(subtags.size());
 
-        subtags.forEach((tag) -> tagBytes.add(tag.byteData()));
+        this.subtags.forEach((tag) -> tagBytes.add(tag.byteData()));
 
         int size = tagBytes.stream().mapToInt(b -> b.length).sum();
         size = size + this.length();

@@ -9,12 +9,12 @@ public final class BooleanTag extends Tag<Boolean> {
     }
 
     @Override
-    protected byte id() {
+    public byte id() {
         return 9;
     }
 
     @Override
-    protected int length() {
+    public int length() {
         return 1 + 1;
     }
 

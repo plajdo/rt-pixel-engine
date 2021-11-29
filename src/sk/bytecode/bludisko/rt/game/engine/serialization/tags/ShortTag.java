@@ -10,12 +10,12 @@ public final class ShortTag extends Tag<Short> {
     }
 
     @Override
-    protected byte id() {
+    public byte id() {
         return 2;
     }
 
     @Override
-    protected int length() {
+    public int length() {
         return 2 + 1;
     }
 

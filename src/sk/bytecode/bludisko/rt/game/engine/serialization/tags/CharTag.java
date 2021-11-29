@@ -9,12 +9,12 @@ public final class CharTag extends Tag<Character> {
     }
 
     @Override
-    protected byte id() {
+    public byte id() {
         return 7;
     }
 
     @Override
-    protected int length() {
+    public int length() {
         return 2 + 1;
     }
 

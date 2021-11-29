@@ -9,12 +9,12 @@ public final class DoubleTag extends Tag<Double> {
     }
 
     @Override
-    protected byte id() {
+    public byte id() {
         return 6;
     }
 
     @Override
-    protected int length() {
+    public int length() {
         return 8 + 1;
     }
 

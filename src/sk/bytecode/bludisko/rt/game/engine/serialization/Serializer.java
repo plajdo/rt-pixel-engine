@@ -1,15 +1,15 @@
 package sk.bytecode.bludisko.rt.game.engine.serialization;
 
+import org.jetbrains.annotations.NotNull;
 import sk.bytecode.bludisko.rt.game.engine.serialization.tags.*;
 
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.util.function.BiConsumer;
 
 public class Serializer {
 
-    public Tag serialize(Object obj) {
+    public Tag<?> serialize(@NotNull Object obj) {
         var result = serializePrimitiveTypes(obj);
         if(result != null) {
             return result;
@@ -26,41 +26,41 @@ public class Serializer {
 
     }
 
-    private Tag serializePrimitiveTypes(Object obj) {
+    private Tag<?> serializePrimitiveTypes(Object obj) {
         if (obj instanceof Number) {
-            if(obj instanceof Integer) {
-                return new IntTag((Integer) obj);
+            if(obj instanceof Integer i) {
+                return new IntTag(i);
 
-            } else if (obj instanceof Float) {
-                return new FloatTag((Float) obj);
+            } else if (obj instanceof Float f) {
+                return new FloatTag(f);
 
-            } else if (obj instanceof Long) {
-                return new LongTag((Long) obj);
+            } else if (obj instanceof Long l) {
+                return new LongTag(l);
 
-            } else if (obj instanceof Double) {
-                return new DoubleTag((Double) obj);
+            } else if (obj instanceof Double d) {
+                return new DoubleTag(d);
 
-            } else if (obj instanceof Byte) {
-                return new ByteTag((Byte) obj);
+            } else if (obj instanceof Byte b) {
+                return new ByteTag(b);
 
-            } else if (obj instanceof Short) {
-                return new ShortTag((Short) obj);
+            } else if (obj instanceof Short s) {
+                return new ShortTag(s);
             }
 
-        } else if(obj instanceof String) {
-            return new StringTag((String) obj);
+        } else if(obj instanceof String s) {
+            return new StringTag(s);
 
-        } else if (obj instanceof Boolean) {
-            return new BooleanTag((Boolean) obj);
+        } else if (obj instanceof Boolean b) {
+            return new BooleanTag(b);
 
-        } else if (obj instanceof Character) {
-            return new CharTag((Character) obj);
+        } else if (obj instanceof Character c) {
+            return new CharTag(c);
         }
 
         return null;
     }
 
-    private Tag serializeObjectTypes(Object obj) {
+    private Tag<?> serializeObjectTypes(Object obj) {
         var wrapperTag = new ObjectTag(obj.getClass());
 
         forAnnotatedFieldsIn(obj.getClass(), (annotation, field) -> {
@@ -82,7 +82,7 @@ public class Serializer {
         return obj.getClass().isArray();
     }
 
-    private Tag serializeArray(Object obj) {
+    private Tag<?> serializeArray(Object obj) {
         int length = Array.getLength(obj);
         var wrapperTag = new ObjectTag(obj.getClass());
 

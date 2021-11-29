@@ -9,12 +9,12 @@ public final class IntTag extends Tag<Integer> {
     }
 
     @Override
-    protected byte id() {
+    public byte id() {
         return 3;
     }
 
     @Override
-    protected int length() {
+    public int length() {
         return 4 + 1;
     }
 
