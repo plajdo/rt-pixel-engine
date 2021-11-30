@@ -4,7 +4,6 @@ import sk.bytecode.bludisko.rt.game.engine.serialization.Serializable;
 
 public class Map {
 
-    @Serializable
     private int[][] tiles;
 
     public Map() {
