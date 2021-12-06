@@ -6,8 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="b56b9792-09b5-4a62-8384-5317f301f33f" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/Map.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/Map.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/serialization/Deserializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/serialization/Deserializer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/serialization/Serializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/serialization/Serializer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/serialization/tags/ObjectTag.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/serialization/tags/ObjectTag.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/DeserializationTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/DeserializationTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,7 +64,7 @@
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2954023" />
-    <property name="settings.editor.selected.configurable" value="preferences.updates" />
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.Java" />
   </component>
   <component name="RecentsManager">
     <key name="CreateTestDialog.Recents.Supers">
@@ -76,7 +78,7 @@
       <recent name="sk.bytecode.bludisko.rt.game.engine.serialization.tags" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.DeserializationTest">
+  <component name="RunManager" selected="JUnit.DeserializationTest.createObjectFromDeserializedData">
     <configuration name="DeserializationTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="bludisko_rt" />
       <extension name="coverage">
@@ -92,7 +94,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="DeserializationTest.deserialize2DArray" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="DeserializationTest.createObjectFromDeserializedData" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="bludisko_rt" />
       <extension name="coverage">
         <pattern>
@@ -102,23 +104,7 @@
       </extension>
       <option name="PACKAGE_NAME" value="test" />
       <option name="MAIN_CLASS_NAME" value="test.DeserializationTest" />
-      <option name="METHOD_NAME" value="deserialize2DArray" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="DeserializationTest.deserializeArray" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="bludisko_rt" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="test.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="test" />
-      <option name="MAIN_CLASS_NAME" value="test.DeserializationTest" />
-      <option name="METHOD_NAME" value="deserializeArray" />
+      <option name="METHOD_NAME" value="createObjectFromDeserializedData" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -135,6 +121,22 @@
       <option name="PACKAGE_NAME" value="test" />
       <option name="MAIN_CLASS_NAME" value="test.DeserializationTest" />
       <option name="METHOD_NAME" value="deserializeComplexObject" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="DeserializationTest.deserializeObject" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="bludisko_rt" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="test.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="test" />
+      <option name="MAIN_CLASS_NAME" value="test.DeserializationTest" />
+      <option name="METHOD_NAME" value="deserializeObject" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -157,11 +159,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.DeserializationTest.createObjectFromDeserializedData" />
         <item itemvalue="JUnit.DeserializationTest" />
+        <item itemvalue="JUnit.DeserializationTest.deserializeObject" />
         <item itemvalue="JUnit.SerializationTest" />
         <item itemvalue="JUnit.DeserializationTest.deserializeComplexObject" />
-        <item itemvalue="JUnit.DeserializationTest.deserialize2DArray" />
-        <item itemvalue="JUnit.DeserializationTest.deserializeArray" />
       </list>
     </recent_temporary>
   </component>
@@ -182,6 +184,10 @@
       <workItem from="1638217559437" duration="31000" />
       <workItem from="1638217641446" duration="11628000" />
       <workItem from="1638296054055" duration="5773000" />
+      <workItem from="1638349560132" duration="589000" />
+      <workItem from="1638399096954" duration="61000" />
+      <workItem from="1638399168614" duration="6964000" />
+      <workItem from="1638723674211" duration="14942000" />
     </task>
     <servers />
   </component>
@@ -199,6 +205,34 @@
       </map>
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/DeserializationTest.java</url>
+          <line>86</line>
+          <option name="timeStamp" value="11" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/serialization/tags/ObjectTag.java</url>
+          <line>167</line>
+          <option name="timeStamp" value="13" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/DeserializationTest.java</url>
+          <line>213</line>
+          <option name="timeStamp" value="16" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+    <watches-manager>
+      <configuration name="JUnit">
+        <watch expression="((java.util.ArrayList)((ObjectTag)wrapperTag.subtags.get(1)).subtags).get(3)" custom="sk.bytecode.bludisko.rt.game.engine.serialization.tags.ObjectTag,java.util.ArrayList" />
+        <watch expression="((java.util.ArrayList)((ObjectTag)wrapperTag.subtags.get(1)).subtags).get(0)" custom="sk.bytecode.bludisko.rt.game.engine.serialization.tags.ObjectTag,java.util.ArrayList" />
+        <watch expression="((java.util.ArrayList)((ObjectTag)wrapperTag.subtags.get(1)).subtags).get(0)" custom="sk.bytecode.bludisko.rt.game.engine.serialization.tags.ObjectTag,java.util.ArrayList" />
+      </configuration>
+    </watches-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

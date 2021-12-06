@@ -3,8 +3,9 @@ package sk.bytecode.bludisko.rt.game.engine.serialization;
 import sk.bytecode.bludisko.rt.game.engine.serialization.tags.*;
 
 import java.io.NotSerializableException;
+import java.lang.reflect.Constructor;
 
-public class Deserializer {
+public final class Deserializer {
 
     private byte[] data;
     private int offset;
@@ -101,10 +102,15 @@ public class Deserializer {
         this.offset += 1; // Object marker - 10/11
 
         final String className = getObjectClassName();
-        final ObjectTag objectTag = createEmptyObjectTagFromClassName(className);
+        final ObjectTag objectTag = createObjectTagFromClassName(className);
+
+        if(objectTag.isObject()) {
+            final ObjectTag fields = getObjectFields();
+            objectTag.addChildren(fields);
+        }
 
         while(!endOfObject()) {
-            var innerTag = this.deserialize();
+            Tag<?> innerTag = this.deserialize();
             objectTag.addChildren(innerTag);
         }
         this.offset += 1; // Terminator - 0
@@ -121,12 +127,22 @@ public class Deserializer {
         return classNameTag.get();
     }
 
-    private ObjectTag createEmptyObjectTagFromClassName(String className) throws NotSerializableException {
+    private ObjectTag createObjectTagFromClassName(String className) throws NotSerializableException {
         try {
-            return new ObjectTag(Class.forName(className));
-        } catch (ClassNotFoundException e) {
-            throw new NotSerializableException("Class not found: " + className);
+            // To keep ObjectTag API pretty
+            Constructor<ObjectTag> constructor = ObjectTag.class.getDeclaredConstructor(Class.class, ObjectTag.class);
+            constructor.setAccessible(true);
+
+            return constructor.newInstance(Class.forName(className), null);
+
+        } catch (ReflectiveOperationException e) {
+            throw new NotSerializableException("Unable to create ObjectTag for class " + className);
         }
+    }
+
+    private ObjectTag getObjectFields() throws NotSerializableException {
+        ObjectTag fields = (ObjectTag) this.deserialize();
+        return fields;
     }
 
     private long deserializeBits(byte[] bytes, int byteCount, int offset) throws NotSerializableException {

@@ -1,8 +1,8 @@
 package sk.bytecode.bludisko.rt.game.engine.serialization.tags;
 
+import org.jetbrains.annotations.Nullable;
 import sk.bytecode.bludisko.rt.game.engine.serialization.Serializable;
 
-import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -10,31 +10,59 @@ import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public final class ObjectTag extends Tag<Class<?>> {
 
+    private final static int SUBTAG_FIELDS = 1;
+
     private final ArrayList<Tag<?>> subtags;
+
+    // MARK: - Constructor
 
     public ObjectTag(Class<?> data) {
         super(data);
 
         this.subtags = new ArrayList<>();
-
         var classNameTag = new StringTag(data.getName());
-        var annotatedFieldsTag = new ObjectTag(String[].class);
+        this.addChildren(classNameTag);
 
-        Arrays.stream(data.getDeclaredFields())
+        if (this.isObject()) {
+            var fieldTags = getFieldTags(data);
+            this.addChildren(fieldTags);
+        }
+    }
+
+    @SuppressWarnings("unused")
+    private ObjectTag(Class<?> data, @Nullable ObjectTag fieldsToSerialize) {
+        super(data);
+
+        this.subtags = new ArrayList<>();
+        var classNameTag = getClassNameTag();
+        this.addChildren(classNameTag);
+
+        if(fieldsToSerialize != null) {
+            this.addChildren(fieldsToSerialize);
+        }
+    }
+
+    private StringTag getClassNameTag() {
+        return new StringTag(data.getName());
+    }
+
+    private ObjectTag getFieldTags(Class<?> data) {
+        var fields = data.getDeclaredFields();
+        var annotatedFieldsTag = new ObjectTag(String[].class);
+        Arrays.stream(fields)
                 .filter((field) -> field.getAnnotation(Serializable.class) != null)
                 .map(Field::getName)
                 .map(StringTag::new)
                 .forEach(annotatedFieldsTag::addChildren);
 
-        this.addChildren(classNameTag, annotatedFieldsTag);
+        return annotatedFieldsTag;
     }
 
-    public void addChildren(Tag<?>... children) {
-        this.subtags.addAll(Arrays.asList(children));
-    }
+    // MARK: - Override
 
     @Override
     public byte id() {
@@ -65,11 +93,28 @@ public final class ObjectTag extends Tag<Class<?>> {
         return mergedTags.array();
     }
 
-    public Object getObject() {
-        try {
-            Object instance = this.getInstance(data);
+    // MARK: - Public
 
-            this.injectFields(data, instance);
+    public boolean isObject() {
+        return !isArray();
+    }
+
+    public boolean isArray() {
+        return this.id() == 11;
+    }
+
+    public void addChildren(Tag<?>... children) {
+        this.subtags.addAll(Arrays.asList(children));
+    }
+
+    @Nullable
+    public Object getObject() {
+        if(this.isArray()) return null;
+        try {
+            Object instance = getInstance(data);
+            String[] fields = getFieldTags();
+
+            this.injectFields(data, fields, instance);
 
             return instance;
         } catch (ReflectiveOperationException e) {
@@ -77,12 +122,34 @@ public final class ObjectTag extends Tag<Class<?>> {
         }
     }
 
-    /**
-     * Create an instance for a given class without calling any constructor.
-     * @param forClass Class to create the instance for
-     * @return Instance of the class, safe to force-cast to type of the class
-     * @throws ReflectiveOperationException If using non-standard JVMs without sun.* package
-     */
+    @Nullable
+    public Object[] getArray() {
+        if(!this.isArray()) return null;
+        return subtags.stream()
+                .skip(1) // Array Class tag
+                .map(Tag::get)
+                .map(this::replaceClassWithElement)
+                .toArray();
+
+    }
+
+    // MARK: - Private
+
+    private <R> R replaceClassWithElement(Object o) {
+        //if()
+        return null;
+    }
+
+    private String[] getFieldTags() {
+        var fieldTags = (ObjectTag) subtags.get(SUBTAG_FIELDS);
+        var fieldCount = fieldTags.subtags.size() - 1; // -1 Class name
+
+        var fieldArray = new String[fieldCount];
+        System.arraycopy(fieldTags.getArray(), 1, fieldArray, 0, fieldCount);
+
+        return fieldArray;
+    }
+
     private Object getInstance(Class<?> forClass) throws ReflectiveOperationException {
         Constructor<Object> fakeConstructor = Object.class.getConstructor((Class<?>[]) null);
         Class<?> reflectionFactoryClass = Class.forName("sun.reflect.ReflectionFactory");
@@ -95,15 +162,15 @@ public final class ObjectTag extends Tag<Class<?>> {
 
         Object classInstance = serializationConstructor.newInstance((Object[]) null);
         return forClass.cast(classInstance);
-
     }
 
-    private void injectFields(Class<?> forClass, Object instance) {
-        for (Field f : forClass.getDeclaredFields()) {
-
-
+    private void injectFields(Class<?> forClass, String[] fieldNames, Object instance) throws ReflectiveOperationException{
+        for (int i = 0; i < fieldNames.length; i++) {
+            String fieldName = fieldNames[i];
+            Field field = forClass.getField(fieldName);
+            field.setAccessible(true);
+            field.set(instance, this.subtags.get(SUBTAG_FIELDS + i).get());
         }
-
     }
 
 }

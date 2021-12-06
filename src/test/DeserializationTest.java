@@ -92,8 +92,10 @@ public class DeserializationTest {
         var d = new Deserializer(bytes);
         var tag = d.deserialize().byteData();
 
-        // System.out.println(Arrays.toString(tag));
-        // System.out.println(new String(tag));
+        System.out.println(Arrays.toString(bytes));
+        System.out.println(Arrays.toString(tag));
+        System.out.println(new String(bytes));
+        System.out.println(new String(tag));
         assert Arrays.equals(bytes, tag);
     }
 
@@ -187,6 +189,33 @@ public class DeserializationTest {
         var castedInstance = classToInstantiate.cast(instance);
 
         System.out.println(castedInstance);
+
+    }
+
+    @Test
+    void createObjectFromDeserializedData() throws NotSerializableException {
+        class TestObject {
+            @Serializable int x = 15;
+            @Serializable float z = 3.14156f;
+            @Serializable char c = 'f';
+            @Serializable short d = 32568;
+            @Serializable boolean[] boolarr = new boolean[]{ false, false, true, false };
+            @Serializable String text = "Hello";
+        }
+
+        var data = new TestObject();
+
+        var s = new Serializer();
+        var bytes = s.serialize(data).byteData();
+
+        var d = new Deserializer(bytes);
+        ObjectTag tag = (ObjectTag) d.deserialize();
+
+        var połska = Class.class.getClass();
+
+        var obj = tag.getObject();
+
+        //assert Arrays.equals(bytes, tag);
 
     }
 

@@ -7,7 +7,7 @@ import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.util.function.BiConsumer;
 
-public class Serializer {
+public final class Serializer {
 
     public Tag<?> serialize(@NotNull Object obj) {
         var result = serializePrimitiveTypes(obj);
