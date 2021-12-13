@@ -1,6 +1,6 @@
 package sk.bytecode.bludisko.rt.game.engine.serialization.tags;
 
-public abstract class Tag<T> {
+public abstract sealed class Tag<T> permits BooleanTag, ByteTag, CharTag, DoubleTag, FloatTag, IntTag, LongTag, ObjectTag, ShortTag, StringTag, TerminatorTag {
 
     protected final T data;
 

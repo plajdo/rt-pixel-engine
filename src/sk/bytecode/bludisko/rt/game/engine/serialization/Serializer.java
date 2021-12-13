@@ -23,10 +23,22 @@ public final class Serializer {
         result = serializeObjectTypes(obj);
 
         return result;
-
     }
 
     private Tag<?> serializePrimitiveTypes(Object obj) {
+        return switch(obj) {
+            case Integer i -> new IntTag(i);
+            case Float f -> new FloatTag(f);
+            case Long l -> new LongTag(l);
+            case Double d -> new DoubleTag(d);
+            case Byte b -> new ByteTag(b);
+            case Short s -> new ShortTag(s);
+            case String s -> new StringTag(s);
+            case Boolean b -> new BooleanTag(b);
+            case Character c -> new CharTag(c);
+            default -> null;
+        };
+        /*
         if (obj instanceof Number) {
             if(obj instanceof Integer i) {
                 return new IntTag(i);
@@ -57,7 +69,7 @@ public final class Serializer {
             return new CharTag(c);
         }
 
-        return null;
+        return null;*/
     }
 
     private Tag<?> serializeObjectTypes(Object obj) {
@@ -75,7 +87,6 @@ public final class Serializer {
         });
 
         return wrapperTag;
-
     }
 
     private boolean isArray(Object obj) {

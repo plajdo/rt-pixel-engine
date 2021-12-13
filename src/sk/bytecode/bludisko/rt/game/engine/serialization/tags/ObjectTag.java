@@ -3,18 +3,21 @@ package sk.bytecode.bludisko.rt.game.engine.serialization.tags;
 import org.jetbrains.annotations.Nullable;
 import sk.bytecode.bludisko.rt.game.engine.serialization.Serializable;
 
+import java.lang.reflect.Array;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.function.Function;
+import java.util.List;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 public final class ObjectTag extends Tag<Class<?>> {
 
-    private final static int SUBTAG_FIELDS = 1;
+    private static final int SUBTAG_FIELDS = 1;
+    private static final int SUBTAG_DATA_START = 2;
 
     private final ArrayList<Tag<?>> subtags;
 
@@ -27,7 +30,7 @@ public final class ObjectTag extends Tag<Class<?>> {
         var classNameTag = new StringTag(data.getName());
         this.addChildren(classNameTag);
 
-        if (this.isObject()) {
+        if(this.isObject()) {
             var fieldTags = getFieldTags(data);
             this.addChildren(fieldTags);
         }
@@ -117,7 +120,7 @@ public final class ObjectTag extends Tag<Class<?>> {
             this.injectFields(data, fields, instance);
 
             return instance;
-        } catch (ReflectiveOperationException e) {
+        } catch(ReflectiveOperationException e) {
             return null;
         }
     }
@@ -125,27 +128,34 @@ public final class ObjectTag extends Tag<Class<?>> {
     @Nullable
     public Object[] getArray() {
         if(!this.isArray()) return null;
+
+        // Array Class tag
+        ArrayList<Object> list = new ArrayList<>();
+        boolean first = true;
+        for(Tag<?> subtag : subtags) {
+            if(first) {
+                first = false;
+                continue;
+            }
+            Object o = subtag.get();
+            list.add(o);
+        }
+        //return list.toArray();
+
         return subtags.stream()
                 .skip(1) // Array Class tag
                 .map(Tag::get)
-                .map(this::replaceClassWithElement)
                 .toArray();
-
     }
 
     // MARK: - Private
 
-    private <R> R replaceClassWithElement(Object o) {
-        //if()
-        return null;
-    }
-
     private String[] getFieldTags() {
         var fieldTags = (ObjectTag) subtags.get(SUBTAG_FIELDS);
-        var fieldCount = fieldTags.subtags.size() - 1; // -1 Class name
+        var fieldCount = fieldTags.subtags.size() - 1; // -1 for Class name
 
         var fieldArray = new String[fieldCount];
-        System.arraycopy(fieldTags.getArray(), 1, fieldArray, 0, fieldCount);
+        System.arraycopy(fieldTags.getArray(), 0, fieldArray, 0, fieldCount);
 
         return fieldArray;
     }
@@ -164,12 +174,32 @@ public final class ObjectTag extends Tag<Class<?>> {
         return forClass.cast(classInstance);
     }
 
-    private void injectFields(Class<?> forClass, String[] fieldNames, Object instance) throws ReflectiveOperationException{
-        for (int i = 0; i < fieldNames.length; i++) {
+    private void injectFields(Class<?> forClass, String[] fieldNames, Object instance) throws ReflectiveOperationException {
+        for(int i = 0; i < fieldNames.length; i++) {
             String fieldName = fieldNames[i];
-            Field field = forClass.getField(fieldName);
+            Field field = forClass.getDeclaredField(fieldName);
             field.setAccessible(true);
-            field.set(instance, this.subtags.get(SUBTAG_FIELDS + i).get());
+
+            var subtag = subtags.get(SUBTAG_DATA_START + i);
+            var subtagObject = switch(subtag) {
+                case ObjectTag o && o.isObject() -> o.getObject();
+                case ObjectTag o && o.isArray() -> o.getArray();
+                /*case ObjectTag o && o.isArray() -> {
+                    var array = o.getArray();
+                    var arrayClass = o.get();
+                    var typedArray = arrayClass.cast(Array.newInstance(arrayClass.componentType(), array.length));
+
+                    for(int j = 0; j < array.length; j++) {
+                        Object element = array[j];
+                        ((Object[]) typedArray)[j] = element;
+                    }
+
+                    yield typedArray;
+                }*/
+                case Tag t -> t.get();
+            };
+
+            field.set(instance, subtagObject);
         }
     }
 

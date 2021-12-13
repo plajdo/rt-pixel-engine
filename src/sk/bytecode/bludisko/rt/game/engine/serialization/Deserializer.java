@@ -7,7 +7,7 @@ import java.lang.reflect.Constructor;
 
 public final class Deserializer {
 
-    private byte[] data;
+    private final byte[] data;
     private int offset;
 
     public Deserializer(byte[] data) {
@@ -141,8 +141,7 @@ public final class Deserializer {
     }
 
     private ObjectTag getObjectFields() throws NotSerializableException {
-        ObjectTag fields = (ObjectTag) this.deserialize();
-        return fields;
+        return (ObjectTag) this.deserialize();
     }
 
     private long deserializeBits(byte[] bytes, int byteCount, int offset) throws NotSerializableException {
