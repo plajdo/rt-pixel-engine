@@ -58,6 +58,7 @@ public final class GameWorld {
             int objectHeight = (int)(height / ray);
 
             Color c;
+            int blockHeightMultiplier = 1;
             switch (map[mapX][mapY]) {
                 case 1:
                     c = new Color(190, 40, 0);
@@ -70,6 +71,7 @@ public final class GameWorld {
                     break;
                 case 4:
                     c = new Color(190, 190, 40);
+                    blockHeightMultiplier = 2;
                     break;
                 default:
                     c = new Color(150, 150, 150);
@@ -79,7 +81,7 @@ public final class GameWorld {
                 c = c.darker();
             }
             graphics.setColor(c);
-            graphics.fillRect(i, height / 2 - objectHeight / 2, 1, objectHeight);
+            graphics.fillRect(i, height / 2 - objectHeight * blockHeightMultiplier / 2, 1, objectHeight * blockHeightMultiplier);
 
         }
 
