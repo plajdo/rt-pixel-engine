@@ -37,18 +37,22 @@ public final class GameWorld {
     private Camera2 camera;
 
     public GameWorld() {
-        Vector2 cameraPosition = new Vector2(22, 12);
+        Vector2 cameraPosition = new Vector2(21, 12);
         Vector2 cameraDirection = new Vector2(-1, 0);
         float fieldOfView = 66f;
 
         this.camera = new Camera2(cameraPosition, cameraDirection, fieldOfView, 640);
 
         new MapManager("no");
-
     }
 
     public void draw(Graphics graphics) {
-        float[][] rays = camera.castRays();
+        camera.draw(graphics);
+    }
+
+    @Deprecated
+    public void drawOld(Graphics graphics) {
+        float[][] rays = camera.castRaysOld();
         for(int i = 0; i < rays.length; i++) {
             float ray = rays[i][0];
             float side = rays[i][1];
@@ -81,20 +85,18 @@ public final class GameWorld {
                 c = c.darker();
             }
             graphics.setColor(c);
-            graphics.fillRect(i, height / 2 - objectHeight * blockHeightMultiplier / 2, 1, objectHeight * blockHeightMultiplier);
-
+            graphics.fillRect(i, height / 2 - objectHeight * blockHeightMultiplier / 2, 1, (int) (objectHeight * ((blockHeightMultiplier != 1) ? 3f/2f : 1f)));
         }
-
     }
 
     public void tick(float dt) {
         float oldx = camera.direction.x;
-        camera.direction.x = (float) (camera.direction.x * Math.cos(-0.01f) - camera.direction.y * Math.sin(-0.01f));
-        camera.direction.y = (float) (oldx * Math.sin(-0.01f) + camera.direction.y * Math.cos(-0.01f));
+        camera.direction.x = (float) (camera.direction.x * Math.cos(-0.015f) - camera.direction.y * Math.sin(-0.015f));
+        camera.direction.y = (float) (oldx * Math.sin(-0.015f) + camera.direction.y * Math.cos(-0.015f));
 
         float oldplanex = camera.plane.x;
-        camera.plane.x = (float) (camera.plane.x * Math.cos(-0.01f) - camera.plane.y * Math.sin(-0.01f));
-        camera.plane.y = (float) (oldplanex * Math.sin(-0.01f) + camera.plane.y * Math.cos(-0.01f));
+        camera.plane.x = (float) (camera.plane.x * Math.cos(-0.015f) - camera.plane.y * Math.sin(-0.015f));
+        camera.plane.y = (float) (oldplanex * Math.sin(-0.015f) + camera.plane.y * Math.cos(-0.015f));
 
     }
 

@@ -6,6 +6,9 @@ public final class Ray {
 
     private Vector2 rayDir;
 
+    private float distance;
+    private int hitSide, hitX, hitY; // TODO: replace with object reference?
+
     public float[] cast(Vector2 position, Vector2 direction, Vector2 plane, int[][] map, int rayCount, int x) {
 
         // MARK: - Setup
@@ -78,7 +81,27 @@ public final class Ray {
             perpendicularSideDistance = squareSideDistance.y - squareSideDifference.y;
         }
 
+        this.distance = perpendicularSideDistance;
+        this.hitSide = side;
+        this.hitX = mapX;
+        this.hitY = mapY;
+
         return new float[] {perpendicularSideDistance, side, mapX, mapY};
     }
 
+    public int getHitSide() {
+        return hitSide;
+    }
+
+    public float getDistance() {
+        return distance;
+    }
+
+    public int getHitX() {
+        return hitX;
+    }
+
+    public int getHitY() {
+        return hitY;
+    }
 }

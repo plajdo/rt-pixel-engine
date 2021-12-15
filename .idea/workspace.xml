@@ -5,14 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b56b9792-09b5-4a62-8384-5317f301f33f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/screens/GameScreen.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/screens/Screen.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/desktop/DesktopLauncher.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/desktop/DesktopLauncher.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/Camera2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/Camera2.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/GameWorld.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/GameWorld.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/Map.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/Map.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/Screen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/Window.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/serialization/tags/ObjectTag.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/serialization/tags/ObjectTag.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/Ray.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/Ray.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/screens/GameScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/screens/GameScreen.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,7 +62,7 @@
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2954023" />
     <property name="settings.editor.selected.configurable" value="preferences.sourceCode.Java" />
@@ -191,7 +188,7 @@
       <workItem from="1638723674211" duration="14942000" />
       <workItem from="1639351157145" duration="1299000" />
       <workItem from="1639388312069" duration="10381000" />
-      <workItem from="1639595561905" duration="3423000" />
+      <workItem from="1639595561905" duration="9740000" />
     </task>
     <servers />
   </component>
