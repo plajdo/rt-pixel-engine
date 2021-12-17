@@ -1,28 +1,29 @@
-package sk.bytecode.bludisko.rt.game.engine.serialization.tags;
+package sk.bytecode.bludisko.rt.game.engine.serialization;
 
 import java.nio.ByteBuffer;
 
-public final class CharTag extends Tag<Character> {
+public final class FloatTag extends PrimitiveTag<Float> {
 
-    public CharTag(Character data) {
+    public FloatTag(Float data) {
         super(data);
     }
 
     @Override
     public byte id() {
-        return 7;
+        return 5;
     }
 
     @Override
     public int length() {
-        return 2 + 1;
+        return 1 + 4;
     }
 
     @Override
     public byte[] byteData() {
         return ByteBuffer.allocate(this.length())
                 .put(this.id())
-                .putChar(data)
+                .putFloat(data)
                 .array();
     }
+
 }

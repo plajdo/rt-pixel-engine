@@ -6,10 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="b56b9792-09b5-4a62-8384-5317f301f33f" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/Camera2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/Camera2.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/GameWorld.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/GameWorld.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/Ray.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/Ray.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/screens/GameScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/screens/GameScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/serialization/PrimitiveTag.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/serialization/PrimitiveTag.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/serialization/StringTag.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/serialization/StringTag.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/serialization/Tag.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/serialization/Tag.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,8 +20,8 @@
       <list>
         <option value="JUnit5 Test Class" />
         <option value="Enum" />
-        <option value="Class" />
         <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -38,6 +37,9 @@
     </file-type-list>
   </component>
   <component name="ProjectId" id="21WQzoyXcmwZh7e9WCUBowlYY2d" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -78,22 +80,22 @@
       <recent name="test" />
       <recent name="sk.bytecode.bludisko.rt.game.engine.serialization.tags" />
     </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="sk.bytecode.bludisko.rt.game.engine.serialization2" />
+    </key>
   </component>
-  <component name="RunManager" selected="Application.DesktopLauncher">
-    <configuration name="DesktopLauncher" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="sk.bytecode.bludisko.rt.desktop.DesktopLauncher" />
+  <component name="RunManager" selected="JUnit.All Tests">
+    <configuration name="All Tests" type="JUnit" factoryName="JUnit">
       <module name="bludisko_rt" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="sk.bytecode.bludisko.rt.desktop.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
+      <option name="PACKAGE_NAME" value="test" />
+      <option name="MAIN_CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="TEST_OBJECT" value="package" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="DeserializationTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="Deserialization2Test.deserializeNullField" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="bludisko_rt" />
       <extension name="coverage">
         <pattern>
@@ -102,29 +104,14 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="test" />
-      <option name="MAIN_CLASS_NAME" value="test.DeserializationTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="DeserializationTest.createObjectFromDeserializedData" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="bludisko_rt" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="test.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="test" />
-      <option name="MAIN_CLASS_NAME" value="test.DeserializationTest" />
-      <option name="METHOD_NAME" value="createObjectFromDeserializedData" />
+      <option name="MAIN_CLASS_NAME" value="test.Deserialization2Test" />
+      <option name="METHOD_NAME" value="deserializeNullField" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="DeserializationTest.deserializeObject" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="Deserialization2Test.deserializeObject" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="bludisko_rt" />
       <extension name="coverage">
         <pattern>
@@ -133,14 +120,14 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="test" />
-      <option name="MAIN_CLASS_NAME" value="test.DeserializationTest" />
+      <option name="MAIN_CLASS_NAME" value="test.Deserialization2Test" />
       <option name="METHOD_NAME" value="deserializeObject" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="SerializationTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="Serialization2Test.arrayByteCopyTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="bludisko_rt" />
       <extension name="coverage">
         <pattern>
@@ -149,19 +136,60 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="test" />
-      <option name="MAIN_CLASS_NAME" value="test.SerializationTest" />
-      <option name="TEST_OBJECT" value="class" />
+      <option name="MAIN_CLASS_NAME" value="test.Serialization2Test" />
+      <option name="METHOD_NAME" value="arrayByteCopyTest" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="Serialization2Test.serializeObject" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="bludisko_rt" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="test.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="test" />
+      <option name="MAIN_CLASS_NAME" value="test.Serialization2Test" />
+      <option name="METHOD_NAME" value="serializeObject" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="test in bludisko_rt" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="bludisko_rt" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="test.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="test" />
+      <option name="MAIN_CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="TEST_OBJECT" value="package" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="JUnit.All Tests" />
+      <item itemvalue="JUnit.test in bludisko_rt" />
+      <item itemvalue="JUnit.Serialization2Test.arrayByteCopyTest" />
+      <item itemvalue="JUnit.Serialization2Test.serializeObject" />
+      <item itemvalue="JUnit.Deserialization2Test.deserializeObject" />
+      <item itemvalue="JUnit.Deserialization2Test.deserializeNullField" />
+    </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.DesktopLauncher" />
-        <item itemvalue="JUnit.DeserializationTest" />
-        <item itemvalue="JUnit.DeserializationTest.createObjectFromDeserializedData" />
-        <item itemvalue="JUnit.DeserializationTest.deserializeObject" />
-        <item itemvalue="JUnit.SerializationTest" />
+        <item itemvalue="JUnit.Deserialization2Test.deserializeNullField" />
+        <item itemvalue="JUnit.Deserialization2Test.deserializeObject" />
+        <item itemvalue="JUnit.Serialization2Test.serializeObject" />
+        <item itemvalue="JUnit.Serialization2Test.arrayByteCopyTest" />
+        <item itemvalue="JUnit.test in bludisko_rt" />
       </list>
     </recent_temporary>
   </component>
@@ -189,6 +217,12 @@
       <workItem from="1639351157145" duration="1299000" />
       <workItem from="1639388312069" duration="10381000" />
       <workItem from="1639595561905" duration="9740000" />
+      <workItem from="1639771802254" duration="16040000" />
+      <workItem from="1639865028889" duration="8252000" />
+      <workItem from="1639942074947" duration="929000" />
+      <workItem from="1640115502875" duration="11056000" />
+      <workItem from="1640201888039" duration="746000" />
+      <workItem from="1640204410896" duration="14393000" />
     </task>
     <servers />
   </component>
@@ -211,14 +245,14 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/test/DeserializationTest.java</url>
-          <line>213</line>
-          <option name="timeStamp" value="16" />
+          <url>file://$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/serialization/tags/ObjectTag.java</url>
+          <line>188</line>
+          <option name="timeStamp" value="19" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/engine/serialization/tags/ObjectTag.java</url>
-          <line>192</line>
-          <option name="timeStamp" value="19" />
+          <url>file://$PROJECT_DIR$/src/test/Serialization2Test.java</url>
+          <line>40</line>
+          <option name="timeStamp" value="30" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -228,6 +262,8 @@
         <watch expression="((java.util.ArrayList)((ObjectTag)wrapperTag.subtags.get(1)).subtags).get(0)" custom="sk.bytecode.bludisko.rt.game.engine.serialization.tags.ObjectTag,java.util.ArrayList" />
         <watch expression="((java.util.ArrayList)((ObjectTag)wrapperTag.subtags.get(1)).subtags).get(0)" custom="sk.bytecode.bludisko.rt.game.engine.serialization.tags.ObjectTag,java.util.ArrayList" />
         <watch expression="subtags" language="JAVA" />
+        <watch expression="placeholder.arr" />
+        <watch expression="placeholder.arr" />
       </configuration>
     </watches-manager>
   </component>

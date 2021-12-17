@@ -1,28 +1,28 @@
-package sk.bytecode.bludisko.rt.game.engine.serialization.tags;
+package sk.bytecode.bludisko.rt.game.engine.serialization;
 
 import java.nio.ByteBuffer;
 
-public final class IntTag extends Tag<Integer> {
+public final class LongTag extends PrimitiveTag<Long> {
 
-    public IntTag(Integer data) {
+    public LongTag(Long data) {
         super(data);
     }
 
     @Override
     public byte id() {
-        return 3;
+        return 4;
     }
 
     @Override
     public int length() {
-        return 4 + 1;
+        return 1 + 8;
     }
 
     @Override
     public byte[] byteData() {
         return ByteBuffer.allocate(this.length())
                 .put(this.id())
-                .putInt(data)
+                .putLong(data)
                 .array();
     }
 

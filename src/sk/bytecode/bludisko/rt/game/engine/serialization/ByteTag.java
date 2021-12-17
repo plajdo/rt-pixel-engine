@@ -1,16 +1,16 @@
-package sk.bytecode.bludisko.rt.game.engine.serialization.tags;
+package sk.bytecode.bludisko.rt.game.engine.serialization;
 
 import java.nio.ByteBuffer;
 
-public final class BooleanTag extends Tag<Boolean> {
+public final class ByteTag extends PrimitiveTag<Byte> {
 
-    public BooleanTag(Boolean data) {
+    public ByteTag(Byte data) {
         super(data);
     }
 
     @Override
     public byte id() {
-        return 9;
+        return 1;
     }
 
     @Override
@@ -22,7 +22,8 @@ public final class BooleanTag extends Tag<Boolean> {
     public byte[] byteData() {
         return ByteBuffer.allocate(this.length())
                 .put(this.id())
-                .put(this.data ? (byte) 1 : (byte) 0)
+                .put(this.data)
                 .array();
     }
+
 }

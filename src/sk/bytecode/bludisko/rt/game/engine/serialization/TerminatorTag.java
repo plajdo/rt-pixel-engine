@@ -1,6 +1,6 @@
-package sk.bytecode.bludisko.rt.game.engine.serialization.tags;
+package sk.bytecode.bludisko.rt.game.engine.serialization;
 
-public final class TerminatorTag extends Tag<Object> {
+public final class TerminatorTag extends Tag<Void> {
 
     public TerminatorTag() {
         super(null);
@@ -18,7 +18,7 @@ public final class TerminatorTag extends Tag<Object> {
 
     @Override
     public byte[] byteData() {
-        return new byte[]{ 0 };
+        return new byte[] { 0 };
     }
 
 }

@@ -1,4 +1,4 @@
-package sk.bytecode.bludisko.rt.game.engine.serialization.tags;
+package sk.bytecode.bludisko.rt.game.engine.serialization;
 
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
@@ -9,26 +9,20 @@ public final class StringTag extends Tag<String> {
     private final IntTag lengthTag;
 
     public StringTag(String data) {
-        super(null);
+        super(data);
 
         this.stringBytes = data.getBytes(StandardCharsets.UTF_8);
         this.lengthTag = new IntTag(stringBytes.length);
-
-    }
-
-    @Override
-    public String get() {
-        return new String(this.stringBytes, StandardCharsets.UTF_8);
     }
 
     @Override
     public byte id() {
-        return 8;
+        return 9;
     }
 
     @Override
     public int length() {
-        return this.stringBytes.length + this.lengthTag.length() + 1;
+        return 1 + this.lengthTag.length() + this.stringBytes.length;
     }
 
     @Override
