@@ -1,6 +1,7 @@
 package sk.bytecode.bludisko.rt.game.engine;
 
 import org.jetbrains.annotations.NotNull;
+import sk.bytecode.bludisko.rt.game.input.InputManager;
 import sk.bytecode.bludisko.rt.game.screens.Screen;
 
 import javax.swing.*;
@@ -16,6 +17,8 @@ public final class Window {
     private final Canvas canvas;
     private final JFrame frame;
     private Screen screen;
+
+    private InputManager inputManager;
 
     private boolean running;
 
@@ -42,9 +45,20 @@ public final class Window {
         this.frame.setVisible(true);
     }
 
-    private void setupScreen(Screen screen) {
+    private void setupScreen(@NotNull Screen screen) {
+        this.canvas.removeKeyListener(this.inputManager);
+        this.canvas.removeMouseListener(this.inputManager);
+        this.canvas.removeMouseMotionListener(this.inputManager);
+
         screen.screenWillAppear(this);
+
+        this.inputManager = screen.getInputManager();
         this.screen = screen;
+
+        this.canvas.addKeyListener(this.inputManager);
+        this.canvas.addMouseListener(this.inputManager);
+        this.canvas.addMouseMotionListener(this.inputManager);
+
         screen.screenDidAppear();
     }
 
@@ -52,6 +66,10 @@ public final class Window {
 
     public void setScreen(Screen screen) {
         setupScreen(screen);
+    }
+
+    public Rectangle dimensions() {
+        return frame.getBounds();
     }
 
     // MARK: - Game thread

@@ -14,6 +14,9 @@ public class Camera2 {
     public Vector2 direction;
     public Vector2 plane;
 
+    public Vector2 movementVector = Vector2.Zero;
+    public float speed = 1.5f;
+
     private final int rayCount;
     private final List<Ray> rays;
 
@@ -41,8 +44,22 @@ public class Camera2 {
         //        .rotateRad(direction.angleRad());
         // TODO: FIX FIX FIX
 
-        this.plane = new Vector2(0f, 0.66f);
+        this.plane = new Vector2(0.66f, 0f);
 
+    }
+
+    public void rotate(float angle) {
+        float oldx = direction.x;
+        direction.x = (float) (direction.x * Math.cos(MathUtils.degreesToRadians * angle) - direction.y * Math.sin(MathUtils.degreesToRadians * angle));
+        direction.y = (float) (oldx * Math.sin(MathUtils.degreesToRadians * angle) + direction.y * Math.cos(MathUtils.degreesToRadians * angle));
+
+        float oldplanex = plane.x;
+        plane.x = (float) (plane.x * Math.cos(MathUtils.degreesToRadians * angle) - plane.y * Math.sin(MathUtils.degreesToRadians * angle));
+        plane.y = (float) (oldplanex * Math.sin(MathUtils.degreesToRadians * angle) + plane.y * Math.cos(MathUtils.degreesToRadians * angle));
+    }
+
+    public void tick(float dt) {
+        position.add(movementVector.cpy().nor().scl(dt).scl(speed).rotateRad(direction.angleRad()));
     }
 
     public void draw(Graphics graphics) {

@@ -38,7 +38,7 @@ public final class GameWorld {
 
     public GameWorld() {
         Vector2 cameraPosition = new Vector2(21, 12);
-        Vector2 cameraDirection = new Vector2(-1, 0);
+        Vector2 cameraDirection = new Vector2(0, 1);
         float fieldOfView = 66f;
 
         this.camera = new Camera2(cameraPosition, cameraDirection, fieldOfView, 640);
@@ -89,14 +89,20 @@ public final class GameWorld {
         }
     }
 
-    public void tick(float dt) {
-        float oldx = camera.direction.x;
-        camera.direction.x = (float) (camera.direction.x * Math.cos(-0.015f) - camera.direction.y * Math.sin(-0.015f));
-        camera.direction.y = (float) (oldx * Math.sin(-0.015f) + camera.direction.y * Math.cos(-0.015f));
+    public Camera2 getCamera() {
+        return camera;
+    }
 
-        float oldplanex = camera.plane.x;
-        camera.plane.x = (float) (camera.plane.x * Math.cos(-0.015f) - camera.plane.y * Math.sin(-0.015f));
-        camera.plane.y = (float) (oldplanex * Math.sin(-0.015f) + camera.plane.y * Math.cos(-0.015f));
+    public void tick(float dt) {
+        camera.tick(dt);
+
+        //float oldx = camera.direction.x;
+        //camera.direction.x = (float) (camera.direction.x * Math.cos(-0.015f) - camera.direction.y * Math.sin(-0.015f));
+        //camera.direction.y = (float) (oldx * Math.sin(-0.015f) + camera.direction.y * Math.cos(-0.015f));
+
+        //float oldplanex = camera.plane.x;
+        //camera.plane.x = (float) (camera.plane.x * Math.cos(-0.015f) - camera.plane.y * Math.sin(-0.015f));
+        //camera.plane.y = (float) (oldplanex * Math.sin(-0.015f) + camera.plane.y * Math.cos(-0.015f));
 
     }
 
