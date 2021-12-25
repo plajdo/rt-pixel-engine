@@ -2,6 +2,8 @@ package sk.bytecode.bludisko.rt.game.input;
 
 import sk.bytecode.bludisko.rt.game.math.Vector2;
 
+import java.awt.AWTException;
+import java.awt.Robot;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 

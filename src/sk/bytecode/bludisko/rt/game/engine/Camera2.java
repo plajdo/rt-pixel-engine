@@ -10,9 +10,9 @@ import java.util.List;
 
 public class Camera2 {
 
-    public Vector2 position; //TODO: better access control
-    public Vector2 direction;
-    public Vector2 plane;
+    private Vector2 position; //TODO: better access control
+    private Vector2 direction;
+    private Vector2 plane;
 
     public Vector2 movementVector = Vector2.Zero;
     public float speed = 1.5f;
@@ -49,17 +49,17 @@ public class Camera2 {
     }
 
     public void rotate(float angle) {
-        float oldx = direction.x;
-        direction.x = (float) (direction.x * Math.cos(MathUtils.degreesToRadians * angle) - direction.y * Math.sin(MathUtils.degreesToRadians * angle));
-        direction.y = (float) (oldx * Math.sin(MathUtils.degreesToRadians * angle) + direction.y * Math.cos(MathUtils.degreesToRadians * angle));
+        float oldx = getDirection().x;
+        getDirection().x = (float) (getDirection().x * Math.cos(MathUtils.degreesToRadians * angle) - getDirection().y * Math.sin(MathUtils.degreesToRadians * angle));
+        getDirection().y = (float) (oldx * Math.sin(MathUtils.degreesToRadians * angle) + getDirection().y * Math.cos(MathUtils.degreesToRadians * angle));
 
-        float oldplanex = plane.x;
-        plane.x = (float) (plane.x * Math.cos(MathUtils.degreesToRadians * angle) - plane.y * Math.sin(MathUtils.degreesToRadians * angle));
-        plane.y = (float) (oldplanex * Math.sin(MathUtils.degreesToRadians * angle) + plane.y * Math.cos(MathUtils.degreesToRadians * angle));
+        float oldplanex = getPlane().x;
+        getPlane().x = (float) (getPlane().x * Math.cos(MathUtils.degreesToRadians * angle) - getPlane().y * Math.sin(MathUtils.degreesToRadians * angle));
+        getPlane().y = (float) (oldplanex * Math.sin(MathUtils.degreesToRadians * angle) + getPlane().y * Math.cos(MathUtils.degreesToRadians * angle));
     }
 
     public void tick(float dt) {
-        position.add(movementVector.cpy().nor().scl(dt).scl(speed).rotateRad(direction.angleRad()));
+        getPosition().add(movementVector.cpy().nor().scl(dt).scl(speed).rotateRad(getDirection().angleRad()));
     }
 
     public void draw(Graphics graphics) {
@@ -133,7 +133,7 @@ public class Camera2 {
     private void castRays() {
         for(int i = 0; i < rays.size(); i++) {
             Ray ray = rays.get(i);
-            ray.cast(this.position, this.direction, this.plane, GameWorld.map, rayCount, i);
+            ray.cast(this.getPosition(), this.getDirection(), this.getPlane(), GameWorld.map, rayCount, i);
         }
     }
 
@@ -141,9 +141,25 @@ public class Camera2 {
     public float[][] castRaysOld() {
         float[][] results = new float[rayCount][2];
         for(int i = 0; i < rayCount; i++) {
-            results[i] = this.rays.get(i).cast(position, direction, plane, GameWorld.map, rayCount, i);
+            results[i] = this.rays.get(i).cast(getPosition(), getDirection(), getPlane(), GameWorld.map, rayCount, i);
         }
         return results;
+    }
+
+    public Vector2 getPosition() {
+        return position;
+    }
+
+    public void setPosition(Vector2 position) {
+        this.position = position;
+    }
+
+    public Vector2 getDirection() {
+        return direction;
+    }
+
+    public Vector2 getPlane() {
+        return plane;
     }
 
 }

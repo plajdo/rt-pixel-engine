@@ -9,34 +9,22 @@ import java.awt.*;
 
 public final class GameScreen extends Screen {
 
-    private final Robot robot;
-
     private final GameWorld gameWorld = new GameWorld();
     private final InputManager gameInput = new GameInputManager();
 
+    // MARK: - Constructor
+
     public GameScreen() {
-        try {
-            this.robot = new Robot();
-        } catch(AWTException e) {
-            throw new RuntimeException("fuck"); // TODO: no
-        }
-
         gameInput.setDelegate(this);
+        gameInput.setMouseLock(true);
     }
 
-    private void lockMouse() {
-        var window = this.window.get();
-
-        assert robot != null;
-        assert window != null;
-
-        var dimensions = window.dimensions();
-        robot.mouseMove(dimensions.width / 2, dimensions.height / 2);
-    }
+    // MARK: - Game loop
 
     @Override
     public void tick(float dt) {
-        lockMouse();
+        super.tick(dt);
+
         gameWorld.tick(dt);
     }
 
@@ -44,6 +32,8 @@ public final class GameScreen extends Screen {
     public void draw(Graphics graphics) {
         gameWorld.draw(graphics);
     }
+
+    // MARK: - Input manager
 
     @Override
     public InputManager getInputManager() {

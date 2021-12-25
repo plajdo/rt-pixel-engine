@@ -6,6 +6,8 @@ import sk.bytecode.bludisko.rt.game.screens.Screen;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.image.BufferStrategy;
 
 public final class Window {
@@ -24,7 +26,7 @@ public final class Window {
 
     // MARK: - Initialize
 
-    public Window(Screen screen) {
+    public Window(@NotNull Screen screen) {
         this.frame = new JFrame("bludisko_rt");
         this.canvas = new Canvas();
 
@@ -39,13 +41,15 @@ public final class Window {
 
     private void setupFrame() {
         this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.frame.addComponentListener(getResizeListener());
+
         this.frame.add(this.canvas);
 
         this.frame.pack(); // sizeToFit
         this.frame.setVisible(true);
     }
 
-    private void setupScreen(@NotNull Screen screen) {
+    private void setupScreen(Screen screen) {
         this.canvas.removeKeyListener(this.inputManager);
         this.canvas.removeMouseListener(this.inputManager);
         this.canvas.removeMouseMotionListener(this.inputManager);
@@ -62,9 +66,21 @@ public final class Window {
         screen.screenDidAppear();
     }
 
+    private ComponentAdapter getResizeListener() {
+        return new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                var component = e.getComponent();
+                if(screen != null && component != null) {
+                    screen.screenDidChangeResolution(component.getBounds());
+                }
+            }
+        };
+    }
+
     // MARK: - Public
 
-    public void setScreen(Screen screen) {
+    public void setScreen(@NotNull Screen screen) {
         setupScreen(screen);
     }
 

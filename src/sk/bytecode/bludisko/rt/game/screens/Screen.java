@@ -5,23 +5,33 @@ import sk.bytecode.bludisko.rt.game.input.InputManager;
 import sk.bytecode.bludisko.rt.game.input.InputManagerDelegate;
 
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.lang.ref.WeakReference;
 
 public abstract class Screen implements InputManagerDelegate {
 
     protected WeakReference<Window> window;
 
-    public abstract void tick(float dt);
+    // MARK: - Game loop
+
+    public void tick(float dt) {
+        getInputManager().tick(dt);
+    }
+
     public abstract void draw(Graphics graphics);
+
+    // MARK: - Public
 
     public abstract InputManager getInputManager();
 
     public void screenWillAppear(Window window) {
         this.window = new WeakReference<>(window);
     }
+
     public void screenDidAppear() {}
 
-    // TODO: didChangeResolution
-    // TODO: updatovat inputmanager z gamescreenu podla zmeny rozlisenia nech tam nie je referencia na screen/window
+    public void screenDidChangeResolution(Rectangle newDimensions) {
+        this.getInputManager().updateWindowDimensions(newDimensions);
+    }
 
 }

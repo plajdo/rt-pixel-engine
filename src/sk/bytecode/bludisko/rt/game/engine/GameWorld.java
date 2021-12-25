@@ -36,15 +36,18 @@ public final class GameWorld {
 
     private Camera2 camera;
 
+    // MARK: - Constructor
+
     public GameWorld() {
-        Vector2 cameraPosition = new Vector2(21, 12);
-        Vector2 cameraDirection = new Vector2(0, 1);
-        float fieldOfView = 66f;
-
-        this.camera = new Camera2(cameraPosition, cameraDirection, fieldOfView, 640);
-
-        new MapManager("no");
+        setupCamera();
     }
+
+    @Deprecated(forRemoval = true)
+    public Camera2 getCamera() {
+        return camera;
+    }
+
+    // MARK: - Game loop
 
     public void draw(Graphics graphics) {
         camera.draw(graphics);
@@ -89,10 +92,6 @@ public final class GameWorld {
         }
     }
 
-    public Camera2 getCamera() {
-        return camera;
-    }
-
     public void tick(float dt) {
         camera.tick(dt);
 
@@ -103,6 +102,17 @@ public final class GameWorld {
         //float oldplanex = camera.plane.x;
         //camera.plane.x = (float) (camera.plane.x * Math.cos(-0.015f) - camera.plane.y * Math.sin(-0.015f));
         //camera.plane.y = (float) (oldplanex * Math.sin(-0.015f) + camera.plane.y * Math.cos(-0.015f));
+
+    }
+
+    // MARK: - Private
+
+    private void setupCamera() {
+        Vector2 cameraPosition = new Vector2(21, 12);
+        Vector2 cameraDirection = new Vector2(0, 1);
+        float fieldOfView = 66f;
+
+        this.camera = new Camera2(cameraPosition, cameraDirection, fieldOfView, 640);
 
     }
 
