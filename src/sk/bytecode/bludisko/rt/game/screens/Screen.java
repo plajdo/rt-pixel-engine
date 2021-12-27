@@ -2,13 +2,12 @@ package sk.bytecode.bludisko.rt.game.screens;
 
 import sk.bytecode.bludisko.rt.game.engine.Window;
 import sk.bytecode.bludisko.rt.game.input.InputManager;
-import sk.bytecode.bludisko.rt.game.input.InputManagerDelegate;
 
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.lang.ref.WeakReference;
 
-public abstract class Screen implements InputManagerDelegate {
+public abstract class Screen {
 
     protected WeakReference<Window> window;
 

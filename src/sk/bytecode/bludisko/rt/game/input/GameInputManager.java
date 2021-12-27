@@ -2,8 +2,6 @@ package sk.bytecode.bludisko.rt.game.input;
 
 import sk.bytecode.bludisko.rt.game.math.Vector2;
 
-import java.awt.AWTException;
-import java.awt.Robot;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
@@ -33,6 +31,20 @@ public class GameInputManager extends InputManager {
         };
     }
 
+    private Vector2 toVector(int direction) {
+        var directionVector = new Vector2();
+        directionVector.add(
+                (direction & 0b1000) > 0 ? 1 : 0,
+                (direction & 0b0100) > 0 ? 1 : 0
+        );
+        directionVector.sub(
+                (direction & 0b0010) > 0 ? 1 : 0,
+                (direction & 0b0001) > 0 ? 1 : 0
+        );
+        directionVector.nor();
+        return directionVector;
+    }
+
     // MARK: - KeyListener
 
     @Override
@@ -42,14 +54,14 @@ public class GameInputManager extends InputManager {
     public void keyPressed(KeyEvent e) {
         toggleDirectionOn(e.getKeyCode());
 
-        this.delegate.direction(direction);
+        this.delegate.didUpdateDirection(toVector(direction));
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
         toggleDirectionOff(e.getKeyCode());
 
-        this.delegate.direction(direction);
+        this.delegate.didUpdateDirection(toVector(direction));
     }
 
     // MARK: - MouseListener
@@ -79,7 +91,7 @@ public class GameInputManager extends InputManager {
     @Override
     public void mouseMoved(MouseEvent e) {
         System.out.println(-(e.getX() - 320));
-        this.delegate.rotation(new Vector2(-(e.getX() - 320), e.getY()));
+        this.delegate.didUpdateRotation(new Vector2(-(e.getX() - 320), e.getY()));
     }
 
 }

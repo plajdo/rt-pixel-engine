@@ -8,7 +8,7 @@ import java.awt.event.KeyListener;
 
 public abstract class InputManager implements KeyListener, MouseInputListener {
 
-    protected InputManagerDelegate delegate; // TODO: weak reference!
+    protected GameInputManagerDelegate delegate; // TODO: weak reference!
 
     private Robot robot;
     private Rectangle windowDimensions;
@@ -32,9 +32,9 @@ public abstract class InputManager implements KeyListener, MouseInputListener {
     }
 
     private void centerMouse() {
-        assert robot != null;
-        assert windowDimensions != null;
-        robot.mouseMove(windowDimensions.width / 2, windowDimensions.height / 2);
+        if(robot != null && windowDimensions != null) {
+            robot.mouseMove(windowDimensions.width / 2, windowDimensions.height / 2);
+        }
     }
 
     // MARK: - Public
@@ -45,7 +45,7 @@ public abstract class InputManager implements KeyListener, MouseInputListener {
         }
     }
 
-    public void setDelegate(InputManagerDelegate delegate) {
+    public void setDelegate(GameInputManagerDelegate delegate) {
         this.delegate = delegate;
     }
 
