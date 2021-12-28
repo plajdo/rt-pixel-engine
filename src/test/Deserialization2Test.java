@@ -1,8 +1,8 @@
 package test;
 
 import org.junit.jupiter.api.Test;
-import sk.bytecode.bludisko.rt.game.engine.serialization.Serializable;
-import sk.bytecode.bludisko.rt.game.engine.serialization.Tag;
+import sk.bytecode.bludisko.rt.game.serialization.Serializable;
+import sk.bytecode.bludisko.rt.game.serialization.Tag;
 
 import java.io.NotSerializableException;
 import java.util.Arrays;

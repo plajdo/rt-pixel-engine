@@ -1,7 +1,7 @@
 package test;
 
-import sk.bytecode.bludisko.rt.game.engine.serialization.Serializable;
-import sk.bytecode.bludisko.rt.game.engine.serialization.*;
+import sk.bytecode.bludisko.rt.game.serialization.Serializable;
+import sk.bytecode.bludisko.rt.game.serialization.*;
 
 import org.junit.jupiter.api.Test;
 
