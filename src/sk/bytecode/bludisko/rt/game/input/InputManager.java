@@ -5,15 +5,16 @@ import java.awt.AWTException;
 import java.awt.Rectangle;
 import java.awt.Robot;
 import java.awt.event.KeyListener;
+import java.lang.ref.WeakReference;
 
 public abstract class InputManager implements KeyListener, MouseInputListener {
 
-    protected GameInputManagerDelegate delegate; // TODO: weak reference!
+    protected WeakReference<GameInputManagerDelegate> delegate; // TODO: weak reference!
 
-    private Robot robot;
-    private Rectangle windowDimensions;
+    protected Robot robot;
+    protected Rectangle windowDimensions;
 
-    private boolean mouseLock = false;
+    protected boolean mouseLocked = false;
 
     // MARK: - Constructor
 
@@ -33,28 +34,30 @@ public abstract class InputManager implements KeyListener, MouseInputListener {
 
     private void centerMouse() {
         if(robot != null && windowDimensions != null) {
-            robot.mouseMove(windowDimensions.width / 2, windowDimensions.height / 2);
+            int centerX = windowDimensions.x + windowDimensions.width / 2;
+            int centerY = windowDimensions.y + windowDimensions.height / 2;
+            robot.mouseMove(centerX, centerY);
         }
     }
 
     // MARK: - Public
 
     public void tick(float dt) {
-        if(mouseLock) {
+        if(mouseLocked) {
             centerMouse();
         }
     }
 
     public void setDelegate(GameInputManagerDelegate delegate) {
-        this.delegate = delegate;
+        this.delegate = new WeakReference<>(delegate);
     }
 
     public void updateWindowDimensions(Rectangle newDimensions) {
         this.windowDimensions = newDimensions;
     }
 
-    public void setMouseLock(boolean locked) {
-        this.mouseLock = locked;
+    public void setMouseLocked(boolean locked) {
+        this.mouseLocked = locked;
     }
 
 }

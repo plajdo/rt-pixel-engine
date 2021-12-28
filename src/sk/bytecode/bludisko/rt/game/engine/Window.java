@@ -9,6 +9,7 @@ import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
 
 public final class Window {
 
@@ -22,7 +23,8 @@ public final class Window {
 
     private InputManager inputManager;
 
-    private boolean running;
+    private boolean running = false;
+    private boolean cursorVisible = true;
 
     // MARK: - Initialize
 
@@ -66,13 +68,36 @@ public final class Window {
         screen.screenDidAppear();
     }
 
+    private void setupCursor() {
+        if(cursorVisible) {
+            this.frame.setCursor(Cursor.getDefaultCursor());
+            return;
+        }
+
+        this.frame.setCursor(
+                this.frame.getToolkit().createCustomCursor(
+                        new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB),
+                        new Point(0, 0),
+                        "Blank cursor"
+                )
+        );
+    }
+
     private ComponentAdapter getResizeListener() {
         return new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
                 var component = e.getComponent();
                 if(screen != null && component != null) {
-                    screen.screenDidChangeResolution(component.getBounds());
+                    screen.screenDidChangeBounds(component.getBounds());
+                }
+            }
+
+            @Override
+            public void componentMoved(ComponentEvent e) {
+                var component = e.getComponent();
+                if(screen != null && component != null) {
+                    screen.screenDidChangeBounds(component.getBounds());
                 }
             }
         };
@@ -82,6 +107,11 @@ public final class Window {
 
     public void setScreen(@NotNull Screen screen) {
         setupScreen(screen);
+    }
+
+    public void setCursorVisible(boolean visible) {
+        this.cursorVisible = visible;
+        this.setupCursor();
     }
 
     public Rectangle dimensions() {

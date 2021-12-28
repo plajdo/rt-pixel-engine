@@ -29,8 +29,8 @@ public abstract class Screen {
 
     public void screenDidAppear() {}
 
-    public void screenDidChangeResolution(Rectangle newDimensions) {
-        this.getInputManager().updateWindowDimensions(newDimensions);
+    public void screenDidChangeBounds(Rectangle bounds) {
+        this.getInputManager().updateWindowDimensions(bounds);
     }
 
 }

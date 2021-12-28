@@ -4,6 +4,7 @@ import sk.bytecode.bludisko.rt.game.math.Vector2;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.util.function.Consumer;
 
 public class GameInputManager extends InputManager {
 
@@ -45,6 +46,13 @@ public class GameInputManager extends InputManager {
         return directionVector;
     }
 
+    private void withDelegate(Consumer<GameInputManagerDelegate> action) {
+        GameInputManagerDelegate delegate;
+        if((this.delegate != null) && (delegate = this.delegate.get()) != null) {
+            action.accept(delegate);
+        }
+    }
+
     // MARK: - KeyListener
 
     @Override
@@ -53,15 +61,18 @@ public class GameInputManager extends InputManager {
     @Override
     public void keyPressed(KeyEvent e) {
         toggleDirectionOn(e.getKeyCode());
+        if(e.getKeyCode() == KeyEvent.VK_E) {
+            this.mouseLocked = !this.mouseLocked;
+        }
 
-        this.delegate.didUpdateDirection(toVector(direction));
+        withDelegate(d -> d.didUpdateDirection(toVector(this.direction)));
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
         toggleDirectionOff(e.getKeyCode());
 
-        this.delegate.didUpdateDirection(toVector(direction));
+        withDelegate(d -> d.didUpdateDirection(toVector(this.direction)));
     }
 
     // MARK: - MouseListener
@@ -90,8 +101,10 @@ public class GameInputManager extends InputManager {
 
     @Override
     public void mouseMoved(MouseEvent e) {
-        System.out.println(-(e.getX() - 320));
-        this.delegate.didUpdateRotation(new Vector2(-(e.getX() - 320), e.getY()));
+        var newPosition = e.getLocationOnScreen();
+        newPosition.translate(-this.windowDimensions.width / 2, -this.windowDimensions.height / 2);
+
+        withDelegate(d -> d.didUpdateRotation(new Vector2(-newPosition.x, newPosition.y)));
     }
 
 }

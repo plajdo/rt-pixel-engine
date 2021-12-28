@@ -1,9 +1,11 @@
 package sk.bytecode.bludisko.rt.game.screens;
 
 import sk.bytecode.bludisko.rt.game.engine.GameWorld;
+import sk.bytecode.bludisko.rt.game.engine.Window;
 import sk.bytecode.bludisko.rt.game.input.GameInputManager;
 import sk.bytecode.bludisko.rt.game.input.GameInputManagerDelegate;
 import sk.bytecode.bludisko.rt.game.input.InputManager;
+import sk.bytecode.bludisko.rt.game.math.MathUtils;
 import sk.bytecode.bludisko.rt.game.math.Vector2;
 
 import java.awt.Graphics;
@@ -17,7 +19,19 @@ public final class GameScreen extends Screen implements GameInputManagerDelegate
 
     public GameScreen() {
         gameInput.setDelegate(this);
-        gameInput.setMouseLock(true);
+        gameInput.setMouseLocked(true);
+    }
+
+    // MARK: - Screen
+
+    @Override
+    public void screenDidAppear() {
+        super.screenDidAppear();
+
+        Window window = this.window.get();
+        if(window != null) {
+            window.setCursorVisible(false);
+        }
     }
 
     // MARK: - Game loop
@@ -48,7 +62,7 @@ public final class GameScreen extends Screen implements GameInputManagerDelegate
 
     @Override
     public void didUpdateRotation(Vector2 rotation) {
-        gameWorld.getCamera().rotate(rotation.x * 0.025f); // TODO: magic constants fuj
+        gameWorld.getCamera().rotate(rotation.x * MathUtils.degreesToRadians);
     }
 
 }
