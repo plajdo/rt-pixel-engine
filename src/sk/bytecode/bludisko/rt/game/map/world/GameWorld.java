@@ -1,50 +1,30 @@
 package sk.bytecode.bludisko.rt.game.map.world;
 
-import sk.bytecode.bludisko.rt.game.graphics.Camera2;
+import sk.bytecode.bludisko.rt.game.graphics.Camera;
+import sk.bytecode.bludisko.rt.game.map.GameMap;
 import sk.bytecode.bludisko.rt.game.math.Vector2;
 
 import java.awt.*;
 
 public final class GameWorld {
 
-    public static int[][] map =
-    {
-        {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-        {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-        {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-        {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-        {1,0,0,0,0,0,2,2,2,2,2,0,0,0,0,3,0,3,0,3,0,0,0,1},
-        {1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,1},
-        {1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,3,0,0,0,3,0,0,0,1},
-        {1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,1},
-        {1,0,0,0,0,0,2,2,0,2,2,0,0,0,0,3,0,3,0,3,0,0,0,1},
-        {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-        {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-        {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-        {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-        {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-        {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-        {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-        {1,4,4,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-        {1,4,0,4,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-        {1,4,0,0,0,0,5,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-        {1,4,0,4,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-        {1,4,0,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-        {1,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-        {1,4,4,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-        {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
-    };
-
-    private Camera2 camera;
+    private Camera camera;
+    private GameMap map;
 
     // MARK: - Constructor
 
     public GameWorld() {
+        setupMap();
         setupCamera();
     }
 
+    private void setupMap() {
+        this.map = new GameMap("testMap", 0, 0);
+
+    }
+
     @Deprecated(forRemoval = true)
-    public Camera2 getCamera() {
+    public Camera getCamera() {
         return camera;
     }
 
@@ -53,7 +33,7 @@ public final class GameWorld {
     public void draw(Graphics graphics) {
         camera.draw(graphics);
     }
-
+/*
     @Deprecated(forRemoval = true) // NOTE: has block height code down, kept for knowledge reasons
     public void drawOld(Graphics graphics) {
         float[][] rays = camera.castRaysOld();
@@ -91,7 +71,7 @@ public final class GameWorld {
             graphics.setColor(c);
             graphics.fillRect(i, height / 2 - objectHeight * blockHeightMultiplier / 2, 1, (int) (objectHeight * ((blockHeightMultiplier != 1) ? 3f/2f : 1f)));
         }
-    }
+    }*/
 
     public void tick(float dt) {
         camera.tick(dt);
@@ -113,7 +93,7 @@ public final class GameWorld {
         Vector2 cameraDirection = new Vector2(0, 1);
         float fieldOfView = 66f;
 
-        this.camera = new Camera2(cameraPosition, cameraDirection, fieldOfView, 640);
+        this.camera = new Camera(map.getWallMap(), cameraPosition, cameraDirection, fieldOfView, 640);
 
     }
 

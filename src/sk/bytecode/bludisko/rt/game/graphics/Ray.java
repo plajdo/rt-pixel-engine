@@ -1,21 +1,132 @@
 package sk.bytecode.bludisko.rt.game.graphics;
 
+import sk.bytecode.bludisko.rt.game.map.Map;
 import sk.bytecode.bludisko.rt.game.math.Vector2;
 
 public final class Ray {
 
-    private Vector2 rayDir;
+    private final Map map;
 
-    private float distance;
-    private int hitSide, hitX, hitY; // TODO: replace with object reference?
+    private final Vector2 currentPosition;
+    private final Vector2 startingPosition;
+    private final Vector2 direction;
+
+    private int currentSide = 0;
+
+    public Ray(Map map, Vector2 startingPosition, Vector2 direction) {
+        this.map = map;
+        this.startingPosition = startingPosition;
+        this.currentPosition = startingPosition.cpy();
+        this.direction = direction;
+    }
+
+    public float cast() {
+        int currentTileX = (int) this.startingPosition.x;
+        int currentTileY = (int) this.startingPosition.y;
+
+        int tileStepX;
+        int tileStepY;
+
+        Vector2 tileLength = new Vector2();
+        Vector2 distance = new Vector2();
+
+        tileLength.x = Math.abs(1 / direction.x);
+        tileLength.y = Math.abs(1 / direction.y);
+
+        // First step
+
+        if(direction.x < 0) {
+            tileStepX = -1;
+            distance.x = (startingPosition.x - currentTileX) * tileLength.x;
+        } else {
+            tileStepX = 1;
+            distance.x = (currentTileX + 1 - startingPosition.x) * tileLength.x;
+        }
+        if(direction.y < 0) {
+            tileStepY = -1;
+            distance.y = (startingPosition.y - currentTileY) * tileLength.y;
+        } else {
+            tileStepY = 1;
+            distance.y = (currentTileY + 1 - startingPosition.y) * tileLength.y;
+        }
+
+        // Next hit
+
+        boolean hit = false;
+        int side = 0;
+
+        while(!hit && distance.len2() < 1000) {
+            if(distance.x < distance.y) {
+                distance.x += tileLength.x;
+                currentTileX += tileStepX;
+                side = 0;
+            } else {
+                distance.y += tileLength.y;
+                currentTileY += tileStepY;
+                side = 1;
+            }
+            currentPosition.set(startingPosition.cpy().add(distance));
+
+            var block = map.getBlock(currentTileX, currentTileY);
+            var hitDistance = block.rayHitDistance(this);
+
+            if(hitDistance >= 0) {
+                this.currentSide = side;
+                if(side == 0) {
+                    return distance.x - tileLength.x;
+                } else {
+                    return distance.y - tileLength.y;
+                }
+            }
+        }
+        return Float.POSITIVE_INFINITY;
+
+        /*
+                float perpendicularSideDistance;
+        if(side == 0) {
+            perpendicularSideDistance = squareSideDistance.x - squareSideDifference.x;
+        } else {
+            perpendicularSideDistance = squareSideDistance.y - squareSideDifference.y;
+        }
+
+        float distance = perpendicularSideDistance;
+        int hitSide = side;
+        int hitX = mapX;
+        // TODO: replace with object reference?
+        int hitY = mapY;
+
+        return new float[] {perpendicularSideDistance, side, mapX, mapY};
+         */
+
+
+
+
+    }
+
+    public Vector2 getStartingPosition() {
+        return startingPosition;
+    }
+
+    public Vector2 getCurrentPosition() {
+        return currentPosition;
+    }
+
+    public Vector2 getDirection() {
+        return this.direction;
+    }
+
+    public int getCurrentSide() {
+        return currentSide;
+    }
 
     public float[] cast(Vector2 position, Vector2 direction, Vector2 plane, int[][] map, int rayCount, int x) {
 
         // MARK: - Setup
 
         float screenX = 2f * x / rayCount - 1f;
-        this.rayDir = new Vector2(
-                direction.x + plane.x * screenX,
+        // this goes to Camera class, nothing to do with a single ray
+        Vector2 rayDir = new Vector2(
+                direction.x + plane.x * screenX,     // this goes to Camera class, nothing to do with a single ray
                 direction.y + plane.y * screenX
         );
 
@@ -81,27 +192,13 @@ public final class Ray {
             perpendicularSideDistance = squareSideDistance.y - squareSideDifference.y;
         }
 
-        this.distance = perpendicularSideDistance;
-        this.hitSide = side;
-        this.hitX = mapX;
-        this.hitY = mapY;
+        float distance = perpendicularSideDistance;
+        int hitSide = side;
+        int hitX = mapX;
+        // TODO: replace with object reference?
+        int hitY = mapY;
 
         return new float[] {perpendicularSideDistance, side, mapX, mapY};
     }
 
-    public int getHitSide() {
-        return hitSide;
-    }
-
-    public float getDistance() {
-        return distance;
-    }
-
-    public int getHitX() {
-        return hitX;
-    }
-
-    public int getHitY() {
-        return hitY;
-    }
 }

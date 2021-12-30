@@ -1,6 +1,7 @@
 package sk.bytecode.bludisko.rt.game.input;
 
 import sk.bytecode.bludisko.rt.game.math.Vector2;
+import sk.bytecode.bludisko.rt.game.util.Config;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
@@ -14,20 +15,20 @@ public class GameInputManager extends InputManager {
 
     private void toggleDirectionOn(int keyCode) {
         this.direction = switch(keyCode) {
-            case Keybinds.UP -> direction | (1 << 3);
-            case Keybinds.LEFT -> direction | (1 << 2);
-            case Keybinds.DOWN -> direction | (1 << 1);
-            case Keybinds.RIGHT -> direction | (1);
+            case Config.Keybinds.UP -> direction | (1 << 3);
+            case Config.Keybinds.LEFT -> direction | (1 << 2);
+            case Config.Keybinds.DOWN -> direction | (1 << 1);
+            case Config.Keybinds.RIGHT -> direction | (1);
             default -> direction;
         };
     }
 
     private void toggleDirectionOff(int keyCode) {
         this.direction = switch(keyCode) {
-            case Keybinds.UP -> direction & ~(1 << 3);
-            case Keybinds.LEFT -> direction & ~(1 << 2);
-            case Keybinds.DOWN -> direction & ~(1 << 1);
-            case Keybinds.RIGHT -> direction & ~(1);
+            case Config.Keybinds.UP -> direction & ~(1 << 3);
+            case Config.Keybinds.LEFT -> direction & ~(1 << 2);
+            case Config.Keybinds.DOWN -> direction & ~(1 << 1);
+            case Config.Keybinds.RIGHT -> direction & ~(1);
             default -> direction;
         };
     }

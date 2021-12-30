@@ -1,6 +1,8 @@
 package sk.bytecode.bludisko.rt.game.graphics;
 
 import sk.bytecode.bludisko.rt.game.graphics.texture.TextureManager;
+import sk.bytecode.bludisko.rt.game.map.GameMap;
+import sk.bytecode.bludisko.rt.game.map.Map;
 import sk.bytecode.bludisko.rt.game.math.MathUtils;
 import sk.bytecode.bludisko.rt.game.math.Vector2;
 import sk.bytecode.bludisko.rt.game.map.world.GameWorld;
@@ -13,7 +15,9 @@ import java.awt.image.DataBufferInt;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Camera2 {
+public class Camera {
+
+    private Map map;
 
     private Vector2 position; //TODO: better access control
     private Vector2 direction;
@@ -31,14 +35,14 @@ public class Camera2 {
 
     // fov = length(dir) : length(plane)
 
-    public Camera2(Vector2 position, Vector2 direction, float fov, int rayCount) {
+    public Camera(Map map, Vector2 position, Vector2 direction, float fov, int rayCount) {
         this.position = position;
         this.direction = direction;
+        this.map = map;
         this.setFieldOfView(fov);
 
         this.rayCount = rayCount;
         this.rays = new ArrayList<>(rayCount);
-        this.createRays();
     }
 
     public void setFieldOfView(float degrees) {
@@ -68,23 +72,29 @@ public class Camera2 {
     }
 
     public void draw(Graphics graphics) {
-        castRays();
-
         int[] image = new int[640 * 480];
 
-        for(int i = 0, raysSize = rays.size(); i < raysSize; i++) {
-            Ray ray = rays.get(i);
-            float distance = ray.getDistance();
-            int hitSide = ray.getHitSide();
+        for(int i = 0; i < rayCount; i++) {
+            float screenX = 2f * i / rayCount - 1f;
+            Vector2 rayDirection = new Vector2(
+                    this.direction.x + plane.x * screenX,
+                    this.direction.y + plane.y * screenX
+            );
 
-            int hitX = ray.getHitX();
-            int hitY = ray.getHitY();
+            var ray = new Ray(this.map, this.position, rayDirection);
+            ray.cast();
+
+            float distance = ray.cast();
+            int hitSide = ray.getCurrentSide();
+
+            int hitX = (int) ray.getCurrentPosition().x; // ray.getHitX();
+            int hitY = (int) ray.getCurrentPosition().y; // ray.getHitY();
 
             int height = 480; // TODO: FIX
             int objectHeight = (int) (height / distance);
 
             // Textures here:
-            int textureNumber = GameWorld.map[hitX][hitY] - 1;
+            int textureNumber = map.getTile(hitX, hitY);
 
             float wallX; //where the wall was hit //TODO: remove comments
             if(hitSide == 0) {
@@ -183,24 +193,11 @@ public class Camera2 {
     }
      */
 
-    private void createRays() {
-        for(int i = 0; i < rayCount; i++) {
-            rays.add(new Ray());
-        }
-    }
-
-    private void castRays() {
-        for(int i = 0; i < rays.size(); i++) {
-            Ray ray = rays.get(i);
-            ray.cast(this.getPosition(), this.getDirection(), this.getPlane(), GameWorld.map, rayCount, i);
-        }
-    }
-
     @Deprecated(forRemoval = true)
     public float[][] castRaysOld() {
         float[][] results = new float[rayCount][2];
         for(int i = 0; i < rayCount; i++) {
-            results[i] = this.rays.get(i).cast(getPosition(), getDirection(), getPlane(), GameWorld.map, rayCount, i);
+            //results[i] = this.rays.get(i).cast(getPosition(), getDirection(), getPlane(), GameWorld.map, rayCount, i);
         }
         return results;
     }
