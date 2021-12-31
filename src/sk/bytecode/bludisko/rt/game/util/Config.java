@@ -16,6 +16,7 @@ public class Config {
     public static class Display {
 
         public static final int RAY_COUNT = -1;
+        public static final int RENDER_DISTANCE_SQ = 100; // (30 tiles)^2
 
     }
 

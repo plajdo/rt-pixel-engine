@@ -21,4 +21,8 @@ public final class MathUtils {
         return (float) Math.sin(value);
     }
 
+    public static float roundAway(float value) {
+        return (float) (Math.ceil(Math.abs(value)) * Math.signum(value));
+    }
+
 }

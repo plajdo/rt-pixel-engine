@@ -11,13 +11,10 @@
   <component name="ChangeListManager">
     <list default="true" id="b56b9792-09b5-4a62-8384-5317f301f33f" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/graphics/Camera2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/graphics/Camera.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/graphics/Camera.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/graphics/Camera.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/graphics/Ray.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/graphics/Ray.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/input/GameInputManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/input/GameInputManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/input/Keybinds.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/map/Map.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/map/Map.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/map/MapManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/map/GameMap.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/map/world/GameWorld.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/map/world/GameWorld.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/math/MathUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/math/MathUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/util/Config.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/util/Config.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -95,7 +92,12 @@
       <recent name="sk.bytecode.bludisko.rt.game.engine.serialization2" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Game">
+  <component name="RunAnythingCache">
+    <option name="myCommands">
+      <command value="echo" />
+    </option>
+  </component>
+  <component name="RunManager" selected="JUnit.RayTest.rayTest">
     <configuration name="Game" type="Application" factoryName="Application" temporary="true">
       <option name="MAIN_CLASS_NAME" value="sk.bytecode.bludisko.rt.desktop.DesktopLauncher" />
       <module name="bludisko_rt" />
@@ -135,22 +137,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Deserialization2Test.deserializeObject" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="bludisko_rt" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="test.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="test" />
-      <option name="MAIN_CLASS_NAME" value="test.Deserialization2Test" />
-      <option name="METHOD_NAME" value="deserializeObject" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="MapTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="bludisko_rt" />
       <extension name="coverage">
@@ -182,21 +168,37 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="RayTest.rayTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="bludisko_rt" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="test.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="test" />
+      <option name="MAIN_CLASS_NAME" value="test.RayTest" />
+      <option name="METHOD_NAME" value="rayTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <list>
       <item itemvalue="Application.Game" />
       <item itemvalue="JUnit.All Tests" />
-      <item itemvalue="JUnit.Deserialization2Test.deserializeObject" />
       <item itemvalue="JUnit.Deserialization2Test.deserializeNullField" />
       <item itemvalue="JUnit.MapTest.saveMap" />
       <item itemvalue="JUnit.MapTest" />
+      <item itemvalue="JUnit.RayTest.rayTest" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.RayTest.rayTest" />
         <item itemvalue="Application.Game" />
         <item itemvalue="JUnit.MapTest.saveMap" />
         <item itemvalue="JUnit.MapTest" />
         <item itemvalue="JUnit.Deserialization2Test.deserializeNullField" />
-        <item itemvalue="JUnit.Deserialization2Test.deserializeObject" />
       </list>
     </recent_temporary>
   </component>
@@ -236,7 +238,8 @@
       <workItem from="1640525655943" duration="4451000" />
       <workItem from="1640641172243" duration="7620000" />
       <workItem from="1640720563488" duration="11543000" />
-      <workItem from="1640806823684" duration="14327000" />
+      <workItem from="1640806823684" duration="16571000" />
+      <workItem from="1640887456019" duration="26899000" />
     </task>
     <servers />
   </component>
@@ -258,33 +261,25 @@
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/serialization/tags/ObjectTag.java</url>
-          <line>188</line>
-          <option name="timeStamp" value="19" />
+        <line-breakpoint enabled="true" suspend="NONE" type="java-line">
+          <condition expression="i==320" language="JAVA" />
+          <url>file://$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/graphics/Camera.java</url>
+          <line>77</line>
+          <log-expression expression="return &quot;&quot; + this.direction.x + &quot; &quot; + this.direction.y;" language="JAVA" mode="CODE_FRAGMENT" />
+          <option name="timeStamp" value="32" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/test/Serialization2Test.java</url>
-          <line>40</line>
-          <option name="timeStamp" value="30" />
+          <url>file://$PROJECT_DIR$/src/test/RayTest.java</url>
+          <line>11</line>
+          <option name="timeStamp" value="42" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/graphics/Ray.java</url>
-          <line>23</line>
-          <option name="timeStamp" value="31" />
+          <url>file://$PROJECT_DIR$/src/test/RayTest.java</url>
+          <line>36</line>
+          <option name="timeStamp" value="44" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
-    <watches-manager>
-      <configuration name="JUnit">
-        <watch expression="((java.util.ArrayList)((ObjectTag)wrapperTag.subtags.get(1)).subtags).get(3)" custom="sk.bytecode.bludisko.rt.game.engine.serialization.tags.ObjectTag,java.util.ArrayList" />
-        <watch expression="((java.util.ArrayList)((ObjectTag)wrapperTag.subtags.get(1)).subtags).get(0)" custom="sk.bytecode.bludisko.rt.game.engine.serialization.tags.ObjectTag,java.util.ArrayList" />
-        <watch expression="((java.util.ArrayList)((ObjectTag)wrapperTag.subtags.get(1)).subtags).get(0)" custom="sk.bytecode.bludisko.rt.game.engine.serialization.tags.ObjectTag,java.util.ArrayList" />
-        <watch expression="subtags" language="JAVA" />
-        <watch expression="placeholder.arr" />
-        <watch expression="placeholder.arr" />
-      </configuration>
-    </watches-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

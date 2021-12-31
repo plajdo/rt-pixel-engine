@@ -1,7 +1,9 @@
 package sk.bytecode.bludisko.rt.game.graphics;
 
 import sk.bytecode.bludisko.rt.game.map.Map;
+import sk.bytecode.bludisko.rt.game.math.MathUtils;
 import sk.bytecode.bludisko.rt.game.math.Vector2;
+import sk.bytecode.bludisko.rt.game.util.Config;
 
 public final class Ray {
 
@@ -12,12 +14,32 @@ public final class Ray {
     private final Vector2 direction;
 
     private int currentSide = 0;
+    private Vector2 hitCoords = new Vector2();
 
     public Ray(Map map, Vector2 startingPosition, Vector2 direction) {
         this.map = map;
         this.startingPosition = startingPosition;
         this.currentPosition = startingPosition.cpy();
         this.direction = direction;
+    }
+
+    public float cast2() {
+        int currentTileX = (int) this.startingPosition.x;
+        int currentTileY = (int) this.startingPosition.y;
+
+        int tileStepX;
+        int tileStepY;
+
+        Vector2 tileLength = new Vector2();
+        Vector2 distance = new Vector2();
+
+        var angle = direction.angleRad();
+        var tang = Math.tan(angle);
+        var tangv2 = direction.y / direction.x;
+
+        //tileLength.x = (float)
+        return 0;
+
     }
 
     public float cast() {
@@ -30,8 +52,11 @@ public final class Ray {
         Vector2 tileLength = new Vector2();
         Vector2 distance = new Vector2();
 
-        tileLength.x = Math.abs(1 / direction.x);
-        tileLength.y = Math.abs(1 / direction.y);
+        // tileLength.x = Math.abs(1 / direction.x);
+        // tileLength.y = Math.abs(1 / direction.y);
+
+        tileLength.x = (float) Math.sqrt(1 + (direction.y * direction.y) / (direction.x * direction.x));
+        tileLength.y = (float) Math.sqrt(1 + (direction.x * direction.x) / (direction.y * direction.y));
 
         // First step
 
@@ -55,7 +80,7 @@ public final class Ray {
         boolean hit = false;
         int side = 0;
 
-        while(!hit && distance.len2() < 1000) {
+        while(!hit /*&& distance.len2() < Config.Display.RENDER_DISTANCE_SQ*/) {
             if(distance.x < distance.y) {
                 distance.x += tileLength.x;
                 currentTileX += tileStepX;
@@ -67,40 +92,29 @@ public final class Ray {
             }
             currentPosition.set(startingPosition.cpy().add(distance));
 
+            //if(map.getTile(currentTileX, currentTileY) > 0) {
+                //hit = true;
+                //hitCoords.set(currentTileX, currentTileY);
+            //}
+
             var block = map.getBlock(currentTileX, currentTileY);
             var hitDistance = block.rayHitDistance(this);
 
             if(hitDistance >= 0) {
-                this.currentSide = side;
-                if(side == 0) {
-                    return distance.x - tileLength.x;
-                } else {
-                    return distance.y - tileLength.y;
-                }
+                hit = true;
             }
         }
-        return Float.POSITIVE_INFINITY;
+        distance.sub(tileLength);
 
-        /*
-                float perpendicularSideDistance;
-        if(side == 0) {
-            perpendicularSideDistance = squareSideDistance.x - squareSideDifference.x;
-        } else {
-            perpendicularSideDistance = squareSideDistance.y - squareSideDifference.y;
+        if(!hit) {
+            return Float.POSITIVE_INFINITY;
         }
-
-        float distance = perpendicularSideDistance;
-        int hitSide = side;
-        int hitX = mapX;
-        // TODO: replace with object reference?
-        int hitY = mapY;
-
-        return new float[] {perpendicularSideDistance, side, mapX, mapY};
-         */
-
-
-
-
+        //return distance.len();
+        //if(side == 0) {
+            //return distance.x;
+        //}
+        return distance.y;
+        //return Float.POSITIVE_INFINITY;
     }
 
     public Vector2 getStartingPosition() {
@@ -117,6 +131,10 @@ public final class Ray {
 
     public int getCurrentSide() {
         return currentSide;
+    }
+
+    public Vector2 getHitCoords() {
+        return hitCoords;
     }
 
     public float[] cast(Vector2 position, Vector2 direction, Vector2 plane, int[][] map, int rayCount, int x) {
@@ -191,12 +209,6 @@ public final class Ray {
         } else {
             perpendicularSideDistance = squareSideDistance.y - squareSideDifference.y;
         }
-
-        float distance = perpendicularSideDistance;
-        int hitSide = side;
-        int hitX = mapX;
-        // TODO: replace with object reference?
-        int hitY = mapY;
 
         return new float[] {perpendicularSideDistance, side, mapX, mapY};
     }

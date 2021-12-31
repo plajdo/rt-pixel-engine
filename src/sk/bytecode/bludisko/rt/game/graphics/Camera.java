@@ -87,8 +87,8 @@ public class Camera {
             float distance = ray.cast();
             int hitSide = ray.getCurrentSide();
 
-            int hitX = (int) ray.getCurrentPosition().x; // ray.getHitX();
-            int hitY = (int) ray.getCurrentPosition().y; // ray.getHitY();
+            int hitX = (int) ray.getHitCoords().x; // ray.getCurrentPosition().x; // ray.getHitX();
+            int hitY = (int) ray.getHitCoords().y; // ray.getCurrentPosition().y; // ray.getHitY();
 
             int height = 480; // TODO: FIX
             int objectHeight = (int) (height / distance);
@@ -120,7 +120,7 @@ public class Camera {
             //how much to increase x coordinate per screen pixel
             float step = 1f * 64 / objectHeight;
             float texPos = ((-objectHeight / 2f + height / 2f) - height / 2f + objectHeight / 2f) * step;
-
+/*
             for(int y = (-objectHeight / 2 + height / 2); y < (height / 2 + objectHeight / 2); y++) {
                 int texelY = (int)texPos & (64 - 1);
                 texPos += step;
@@ -137,19 +137,19 @@ public class Camera {
                 //graphics.fillRect(i, y, 1, 1);
 
             }
+*/
 
-
-            //graphics.setColor(Color.green);
-            //if(hitSide == 1) {
-            //    graphics.setColor(Color.green.darker());
-            //}
-            //graphics.fillRect(i, height / 2 - objectHeight / 2, 1, objectHeight);
+            graphics.setColor(Color.green);
+            if(hitSide == 1) {
+                graphics.setColor(Color.green.darker());
+            }
+            graphics.fillRect(i, height / 2 - objectHeight / 2, 1, objectHeight);
         }
-        BufferedImage bufferedImage = new BufferedImage(640, 480, BufferedImage.TYPE_INT_RGB);
-        final int[] buffer = ((DataBufferInt) bufferedImage.getRaster().getDataBuffer()).getData();
+        //BufferedImage bufferedImage = new BufferedImage(640, 480, BufferedImage.TYPE_INT_RGB);
+        //final int[] buffer = ((DataBufferInt) bufferedImage.getRaster().getDataBuffer()).getData();
 
-        System.arraycopy(image, 0, buffer, 0, image.length);
-        graphics.drawImage(bufferedImage, 0, 0, null);
+        //System.arraycopy(image, 0, buffer, 0, image.length);
+        //graphics.drawImage(bufferedImage, 0, 0, null);
     }
 
     //TODO: kept because of block height multiplier
