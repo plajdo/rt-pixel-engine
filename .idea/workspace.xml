@@ -13,8 +13,7 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/graphics/Camera.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/graphics/Camera.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/graphics/Ray.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/graphics/Ray.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/math/MathUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/math/MathUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/util/Config.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/util/Config.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/RayTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/RayTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -97,7 +96,7 @@
       <command value="echo" />
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.RayTest.rayTest">
+  <component name="RunManager" selected="Application.Game">
     <configuration name="Game" type="Application" factoryName="Application" temporary="true">
       <option name="MAIN_CLASS_NAME" value="sk.bytecode.bludisko.rt.desktop.DesktopLauncher" />
       <module name="bludisko_rt" />
@@ -121,37 +120,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Deserialization2Test.deserializeNullField" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="bludisko_rt" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="test.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="test" />
-      <option name="MAIN_CLASS_NAME" value="test.Deserialization2Test" />
-      <option name="METHOD_NAME" value="deserializeNullField" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="MapTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="bludisko_rt" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="test.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="test" />
-      <option name="MAIN_CLASS_NAME" value="test.MapTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="MapTest.saveMap" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="bludisko_rt" />
       <extension name="coverage">
@@ -163,6 +131,22 @@
       <option name="PACKAGE_NAME" value="test" />
       <option name="MAIN_CLASS_NAME" value="test.MapTest" />
       <option name="METHOD_NAME" value="saveMap" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="RayTest.bitShift" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="bludisko_rt" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="test.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="test" />
+      <option name="MAIN_CLASS_NAME" value="test.RayTest" />
+      <option name="METHOD_NAME" value="bitShift" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -184,21 +168,37 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="RayTest.rayVectorTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="bludisko_rt" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="test.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="test" />
+      <option name="MAIN_CLASS_NAME" value="test.RayTest" />
+      <option name="METHOD_NAME" value="rayVectorTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <list>
       <item itemvalue="Application.Game" />
       <item itemvalue="JUnit.All Tests" />
-      <item itemvalue="JUnit.Deserialization2Test.deserializeNullField" />
       <item itemvalue="JUnit.MapTest.saveMap" />
-      <item itemvalue="JUnit.MapTest" />
       <item itemvalue="JUnit.RayTest.rayTest" />
+      <item itemvalue="JUnit.RayTest.rayVectorTest" />
+      <item itemvalue="JUnit.RayTest.bitShift" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.RayTest.rayTest" />
         <item itemvalue="Application.Game" />
+        <item itemvalue="JUnit.RayTest.rayVectorTest" />
+        <item itemvalue="JUnit.RayTest.bitShift" />
+        <item itemvalue="JUnit.RayTest.rayTest" />
         <item itemvalue="JUnit.MapTest.saveMap" />
-        <item itemvalue="JUnit.MapTest" />
-        <item itemvalue="JUnit.Deserialization2Test.deserializeNullField" />
       </list>
     </recent_temporary>
   </component>
@@ -239,12 +239,23 @@
       <workItem from="1640641172243" duration="7620000" />
       <workItem from="1640720563488" duration="11543000" />
       <workItem from="1640806823684" duration="16571000" />
-      <workItem from="1640887456019" duration="26899000" />
+      <workItem from="1640887456019" duration="31950000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.History.Properties">
+    <option name="COLUMN_ID_ORDER">
+      <list>
+        <option value="Default.Root" />
+        <option value="Default.Author" />
+        <option value="Default.Date" />
+        <option value="Default.Subject" />
+        <option value="Space.CommitStatus" />
+      </list>
+    </option>
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -261,13 +272,6 @@
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" suspend="NONE" type="java-line">
-          <condition expression="i==320" language="JAVA" />
-          <url>file://$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/graphics/Camera.java</url>
-          <line>77</line>
-          <log-expression expression="return &quot;&quot; + this.direction.x + &quot; &quot; + this.direction.y;" language="JAVA" mode="CODE_FRAGMENT" />
-          <option name="timeStamp" value="32" />
-        </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/test/RayTest.java</url>
           <line>11</line>
@@ -275,8 +279,18 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/test/RayTest.java</url>
-          <line>36</line>
+          <line>45</line>
           <option name="timeStamp" value="44" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/RayTest.java</url>
+          <line>68</line>
+          <option name="timeStamp" value="45" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/RayTest.java</url>
+          <line>106</line>
+          <option name="timeStamp" value="46" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

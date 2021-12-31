@@ -72,23 +72,23 @@ public class Camera {
     }
 
     public void draw(Graphics graphics) {
-        int[] image = new int[640 * 480];
+        //int[] image = new int[640 * 480];
 
         for(int i = 0; i < rayCount; i++) {
             float screenX = 2f * i / rayCount - 1f;
             Vector2 rayDirection = new Vector2(
                     this.direction.x + plane.x * screenX,
                     this.direction.y + plane.y * screenX
-            );
+            ).nor();
 
             var ray = new Ray(this.map, this.position, rayDirection);
-            ray.cast();
+            float rayDistance = ray.cast2();
+            float distance = 
 
-            float distance = ray.cast();
-            int hitSide = ray.getCurrentSide();
+            int hitSide = ray.getSide();
 
-            int hitX = (int) ray.getHitCoords().x; // ray.getCurrentPosition().x; // ray.getHitX();
-            int hitY = (int) ray.getHitCoords().y; // ray.getCurrentPosition().y; // ray.getHitY();
+            int hitX = (int) ray.getPosition().x;
+            int hitY = (int) ray.getPosition().y;
 
             int height = 480; // TODO: FIX
             int objectHeight = (int) (height / distance);
