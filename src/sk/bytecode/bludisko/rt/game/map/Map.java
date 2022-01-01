@@ -2,6 +2,7 @@ package sk.bytecode.bludisko.rt.game.map;
 
 import sk.bytecode.bludisko.rt.game.blocks.Block;
 import sk.bytecode.bludisko.rt.game.blocks.BlockManager;
+import sk.bytecode.bludisko.rt.game.math.Vector2;
 import sk.bytecode.bludisko.rt.game.serialization.Serializable;
 
 public class Map {
@@ -30,6 +31,11 @@ public class Map {
         }
         var value = tiles[x][y];
         return value == null ? 0 : value;
+    }
+
+    public void setTile(int x, int y, int value) {
+        //TODO: proper check
+        tiles[x][y] = value;
     }
 
     public Block getBlock(int x, int y) {

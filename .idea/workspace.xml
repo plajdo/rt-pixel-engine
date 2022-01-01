@@ -13,6 +13,10 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/graphics/Camera.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/graphics/Camera.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/graphics/Ray.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/graphics/Ray.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/map/Map.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/map/Map.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/map/world/GameWorld.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/map/world/GameWorld.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/math/Vector2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/math/Vector2.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/MapTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/MapTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/RayTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/RayTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -96,7 +100,7 @@
       <command value="echo" />
     </option>
   </component>
-  <component name="RunManager" selected="Application.Game">
+  <component name="RunManager" selected="JUnit.RayTest.rayVectorTest">
     <configuration name="Game" type="Application" factoryName="Application" temporary="true">
       <option name="MAIN_CLASS_NAME" value="sk.bytecode.bludisko.rt.desktop.DesktopLauncher" />
       <module name="bludisko_rt" />
@@ -194,11 +198,11 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.Game" />
         <item itemvalue="JUnit.RayTest.rayVectorTest" />
+        <item itemvalue="Application.Game" />
+        <item itemvalue="JUnit.MapTest.saveMap" />
         <item itemvalue="JUnit.RayTest.bitShift" />
         <item itemvalue="JUnit.RayTest.rayTest" />
-        <item itemvalue="JUnit.MapTest.saveMap" />
       </list>
     </recent_temporary>
   </component>
@@ -239,7 +243,8 @@
       <workItem from="1640641172243" duration="7620000" />
       <workItem from="1640720563488" duration="11543000" />
       <workItem from="1640806823684" duration="16571000" />
-      <workItem from="1640887456019" duration="31950000" />
+      <workItem from="1640887456019" duration="32188000" />
+      <workItem from="1640965507906" duration="34457000" />
     </task>
     <servers />
   </component>
@@ -274,23 +279,21 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/test/RayTest.java</url>
-          <line>11</line>
-          <option name="timeStamp" value="42" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/test/RayTest.java</url>
-          <line>45</line>
-          <option name="timeStamp" value="44" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/test/RayTest.java</url>
-          <line>68</line>
-          <option name="timeStamp" value="45" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/test/RayTest.java</url>
-          <line>106</line>
+          <line>53</line>
           <option name="timeStamp" value="46" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <condition expression="i&gt;319" language="JAVA" />
+          <dependency id="0" />
+          <url>file://$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/graphics/Camera.java</url>
+          <line>77</line>
+          <option name="timeStamp" value="50" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <dependency master-id="0" />
+          <url>file://$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/graphics/Ray.java</url>
+          <line>61</line>
+          <option name="timeStamp" value="74" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

@@ -83,12 +83,12 @@ public class Camera {
 
             var ray = new Ray(this.map, this.position, rayDirection);
             float rayDistance = ray.cast2();
-            float distance = 
+            float distance = rayDistance;//(float) (rayDistance * Math.sin(Math.PI / 2 - rayDirection.angleRad()));
 
             int hitSide = ray.getSide();
 
-            int hitX = (int) ray.getPosition().x;
-            int hitY = (int) ray.getPosition().y;
+            int hitX = (int) ray.getTile().x;
+            int hitY = (int) ray.getTile().y;
 
             int height = 480; // TODO: FIX
             int objectHeight = (int) (height / distance);
@@ -144,6 +144,7 @@ public class Camera {
                 graphics.setColor(Color.green.darker());
             }
             graphics.fillRect(i, height / 2 - objectHeight / 2, 1, objectHeight);
+            graphics.drawString(this.position.toString(), 0, 50);
         }
         //BufferedImage bufferedImage = new BufferedImage(640, 480, BufferedImage.TYPE_INT_RGB);
         //final int[] buffer = ((DataBufferInt) bufferedImage.getRaster().getDataBuffer()).getData();

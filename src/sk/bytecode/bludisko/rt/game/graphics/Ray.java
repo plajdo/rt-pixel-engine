@@ -2,6 +2,7 @@ package sk.bytecode.bludisko.rt.game.graphics;
 
 import sk.bytecode.bludisko.rt.game.blocks.Block;
 import sk.bytecode.bludisko.rt.game.map.Map;
+import sk.bytecode.bludisko.rt.game.math.MathUtils;
 import sk.bytecode.bludisko.rt.game.math.Vector2;
 
 public final class Ray {
@@ -32,6 +33,8 @@ public final class Ray {
                 Math.copySign(1f, direction.y)
         );
 
+        float angle = direction.angleRad();
+
         boolean hit = false;
         float distance = Float.POSITIVE_INFINITY;
 
@@ -56,10 +59,30 @@ public final class Ray {
 
             distance = new Vector2(this.position.cpy().sub(startingPosition)).len();
 
-            Block block = map.getBlock((int) position.x, (int) position.y);
+            Block block = map.getBlock((int) position.x + (sign.x < 0 ? -1 : 0), (int) position.y + (sign.y < 0 ? -1 : 0));
+
+            if(angle > Math.PI / 2) {
+                block = map.getBlock((int) position.x - 1, (int) position.y);
+            } else if(angle > 0) {
+                block = map.getBlock((int) position.x, (int) position.y);
+            } else if(angle > -Math.PI / 2) {
+                block = map.getBlock((int) position.x, (int) position.y - 1);
+            } else {
+                block = map.getBlock((int) position.x - 1, (int) position.y - 1);
+            }
+            /*
+            if(angle > Math.PI * 3 / 2) {
+                block = map.getBlock((int) position.x, (int) position.y - 1);
+            } else if (angle > Math.PI) {
+                block = map.getBlock((int) position.x - 1, (int) position.y - 1);
+            } else if (angle > Math.PI / 2) {
+                block = map.getBlock((int) position.x - 1, (int) position.y);
+            } else {
+                block = map.getBlock((int) position.x, (int) position.y);
+            }*/
             float hitDistance = block.rayHitDistance(this);
 
-            if(hitDistance >= 0 || distance > 100) {
+            if(hitDistance >= 0 || distance > 200) {
                 hit = true;
             }
         }
@@ -144,6 +167,19 @@ public final class Ray {
 
     public Vector2 getPosition() {
         return position;
+    }
+
+    public Vector2 getTile() {
+        Vector2 sign = new Vector2(
+                Math.copySign(1f, direction.x),
+                Math.copySign(1f, direction.y)
+        );
+
+        return new Vector2(
+                (int) MathUtils.roundAway(position.x) + sign.x,
+                (int) MathUtils.roundAway(position.y) + sign.y
+        );
+
     }
 
     public Vector2 getDirection() {

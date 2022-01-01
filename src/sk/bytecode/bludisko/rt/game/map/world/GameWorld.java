@@ -19,7 +19,7 @@ public final class GameWorld {
     }
 
     private void setupMap() {
-        this.map = new GameMap("testMap", 0, 0);
+        this.map = new GameMap("testMap2", 0, 0);
 
     }
 
@@ -89,7 +89,7 @@ public final class GameWorld {
     // MARK: - Private
 
     private void setupCamera() {
-        Vector2 cameraPosition = new Vector2(21, 12);
+        Vector2 cameraPosition = new Vector2(5.5f, 5.5f);
         Vector2 cameraDirection = new Vector2(0, 1);
         float fieldOfView = 66f;
 

@@ -574,5 +574,4 @@ public class Vector2 implements Serializable {
         return this;
     }
 
-
 }
