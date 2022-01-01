@@ -33,63 +33,65 @@ public final class Ray {
                 Math.copySign(1f, direction.y)
         );
 
-        float angle = direction.angleRad();
+        Vector2 rawSign = new Vector2( // TODO: ku optimalizácii ifov dolu?
+                Float.floatToRawIntBits(sign.x) >>> 31,
+                Float.floatToRawIntBits(sign.y) >>> 31
+        ).add(1f, 1f).scl(0.5f);
 
-        boolean hit = false;
         float distance = Float.POSITIVE_INFINITY;
+        boolean hit = false;
+        int steps = 100;
 
-        while(!hit) {
-            Vector2 nextTileDistance = new Vector2(
-                    (int) position.x - position.x + (sign.x),
-                    (int) position.y - position.y + (sign.y)
-            );
+        while(!hit && steps > 0) {
+            Vector2 positionInTile = MathUtils.decimalPart(position);
 
-            Vector2 nextDistance = new Vector2(
-                    new Vector2(nextTileDistance.x, nextTileDistance.x * tileDistance.y).len2(),
-                    new Vector2(nextTileDistance.y / tileDistance.y, nextTileDistance.y).len2()
-            );
+            Vector2 nextTileDistance;
+            if(sign.x > 0 && sign.y > 0) {
+                nextTileDistance = new Vector2(1, 1).sub(positionInTile); // TODO: optimalizovať ify
 
-            if(nextDistance.x < nextDistance.y) {
-                position.add(nextTileDistance.x, tileDistance.y * Math.abs(nextTileDistance.x) * sign.y);
-                side = 0;
+            } else if(sign.x > 0 && sign.y < 0) {
+                nextTileDistance = new Vector2(1 - positionInTile.x, 0 + positionInTile.y);
+
+            } else if(sign.x < 0 && sign.y > 0) {
+                nextTileDistance = new Vector2(0 + positionInTile.x, 1 - positionInTile.y);
+
             } else {
-                position.add(tileDistance.x * Math.abs(nextTileDistance.y) * sign.x, nextTileDistance.y);
+                nextTileDistance = new Vector2(0 + positionInTile.x, 0 + positionInTile.y);
+            }
+
+            if(nextTileDistance.x == 0) {
+                nextTileDistance.x = 1;
+            }
+            if(nextTileDistance.y == 0) {
+                nextTileDistance.y = 1;
+            }
+
+            Vector2 nextStepDistance = nextTileDistance.cpy()
+                    .scl(
+                            Math.abs((float) (1D / Math.sin((Math.PI / 2) - direction.angleRad()))),
+                            Math.abs((float) (1D / Math.sin((Math.PI / 2) - ((Math.PI / 2) - direction.angleRad()))))
+                    );
+
+            if(nextStepDistance.x < nextStepDistance.y) {
+                position.add(nextTileDistance.x * sign.x, tileDistance.x * nextTileDistance.x * sign.y);
+                side = 0; // TODO: remove side handling from Ray
+            } else {
+                position.add(tileDistance.y * nextTileDistance.y * sign.x, nextTileDistance.y  * sign.y);
                 side = 1;
             }
 
-            distance = new Vector2(this.position.cpy().sub(startingPosition)).len();
+            Block block = map.getBlockAt(position);
+            float hitDistance = (block == null) ? -1 : block.rayHitDistance(this);
 
-            Block block = map.getBlock((int) position.x + (sign.x < 0 ? -1 : 0), (int) position.y + (sign.y < 0 ? -1 : 0));
-
-            if(angle > Math.PI / 2) {
-                block = map.getBlock((int) position.x - 1, (int) position.y);
-            } else if(angle > 0) {
-                block = map.getBlock((int) position.x, (int) position.y);
-            } else if(angle > -Math.PI / 2) {
-                block = map.getBlock((int) position.x, (int) position.y - 1);
-            } else {
-                block = map.getBlock((int) position.x - 1, (int) position.y - 1);
-            }
-            /*
-            if(angle > Math.PI * 3 / 2) {
-                block = map.getBlock((int) position.x, (int) position.y - 1);
-            } else if (angle > Math.PI) {
-                block = map.getBlock((int) position.x - 1, (int) position.y - 1);
-            } else if (angle > Math.PI / 2) {
-                block = map.getBlock((int) position.x - 1, (int) position.y);
-            } else {
-                block = map.getBlock((int) position.x, (int) position.y);
-            }*/
-            float hitDistance = block.rayHitDistance(this);
-
-            if(hitDistance >= 0 || distance > 200) {
+            if(hitDistance >= 0) {
                 hit = true;
+                distance = new Vector2(this.position.cpy().sub(startingPosition)).len();
             }
+            steps--;
         }
-
         return distance;
     }
-
+/*
     public float cast() {
         int currentTileX = (int) this.position.x;
         int currentTileY = (int) this.position.y;
@@ -128,7 +130,7 @@ public final class Ray {
         boolean hit = false;
         int side = 0;
 
-        while(!hit /*&& distance.len2() < Config.Display.RENDER_DISTANCE_SQ*/) {
+        while(!hit && distance.len2() < Config.Display.RENDER_DISTANCE_SQ) {
             if(distance.x < distance.y) {
                 distance.x += tileLength.x;
                 currentTileX += tileStepX;
@@ -145,7 +147,7 @@ public final class Ray {
                 //hitCoords.set(currentTileX, currentTileY);
             //}
 
-            var block = map.getBlock(currentTileX, currentTileY);
+            var block = map.getBlockAt(currentTileX, currentTileY);
             var hitDistance = block.rayHitDistance(this);
 
             if(hitDistance >= 0) {
@@ -163,7 +165,7 @@ public final class Ray {
         //}
         return distance.y;
         //return Float.POSITIVE_INFINITY;
-    }
+    }*/
 
     public Vector2 getPosition() {
         return position;

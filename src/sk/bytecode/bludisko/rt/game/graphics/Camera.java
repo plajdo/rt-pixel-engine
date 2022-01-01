@@ -12,7 +12,9 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
+import java.awt.image.ImageObserver;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Camera {
@@ -72,7 +74,8 @@ public class Camera {
     }
 
     public void draw(Graphics graphics) {
-        //int[] image = new int[640 * 480];
+        BufferedImage bufferedImage = new BufferedImage(640, 480, BufferedImage.TYPE_INT_RGB);
+        final int[] screenBuffer = ((DataBufferInt) bufferedImage.getRaster().getDataBuffer()).getData();
 
         for(int i = 0; i < rayCount; i++) {
             float screenX = 2f * i / rayCount - 1f;
@@ -120,7 +123,7 @@ public class Camera {
             //how much to increase x coordinate per screen pixel
             float step = 1f * 64 / objectHeight;
             float texPos = ((-objectHeight / 2f + height / 2f) - height / 2f + objectHeight / 2f) * step;
-/*
+
             for(int y = (-objectHeight / 2 + height / 2); y < (height / 2 + objectHeight / 2); y++) {
                 int texelY = (int)texPos & (64 - 1);
                 texPos += step;
@@ -130,27 +133,26 @@ public class Camera {
                     color = (color >> 1) & 0b011111110111111101111111;
                 }
 
+                System.out.println(color);
+
                 if(y >= 0 && y < 480) {
-                    image[i + y * 640] = color;
+                    screenBuffer[i + y * 640] = color;
                 }
                 //graphics.setColor(new Color(color)); //TODO: IMPORTANT: USE BUFFERED IMAGE TO DRAW INSTEAD - done????
                 //graphics.fillRect(i, y, 1, 1);
 
             }
-*/
-
+/*
             graphics.setColor(Color.green);
             if(hitSide == 1) {
                 graphics.setColor(Color.green.darker());
             }
             graphics.fillRect(i, height / 2 - objectHeight / 2, 1, objectHeight);
-            graphics.drawString(this.position.toString(), 0, 50);
+            graphics.drawString(this.position.toString(), 0, 50);*/
         }
-        //BufferedImage bufferedImage = new BufferedImage(640, 480, BufferedImage.TYPE_INT_RGB);
-        //final int[] buffer = ((DataBufferInt) bufferedImage.getRaster().getDataBuffer()).getData();
-
-        //System.arraycopy(image, 0, buffer, 0, image.length);
-        //graphics.drawImage(bufferedImage, 0, 0, null);
+        graphics.setColor(Color.green);
+        graphics.drawImage(bufferedImage, 0, 0, null);
+        graphics.drawString(this.position.toString(), 0, 50);
     }
 
     //TODO: kept because of block height multiplier

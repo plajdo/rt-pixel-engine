@@ -1,5 +1,7 @@
 package sk.bytecode.bludisko.rt.game.math;
 
+import org.jetbrains.annotations.Contract;
+
 public final class MathUtils {
 
     public static final float PI = (float) Math.PI;
@@ -23,6 +25,20 @@ public final class MathUtils {
 
     public static float roundAway(float value) {
         return (float) (Math.ceil(Math.abs(value)) * Math.signum(value));
+    }
+
+    /**
+     * Decimal part of a vector.
+     * Calculated as the distance to the nearest mathematical integer
+     * closest to negative infinity, separately for both X and Y elements.
+     * @param v Vector to calculate the part of.
+     * @return New vector containing decimal coordinates, calculated by rules explained above.
+     */
+    public static Vector2 decimalPart(Vector2 v) {
+        return new Vector2(
+                (float) Math.abs(Math.floor(v.x) - v.x),
+                (float) Math.abs(Math.floor(v.y) - v.y)
+        );
     }
 
 }

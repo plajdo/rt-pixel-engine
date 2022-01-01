@@ -2,6 +2,8 @@ package sk.bytecode.bludisko.rt.game.map;
 
 import sk.bytecode.bludisko.rt.game.blocks.Block;
 import sk.bytecode.bludisko.rt.game.blocks.BlockManager;
+import sk.bytecode.bludisko.rt.game.blocks.EmptyBlock;
+import sk.bytecode.bludisko.rt.game.math.MathUtils;
 import sk.bytecode.bludisko.rt.game.math.Vector2;
 import sk.bytecode.bludisko.rt.game.serialization.Serializable;
 
@@ -38,8 +40,30 @@ public class Map {
         tiles[x][y] = value;
     }
 
-    public Block getBlock(int x, int y) {
-        return BlockManager.getBlock(getTile(x, y));
+    public Block getBlockAt(Vector2 position) {
+        boolean onEdge = coordinatesOnBlockEdge(position);
+
+        Block centerBlock = BlockManager.getBlock(getTile((int) position.x, (int) position.y));
+        if(!onEdge) {
+            return centerBlock;
+        }
+
+        if(centerBlock != null) {
+            return centerBlock;
+        }
+        if(position.x % 1 == 0) {
+            return BlockManager.getBlock(getTile((int) position.x - 1, (int) position.y));
+        } else {
+            return BlockManager.getBlock(getTile((int) position.x, (int) position.y - 1));
+        }
+    }
+
+    private boolean coordinatesOnBlockEdge(Vector2 position) {
+        Vector2 positionInBlockCoords = MathUtils.decimalPart(position);
+        return positionInBlockCoords.x == 0 ||
+               positionInBlockCoords.y == 0 ||
+               positionInBlockCoords.x == 1 ||
+               positionInBlockCoords.y == 1;
     }
 
 }

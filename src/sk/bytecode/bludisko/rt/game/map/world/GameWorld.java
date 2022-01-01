@@ -89,7 +89,7 @@ public final class GameWorld {
     // MARK: - Private
 
     private void setupCamera() {
-        Vector2 cameraPosition = new Vector2(5.5f, 5.5f);
+        Vector2 cameraPosition = new Vector2(6.5f, 0f);
         Vector2 cameraDirection = new Vector2(0, 1);
         float fieldOfView = 66f;
 

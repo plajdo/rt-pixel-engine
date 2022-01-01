@@ -11,7 +11,9 @@
   <component name="ChangeListManager">
     <list default="true" id="b56b9792-09b5-4a62-8384-5317f301f33f" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/RayTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/RayTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/graphics/Camera.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/graphics/Camera.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/graphics/Ray.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/graphics/Ray.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/map/world/GameWorld.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/map/world/GameWorld.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -94,7 +96,7 @@
       <command value="echo" />
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.RayTest.rayVectorTest">
+  <component name="RunManager" selected="Application.Game">
     <configuration name="Game" type="Application" factoryName="Application" temporary="true">
       <option name="MAIN_CLASS_NAME" value="sk.bytecode.bludisko.rt.desktop.DesktopLauncher" />
       <module name="bludisko_rt" />
@@ -192,8 +194,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.RayTest.rayVectorTest" />
         <item itemvalue="Application.Game" />
+        <item itemvalue="JUnit.RayTest.rayVectorTest" />
         <item itemvalue="JUnit.MapTest.saveMap" />
         <item itemvalue="JUnit.RayTest.bitShift" />
         <item itemvalue="JUnit.RayTest.rayTest" />
@@ -238,7 +240,8 @@
       <workItem from="1640720563488" duration="11543000" />
       <workItem from="1640806823684" duration="16571000" />
       <workItem from="1640887456019" duration="32188000" />
-      <workItem from="1640965507906" duration="47156000" />
+      <workItem from="1640965507906" duration="62615000" />
+      <workItem from="1641079016363" duration="1741000" />
     </task>
     <servers />
   </component>
@@ -276,18 +279,12 @@
           <line>61</line>
           <option name="timeStamp" value="46" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
+        <line-breakpoint type="java-line">
           <condition expression="i&gt;319" language="JAVA" />
           <dependency id="0" />
           <url>file://$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/graphics/Camera.java</url>
-          <line>77</line>
+          <line>80</line>
           <option name="timeStamp" value="50" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <dependency master-id="0" />
-          <url>file://$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/graphics/Ray.java</url>
-          <line>61</line>
-          <option name="timeStamp" value="74" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

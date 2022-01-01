@@ -67,7 +67,7 @@ public class RayTest {
 
             Vector2 nextTileDistance;
             if(sign.x > 0 && sign.y > 0) {
-                nextTileDistance = new Vector2(1, 1).sub(positionInTile);
+                nextTileDistance = new Vector2(1, 1).sub(positionInTile); // TODO: optimalizovať ify
 
             } else if(sign.x > 0 && sign.y < 0) {
                 nextTileDistance = new Vector2(1 - positionInTile.x, 0 + positionInTile.y);
