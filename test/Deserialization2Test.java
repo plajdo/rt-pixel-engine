@@ -1,5 +1,3 @@
-package test;
-
 import org.junit.jupiter.api.Test;
 import sk.bytecode.bludisko.rt.game.serialization.Serializable;
 import sk.bytecode.bludisko.rt.game.serialization.Tag;
@@ -41,6 +39,22 @@ public class Deserialization2Test {
 
     }
 
+    static class NullArray {
+        @Serializable boolean b = false;
+        @Serializable char c = 'h';
+        @Serializable Byte[] barr = {0x15, 0x03, 0x7F, 0x5C};
+        @Serializable String[] sarr = null;
+    }
+
+    static class TestPlaceholder {
+        @Serializable int x = 7;
+        @Serializable float f = 6.35f;
+        @Serializable long l = 12345678987654321L;
+        @Serializable double d = 53.4d;
+        @Serializable String s = "Bohemian rhapsody";
+        @Serializable NullArray[] arr = { new NullArray(), null, new NullArray() };
+    }
+
     @Test
     void deserializeObject() throws NotSerializableException {
         byte[] input = new byte[] { 10, 9, 3, 0, 0, 0, 39, 116, 101, 115, 116, 46, 83, 101, 114, 105, 97, 108, 105,
@@ -63,7 +77,7 @@ public class Deserialization2Test {
                 97, 114, 114, 9, 3, 0, 0, 0, 4, 115, 97, 114, 114, 0, 8, 0, 7, 0, 104, 11, 9, 3, 0, 0, 0, 14, 106, 97,
                 118, 97, 46, 108, 97, 110, 103, 46, 66, 121, 116, 101, 1, 21, 1, 3, 1, 127, 1, 92, 0, 0, 0, 0 };
 
-        var obj = Tag.fromBytes(input, Serialization2Test.TestPlaceholder.class);
+        var obj = Tag.fromBytes(input, TestPlaceholder.class);
         var content = obj.getContent();
 
         assert content.d == 53.4;

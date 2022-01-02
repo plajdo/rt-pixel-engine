@@ -10,6 +10,7 @@ public final class MathUtils {
     public static final float degreesToRadians = PI / 180f;
 
     public static final float FLOAT_ROUNDING_ERROR = 0.000001f; // 32 bits
+    public static final int INT_MSB_MASK = 0xFF000000;
     
     public static boolean isZero (float value) {
         return Math.abs(value) <= FLOAT_ROUNDING_ERROR;

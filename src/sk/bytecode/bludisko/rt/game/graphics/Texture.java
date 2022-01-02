@@ -1,4 +1,4 @@
-package sk.bytecode.bludisko.rt.game.graphics.texture;
+package sk.bytecode.bludisko.rt.game.graphics;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -11,16 +11,25 @@ import java.util.function.ToIntBiFunction;
 
 public class Texture {
 
+    public static final int SIZE = 64;
+
     private final BufferedImage image;
 
     // MARK: - Constructor
+
+    /**
+     * Creates an empty texture with dimensions 64 by 64.
+     */
+    public Texture() {
+        this.image = new BufferedImage(64, 64, BufferedImage.TYPE_INT_ARGB);
+    }
 
     /**
      * Loads a texture from file textureName.png.
      * @param textureName Texture name without file extension.
      * @throws IOException When an error occurs during loading.
      */
-    Texture(@NotNull String textureName) throws IOException {
+    public Texture(@NotNull String textureName) throws IOException {
         image = ImageIO.read(new File(textureName + ".png"));
     }
 
@@ -30,15 +39,15 @@ public class Texture {
      * @param texelGenerator Texel generator. Accepts [x, y] as its parameters,
      *                       returns an int representing 32-bit colour.
      */
-    Texture(@NotNull ToIntBiFunction<Integer, Integer> texelGenerator) {
-        int[] texelArray = new int[64 * 64];
-        for(int x = 0; x < 64; x++) {
-            for(int y = 0; y < 64; y++) {
-                texelArray[(x * 64) + y] = texelGenerator.applyAsInt(x, y);
+    public Texture(@NotNull ToIntBiFunction<Integer, Integer> texelGenerator) {
+        int[] texelArray = new int[SIZE * SIZE];
+        for(int x = 0; x < SIZE; x++) {
+            for(int y = 0; y < SIZE; y++) {
+                texelArray[(x * SIZE) + y] = texelGenerator.applyAsInt(x, y);
             }
         }
 
-        BufferedImage generatedImage = new BufferedImage(64, 64, BufferedImage.TYPE_INT_ARGB);
+        BufferedImage generatedImage = new BufferedImage(SIZE, SIZE, BufferedImage.TYPE_INT_ARGB);
         final int[] imageTexelArray = ((DataBufferInt) generatedImage.getRaster().getDataBuffer()).getData();
 
         System.arraycopy(texelArray, 0, imageTexelArray, 0, texelArray.length);
@@ -48,8 +57,8 @@ public class Texture {
 
     // MARK: - Public
 
-    public int getRGB(int x, int y) {
-        return image.getRGB(x, y);
+    public Color getRGB(int x, int y) {
+        return new Color(image.getRGB(x, y));
     }
 
 }

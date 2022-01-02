@@ -1,6 +1,6 @@
-package sk.bytecode.bludisko.rt.game.graphics.texture;
+package sk.bytecode.bludisko.rt.game.graphics;
 
-public class TextureManager {
+/*public class TextureManager {
 
     private static Texture[] generatedTextures;
     private static Texture[] loadedTextures;
@@ -32,4 +32,4 @@ public class TextureManager {
 
     }
 
-}
+}*/

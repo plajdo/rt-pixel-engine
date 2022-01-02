@@ -4,6 +4,7 @@ import sk.bytecode.bludisko.rt.game.serialization.Tag;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.net.URL;
 
 public class GameMap {
 
@@ -23,6 +24,12 @@ public class GameMap {
         }
     }
 
+    // MARK: - Public
+
+    public Map getWallMap() {
+        return walls;
+    }
+
     // MARK: - Private
 
     private void loadMaps(String name) throws IOException {
@@ -37,12 +44,6 @@ public class GameMap {
         inputStream.close();
 
         return Tag.fromBytes(mapBytes, Map.class).getContent();
-    }
-
-    // MARK: - Public
-
-    public Map getWallMap() {
-        return walls;
     }
 
 }

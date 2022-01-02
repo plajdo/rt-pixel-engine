@@ -1,0 +1,12 @@
+<component name="ArtifactManager">
+  <artifact name="bludisko_rt:zip">
+    <output-path>$PROJECT_DIR$/out/artifacts/bludisko_rt_zip</output-path>
+    <root id="root">
+      <element id="archive" name="bludisko.zip">
+        <element id="artifact" artifact-name="bludisko_rt:jar" />
+        <element id="file-copy" path="$PROJECT_DIR$/res/run.bat" />
+        <element id="file-copy" path="$PROJECT_DIR$/res/run.sh" />
+      </element>
+    </root>
+  </artifact>
+</component>

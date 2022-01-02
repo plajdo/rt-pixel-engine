@@ -1,11 +1,11 @@
 package sk.bytecode.bludisko.rt.game.blocks;
 
 import sk.bytecode.bludisko.rt.game.graphics.Ray;
-import sk.bytecode.bludisko.rt.game.graphics.texture.Texture;
+import sk.bytecode.bludisko.rt.game.graphics.Texture;
 
 public abstract class Block {
 
-    public abstract Texture getTexture();
+    public abstract Texture getTexture(float side);
     public abstract float getHeight();
 
     /**
