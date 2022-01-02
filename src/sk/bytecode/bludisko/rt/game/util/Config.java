@@ -13,6 +13,8 @@ public class Config {
         public static final int DOWN = KeyEvent.VK_S;
         public static final int RIGHT = KeyEvent.VK_D;
 
+        public static final int LOCK_MOUSE = KeyEvent.VK_ESCAPE;
+
     }
 
     public static class Display {

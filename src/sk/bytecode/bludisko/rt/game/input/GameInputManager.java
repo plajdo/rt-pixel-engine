@@ -62,7 +62,8 @@ public class GameInputManager extends InputManager {
     @Override
     public void keyPressed(KeyEvent e) {
         toggleDirectionOn(e.getKeyCode());
-        if(e.getKeyCode() == KeyEvent.VK_E) {
+
+        if(e.getKeyCode() == Config.Keybinds.LOCK_MOUSE) {
             this.mouseLocked = !this.mouseLocked;
         }
 

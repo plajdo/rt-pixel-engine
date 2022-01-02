@@ -70,48 +70,35 @@ public class Camera {
             float distance = (float) (hit.distance() * Math.abs(Math.sin(plane.angleRad() - rayDirection.angleRad())));
             float hitSide = hit.side();
 
-            int height = screenSize.height;
-            int objectHeight = (int) (height / distance);
+            // Texture coordinates
+            Vector2 hitPosition = ray.getPosition();
+            Vector2 wallHitCoordinates = hitPosition.cpy()
+                    .sub((float) Math.floor(hitPosition.x), (float) Math.floor(hitPosition.y));
 
-            // Textures here:
-            float wallX; //where the wall was hit //TODO: remove comments
-            float wallY;
-            if(hitSide == 0) {
-                wallX = position.y + distance * (direction.y + plane.y * (2f * i / rayCount - 1f)); //rayDirY
-            } else {
-                wallX = position.x + distance * (direction.x + plane.x * (2f * i / rayCount - 1f)); //rayDirX
-            }
-            wallX = ray.getPosition().x;
-            wallX -= Math.floor(wallX);
+            int texelX_X = Texture.SIZE - (int)(wallHitCoordinates.x * Texture.SIZE) - 1;
+            int texelX_Y = Texture.SIZE - (int)(wallHitCoordinates.y * Texture.SIZE) - 1;
+            int texelX = Math.min(texelX_X, texelX_Y);
 
-            wallY = ray.getPosition().y;
-            wallY -= Math.floor(wallY);
+            int screenHeight = screenSize.height;
+            int objectHeight = (int) (screenHeight / distance);
 
-            int texelX = Texture.SIZE - (int)(wallX * Texture.SIZE) - 1;
-            int texelX2 = Texture.SIZE - (int)(wallY * Texture.SIZE) - 1;
+            int horizon = screenHeight / 2;
+            int objectCenter = objectHeight / 2;
+            int objectTop = -objectCenter + horizon;
+            int objectBottom = objectCenter + horizon;
 
-            // TODO: why this? how this? understand plz
-            //x coordinate on the texture
-            //int texelX;// = Texture.SIZE - (int)(wallX * Texture.SIZE) - 1;
-            /*if(hitSide == 0 && (direction.x + plane.x * (2f * i / rayCount - 1f)) > 0) {
-                texelX = Texture.SIZE - texelX - 1;
-            }
-            if(hitSide == 1 && (direction.y + plane.y * (2f * i / rayCount - 1f)) < 0) {
-                texelX = Texture.SIZE - texelX - 1;
-            }*/
-
-            //how much to increase x coordinate per screen pixel
-            float step = 1f * 64 / objectHeight;
-            float texPos = ((-objectHeight / 2f + height / 2f) - height / 2f + objectHeight / 2f) * step;
+            float texelStep = 1f * Texture.SIZE / objectHeight;
+            //float texPos = (objectTop - horizon + objectCenter) * texelStep;
+            float texPos = texelStep;
 
             float colorScale = 1 - (hitSide * 0.33f);
 
-            for(int y = (-objectHeight / 2 + height / 2); y < (height / 2 + objectHeight / 2); y++) {
+            for(int y = objectTop; y < objectBottom; y++) {
                 int texelY = (int)texPos & (64 - 1);
-                texPos += step;
+                texPos += texelStep;
 
                 Texture texture = hit.block().getTexture(hitSide);
-                Color color = texture.getRGB(Math.min(texelX, texelX2), texelY);
+                Color color = texture.getRGB(Math.min(texelX_X, texelX_Y), texelY);
 
                 if(y >= 0 && y < 480) {
                     screenBuffer[i + y * 640] = color.scaled(colorScale);
@@ -130,7 +117,11 @@ public class Camera {
                 c = c.darker();
             }
             graphics.setColor(c);
-            graphics.fillRect(i, height / 2 - objectHeight * blockHeightMultiplier / 2, 1, (int) (objectHeight * ((blockHeightMultiplier != 1) ? 3f/2f : 1f)));
+            graphics.fillRect(i,
+            height / 2 - objectHeight * blockHeightMultiplier / 2,
+            1,
+            (int) (objectHeight * ((blockHeightMultiplier != 1) ? 3f/2f : 1f))
+            );
         }
     }
      */
