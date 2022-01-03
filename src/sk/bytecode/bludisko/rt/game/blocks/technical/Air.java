@@ -19,7 +19,7 @@ public class Air extends Block {
     }
 
     @Override
-    public float rayHitDistance(Ray ray) {
+    public float hitDistance(Ray ray) {
         return -1;
     }
 

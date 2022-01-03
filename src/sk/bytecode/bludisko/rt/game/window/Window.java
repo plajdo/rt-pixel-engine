@@ -13,10 +13,10 @@ import java.awt.image.BufferedImage;
 
 public final class Window {
 
-    private final static Dimension WINDOW_SIZE = new Dimension(640, 480);
     private final static int FRAMERATE = 24;
     private final static float FRAME_TIME = 1000f / FRAMERATE;
 
+    private final Dimension windowSize;
     private final Canvas canvas;
     private final JFrame frame;
     private Screen screen;
@@ -29,6 +29,7 @@ public final class Window {
     // MARK: - Initialize
 
     public Window(@NotNull Screen screen) {
+        this.windowSize = new Dimension(640, 480);
         this.frame = new JFrame("bludisko_rt");
         this.canvas = new Canvas();
 
@@ -38,7 +39,7 @@ public final class Window {
     }
 
     private void setupCanvas() {
-        this.canvas.setPreferredSize(WINDOW_SIZE);
+        this.canvas.setPreferredSize(windowSize);
     }
 
     private void setupFrame() {
@@ -89,7 +90,7 @@ public final class Window {
             public void componentResized(ComponentEvent e) {
                 var component = e.getComponent();
                 if(screen != null && component != null) {
-                    screen.screenDidChangeBounds(component.getBounds());
+                    updateBounds(component);
                 }
             }
 
@@ -97,10 +98,16 @@ public final class Window {
             public void componentMoved(ComponentEvent e) {
                 var component = e.getComponent();
                 if(screen != null && component != null) {
-                    screen.screenDidChangeBounds(component.getBounds());
+                    updateBounds(component);
                 }
             }
         };
+    }
+
+    private void updateBounds(@NotNull Component component) {
+        Rectangle bounds = component.getBounds();
+        screen.screenDidChangeBounds(bounds);
+        windowSize.setSize(bounds.width, bounds.height);
     }
 
     // MARK: - Public
@@ -114,8 +121,8 @@ public final class Window {
         this.setupCursor();
     }
 
-    public Rectangle dimensions() {
-        return frame.getBounds();
+    public Rectangle canvasBounds() {
+        return canvas.getBounds();
     }
 
     // MARK: - Game thread
@@ -177,7 +184,7 @@ public final class Window {
 
     private void clearScreen(@NotNull Graphics graphics) {
         graphics.setColor(Color.BLACK);
-        graphics.fillRect(0, 0, WINDOW_SIZE.width, WINDOW_SIZE.height);
+        graphics.fillRect(0, 0, windowSize.width, windowSize.height);
     }
 
 }

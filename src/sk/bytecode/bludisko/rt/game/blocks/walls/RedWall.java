@@ -16,11 +16,11 @@ public class RedWall extends Block {
 
     @Override
     public float getHeight() {
-        return 0.5f;
+        return 3f;
     }
 
     @Override
-    public float rayHitDistance(Ray ray) {
+    public float hitDistance(Ray ray) {
         return 0;
     }
 }

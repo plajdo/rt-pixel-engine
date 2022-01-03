@@ -20,11 +20,11 @@ public class MissingBlock extends Block {
 
     @Override
     public float getHeight() {
-        return 1;
+        return 2f;
     }
 
     @Override
-    public float rayHitDistance(Ray ray) {
+    public float hitDistance(Ray ray) {
         return 0;
     }
 

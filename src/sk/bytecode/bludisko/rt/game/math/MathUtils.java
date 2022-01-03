@@ -42,4 +42,24 @@ public final class MathUtils {
         );
     }
 
+    /**
+     * 2 = halves
+     * 3 = thirds
+     * ...
+     * TODO: write documentation
+     * @param v
+     * @param fraction
+     * @return
+     */
+    public static Vector2 part(Vector2 v, float fraction) {
+        return new Vector2(
+                Math.abs(MathUtils.roundToFraction(v.x, fraction) - v.x),
+                Math.abs(MathUtils.roundToFraction(v.y, fraction) - v.y)
+        );
+    }
+
+    public static float roundToFraction(float number, float fraction) {
+        return Math.round(number * fraction) / fraction;
+    }
+
 }

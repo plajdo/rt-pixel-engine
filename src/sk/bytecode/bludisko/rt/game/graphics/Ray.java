@@ -1,28 +1,115 @@
 package sk.bytecode.bludisko.rt.game.graphics;
 
-import sk.bytecode.bludisko.rt.game.blocks.Block;
-import sk.bytecode.bludisko.rt.game.blocks.BlockManager;
-import sk.bytecode.bludisko.rt.game.map.Map;
 import sk.bytecode.bludisko.rt.game.math.MathUtils;
 import sk.bytecode.bludisko.rt.game.math.Vector2;
 
-public final class Ray {
+import java.util.function.Supplier;
 
-    public static record Hit(Block block, float distance, float side) {}
+public final class Ray<T extends Traceable> {
 
-    private final Map map;
+    public static record Hit<T>(T result, Vector2 position, float distance) {}
 
-    private final Vector2 position;
-    private final Vector2 startingPosition;
-    private final Vector2 direction;
+    private Vector2 position;
+    private Vector2 startingPosition;
+    private Vector2 direction;
 
-    public Ray(Map map, Vector2 position, Vector2 direction) {
-        this.map = map;
-        this.position = position.cpy();
-        this.startingPosition = position.cpy();
-        this.direction = direction.cpy();
+    private Vector2 marginalTileDistance;
+    private Vector2 tileSize;
+    private Vector2 sign;
+
+    public Ray(Vector2 position, Vector2 direction, Vector2 tileSize) {
+        this(position, direction);
+        this.tileSize = tileSize;
     }
 
+    public Ray(Vector2 position, Vector2 direction) {
+        this.position = position.cpy();
+        this.startingPosition = position.cpy();
+        this.tileSize = new Vector2(1, 1);
+
+        updateDirection(direction);
+    }
+
+    public void updateDirection(Vector2 direction) {
+        this.direction = direction.cpy();
+        this.marginalTileDistance = new Vector2(
+                Math.abs(direction.y / direction.x),
+                Math.abs(direction.x / direction.y)
+        );
+        this.sign = new Vector2(
+                Math.copySign(1f, direction.x),
+                Math.copySign(1f, direction.y)
+        );
+    }
+
+    /**
+     *
+     * @param steps Maximum number of steps to take before returning
+     * @param traceableSupplier Function that supplies an object, which can be traced.
+     * @return Hit record containing the last object that was traced, position at
+     * which the object was found and distance from the rays' origin.
+     * @see Traceable
+     */
+    public Ray.Hit<T> cast(int steps, Supplier<T> traceableSupplier) {
+        T traceableObject = null;
+        for(int i = 0; i < steps; i++) {
+            step();
+
+            traceableObject = traceableSupplier.get();
+            var result = traceableObject.hitDistance(this);
+
+            if(result >= 0) {
+                position.add(direction.cpy().scl(result));
+                break;
+            }
+        }
+
+        var distance = Vector2.dst(position.x, position.y, startingPosition.x, startingPosition.y);
+        return new Ray.Hit<>(traceableObject, this.position.cpy(), distance);
+    }
+
+    public void step() {
+        Vector2 positionInTile;
+        if(tileSize.x != 1 || tileSize.y != 1) {
+            positionInTile = MathUtils.part(position, (int) (1 / Math.min(tileSize.x, tileSize.y)));
+        } else {
+            positionInTile = MathUtils.decimalPart(position);
+        }
+
+        Vector2 nextTileDistance;
+        if(sign.x > 0 && sign.y > 0) {
+            nextTileDistance = new Vector2(tileSize).sub(positionInTile); // TODO: optimalizovať ify
+
+        } else if(sign.x > 0 && sign.y < 0) {
+            nextTileDistance = new Vector2(tileSize.x - positionInTile.x, 0 + positionInTile.y);
+
+        } else if(sign.x < 0 && sign.y > 0) {
+            nextTileDistance = new Vector2(0 + positionInTile.x, tileSize.y - positionInTile.y);
+
+        } else {
+            nextTileDistance = new Vector2(0 + positionInTile.x, 0 + positionInTile.y);
+        }
+
+        if(nextTileDistance.x == 0) {
+            nextTileDistance.x = tileSize.x;
+        }
+        if(nextTileDistance.y == 0) {
+            nextTileDistance.y = tileSize.y;
+        }
+
+        Vector2 nextStepDistance = nextTileDistance.cpy()
+                .scl(
+                        Math.abs((float) (1D / Math.sin((Math.PI / 2) - direction.angleRad()))),
+                        Math.abs((float) (1D / Math.sin((Math.PI / 2) - ((Math.PI / 2) - direction.angleRad()))))
+                );
+
+        if(nextStepDistance.x < nextStepDistance.y) {
+            position.add(nextTileDistance.x * sign.x, marginalTileDistance.x * nextTileDistance.x * sign.y);
+        } else {
+            position.add(marginalTileDistance.y * nextTileDistance.y * sign.x, nextTileDistance.y  * sign.y);
+        }
+    }
+/*
     public Ray.Hit cast2() {
         Vector2 tileDistance = new Vector2(
                 Math.abs(direction.y / direction.x),
@@ -89,13 +176,14 @@ public final class Ray {
 
             if(hitDistance >= 0) {
                 hit = true;
+                position.add(direction.cpy().scl(hitDistance));
                 distance = new Vector2(this.position.cpy().sub(startingPosition)).len();
             }
             steps--;
         }
         return new Ray.Hit(block, distance, side);
     }
-/*
+
     public float cast() {
         int currentTileX = (int) this.position.x;
         int currentTileY = (int) this.position.y;
@@ -178,5 +266,4 @@ public final class Ray {
     public Vector2 getDirection() {
         return this.direction;
     }
-
 }

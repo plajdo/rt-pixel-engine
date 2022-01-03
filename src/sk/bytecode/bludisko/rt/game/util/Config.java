@@ -19,7 +19,7 @@ public class Config {
 
     public static class Display {
 
-        public static final float DRAWING_QUALITY = 0.5f;
+        public static final float DRAWING_QUALITY = 1f;
         public static final int RENDER_DISTANCE = 100;
 
     }

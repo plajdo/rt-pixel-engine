@@ -1,30 +1,28 @@
 package sk.bytecode.bludisko.rt.game.graphics;
 
+import sk.bytecode.bludisko.rt.game.blocks.Block;
 import sk.bytecode.bludisko.rt.game.map.Map;
-import sk.bytecode.bludisko.rt.game.math.MathUtils;
 import sk.bytecode.bludisko.rt.game.math.Vector2;
+import sk.bytecode.bludisko.rt.game.util.Config;
 
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Camera {
 
     private Map map;
 
-    private final Vector2 position; //TODO: better access control
+    private final Vector2 position;
     private final Vector2 direction;
     private final Vector2 plane;
 
+    private final Vector2 viewportSize;
     private Rectangle screenSize;
 
     public Vector2 movementVector = Vector2.Zero;
     public float speed = 1.5f;
-
-    private final int rayCount;
 
     // plane center = position + direction
     // plane right end = pos + dir + plane
@@ -32,15 +30,15 @@ public class Camera {
 
     // fov = length(dir) : length(plane)
 
-    public Camera(Map map, Vector2 position, Vector2 direction, Rectangle screenSize) {
+    public Camera(Map map, Vector2 position, Vector2 direction) {
         this.position = position;
         this.direction = direction;
         this.plane = direction.cpy().rotate90(-1).scl(2f / 3f);
 
         this.map = map;
 
-        this.screenSize = screenSize;
-        this.rayCount = 640;
+        this.viewportSize = new Vector2(160, 90);
+        this.screenSize = new Rectangle(160, 90);
     }
 
     public void rotate(float angleDeg) {
@@ -52,23 +50,35 @@ public class Camera {
         position.add(movementVector.cpy().scl(dt).scl(speed).rotateRad(direction.angleRad()));
     }
 
+
     public void draw(Graphics graphics) {
-        BufferedImage bufferedImage = new BufferedImage(640, 480, BufferedImage.TYPE_INT_ARGB);
+        synchronized(this) {
+            drawWalls(graphics);
+        }
+    }
+
+    @SuppressWarnings("UnnecessaryLocalVariable")
+    private void drawWalls(Graphics graphics) {
+        BufferedImage bufferedImage = new BufferedImage(
+                (int) viewportSize.x,
+                (int) viewportSize.y,
+                BufferedImage.TYPE_INT_ARGB
+        );
         final int[] screenBuffer = ((DataBufferInt) bufferedImage.getRaster().getDataBuffer()).getData();
 
-        for(int i = 0; i < rayCount; i++) {
-            float screenX = 2f * i / rayCount - 1f;
+        for(int i = 0; i < (int) viewportSize.x; i++) {
+            float screenX = 2f * i / (int) viewportSize.x - 1f;
             Vector2 rayDirection = new Vector2(
                     this.direction.x + plane.x * screenX,
                     this.direction.y + plane.y * screenX
             ).nor();
 
-            var ray = new Ray(this.map, this.position, rayDirection);
-            var hit = ray.cast2();
+            var ray = new Ray<Block>(this.position, rayDirection);
+            var hit = ray.cast(Config.Display.RENDER_DISTANCE, () -> map.getBlockAt(ray.getPosition()));
 
             // Fish eye fix
             float distance = (float) (hit.distance() * Math.abs(Math.sin(plane.angleRad() - rayDirection.angleRad())));
-            float hitSide = hit.side();
+            float hitSide = hit.position().x % 1 == 0 ? 0 : 1;
 
             // Texture coordinates
             Vector2 hitPosition = ray.getPosition();
@@ -79,55 +89,48 @@ public class Camera {
             int texelX_Y = Texture.SIZE - (int)(wallHitCoordinates.y * Texture.SIZE) - 1;
             int texelX = Math.min(texelX_X, texelX_Y);
 
-            int screenHeight = screenSize.height;
-            int objectHeight = (int) (screenHeight / distance);
+            int screenHeight = (int) viewportSize.y;
+            int marginalObjectHeight = (int) (screenHeight / distance);
 
             int horizon = screenHeight / 2;
-            int objectCenter = objectHeight / 2;
-            int objectTop = -objectCenter + horizon;
-            int objectBottom = objectCenter + horizon;
+            int eyeLevel = marginalObjectHeight / 2;
+            int floorLevel = eyeLevel + horizon;
 
-            float texelStep = 1f * Texture.SIZE / objectHeight;
-            //float texPos = (objectTop - horizon + objectCenter) * texelStep;
-            float texPos = texelStep;
+            float objectHeight = hit.result().getHeight() * marginalObjectHeight;
+            int objectTop = (int) (floorLevel - objectHeight / 2);
+            int objectBottom = floorLevel;
+
+            float texelStep = 1f * Texture.SIZE / marginalObjectHeight;
+            float texelPosition = texelStep;
 
             float colorScale = 1 - (hitSide * 0.33f);
 
             for(int y = objectTop; y < objectBottom; y++) {
-                int texelY = (int)texPos & (64 - 1);
-                texPos += texelStep;
+                int texelY = (int)texelPosition & (Texture.SIZE - 1);
+                texelPosition += texelStep;
 
-                Texture texture = hit.block().getTexture(hitSide);
-                Color color = texture.getRGB(Math.min(texelX_X, texelX_Y), texelY);
+                Texture texture = hit.result().getTexture(hitSide);
+                Color color = texture.getRGB(texelX, texelY);
 
-                if(y >= 0 && y < 480) {
-                    screenBuffer[i + y * 640] = color.scaled(colorScale);
+                if(y >= 0 && y < (int) viewportSize.y) {
+                    screenBuffer[i + y * (int) viewportSize.x] = color.scaled(colorScale);
                 }
             }
         }
 
         graphics.setColor(java.awt.Color.green);
-        graphics.drawImage(bufferedImage, 0, 0, null);
+        graphics.drawImage(bufferedImage, 0, 0, screenSize.width, screenSize.height, null);
         graphics.drawString(this.position.toString(), 0, 50);
     }
 
-    //TODO: kept because of block height multiplier
-    /*
-            if(side == 1) {
-                c = c.darker();
-            }
-            graphics.setColor(c);
-            graphics.fillRect(i,
-            height / 2 - objectHeight * blockHeightMultiplier / 2,
-            1,
-            (int) (objectHeight * ((blockHeightMultiplier != 1) ? 3f/2f : 1f))
+    public void setScreenSize(Rectangle size) {
+        synchronized(this) {
+            this.screenSize = size;
+            this.viewportSize.set(
+                    size.width * Config.Display.DRAWING_QUALITY,
+                    size.height * Config.Display.DRAWING_QUALITY
             );
         }
-    }
-     */
-
-    public void setScreenSize(Rectangle newScreenSize) {
-        this.screenSize = newScreenSize;
     }
 
 }

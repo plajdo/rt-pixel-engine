@@ -23,6 +23,7 @@ public final class GameScreen extends Screen implements GameInputManagerDelegate
 
     public GameScreen() {
         setupMap();
+        setupCamera();
         setupInput();
     }
 
@@ -31,16 +32,10 @@ public final class GameScreen extends Screen implements GameInputManagerDelegate
     }
 
     // TODO: setup player
-    private void setupCamera(Rectangle screenDimensions) {
+    private void setupCamera() {
         Vector2 cameraPosition = new Vector2(21f, 13f);
         Vector2 cameraDirection = new Vector2(0, 1);
-
-        this.camera = new Camera(
-                map.getWallMap(),
-                cameraPosition,
-                cameraDirection,
-                screenDimensions
-        );
+        this.camera = new Camera(map.getWallMap(), cameraPosition, cameraDirection);
     }
 
     private void setupInput() {
@@ -62,7 +57,16 @@ public final class GameScreen extends Screen implements GameInputManagerDelegate
         Window window = this.window.get();
         if(window != null) {
             window.setCursorVisible(false);
-            setupCamera(window.dimensions());
+        }
+    }
+
+    @Override
+    public void screenDidChangeBounds(Rectangle bounds) {
+        super.screenDidChangeBounds(bounds);
+
+        var window = this.window.get();
+        if(window != null) {
+            camera.setScreenSize(window.canvasBounds());
         }
     }
 
