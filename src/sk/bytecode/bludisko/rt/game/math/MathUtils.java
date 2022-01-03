@@ -33,7 +33,7 @@ public final class MathUtils {
      * Calculated as the distance to the nearest mathematical integer
      * closest to negative infinity, separately for both X and Y elements.
      * @param v Vector to calculate the part of.
-     * @return New vector containing decimal coordinates, calculated by rules explained above.
+     * @return New vector containing decimal coordinates, calculated by the rules above.
      */
     public static Vector2 decimalPart(Vector2 v) {
         return new Vector2(

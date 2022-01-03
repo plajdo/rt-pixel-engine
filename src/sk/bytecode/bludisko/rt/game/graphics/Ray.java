@@ -3,15 +3,15 @@ package sk.bytecode.bludisko.rt.game.graphics;
 import sk.bytecode.bludisko.rt.game.math.MathUtils;
 import sk.bytecode.bludisko.rt.game.math.Vector2;
 
-import java.util.function.Supplier;
-
-public final class Ray<T extends Traceable> {
+public class Ray {
 
     public static record Hit<T>(T result, Vector2 position, float distance) {}
+    public static record Result(BlockType type, float distance) {}
 
-    private Vector2 position;
-    private Vector2 startingPosition;
-    private Vector2 direction;
+    protected Vector2 position;
+    protected Vector2 startingPosition;
+    protected Vector2 direction;
+    protected float distance;
 
     private Vector2 marginalTileDistance;
     private Vector2 tileSize;
@@ -40,32 +40,6 @@ public final class Ray<T extends Traceable> {
                 Math.copySign(1f, direction.x),
                 Math.copySign(1f, direction.y)
         );
-    }
-
-    /**
-     *
-     * @param steps Maximum number of steps to take before returning
-     * @param traceableSupplier Function that supplies an object, which can be traced.
-     * @return Hit record containing the last object that was traced, position at
-     * which the object was found and distance from the rays' origin.
-     * @see Traceable
-     */
-    public Ray.Hit<T> cast(int steps, Supplier<T> traceableSupplier) {
-        T traceableObject = null;
-        for(int i = 0; i < steps; i++) {
-            step();
-
-            traceableObject = traceableSupplier.get();
-            var result = traceableObject.hitDistance(this);
-
-            if(result >= 0) {
-                position.add(direction.cpy().scl(result));
-                break;
-            }
-        }
-
-        var distance = Vector2.dst(position.x, position.y, startingPosition.x, startingPosition.y);
-        return new Ray.Hit<>(traceableObject, this.position.cpy(), distance);
     }
 
     public void step() {
@@ -105,8 +79,10 @@ public final class Ray<T extends Traceable> {
 
         if(nextStepDistance.x < nextStepDistance.y) {
             position.add(nextTileDistance.x * sign.x, marginalTileDistance.x * nextTileDistance.x * sign.y);
+            distance += nextStepDistance.x;
         } else {
             position.add(marginalTileDistance.y * nextTileDistance.y * sign.x, nextTileDistance.y  * sign.y);
+            distance += nextStepDistance.y;
         }
     }
 /*
@@ -266,4 +242,9 @@ public final class Ray<T extends Traceable> {
     public Vector2 getDirection() {
         return this.direction;
     }
+
+    public float getDistance() {
+        return distance;
+    }
+
 }

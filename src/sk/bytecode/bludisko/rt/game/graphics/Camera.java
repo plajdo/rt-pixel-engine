@@ -73,48 +73,54 @@ public class Camera {
                     this.direction.y + plane.y * screenX
             ).nor();
 
-            var ray = new Ray<Block>(this.position, rayDirection);
-            var hit = ray.cast(Config.Display.RENDER_DISTANCE, () -> map.getBlockAt(ray.getPosition()));
+            var ray = new BlockRay(this.position, rayDirection, map);
+            var zBuffer = ray.cast(Config.Display.RENDER_DISTANCE);
+            //System.out.println(zBuffer.size());
 
-            // Fish eye fix
-            float distance = (float) (hit.distance() * Math.abs(Math.sin(plane.angleRad() - rayDirection.angleRad())));
-            float hitSide = hit.position().x % 1 == 0 ? 0 : 1;
+            for(int j = zBuffer.size() - 1; j >= 0; j--) {
+                Ray.Hit<Block> hit = zBuffer.get(j);
 
-            // Texture coordinates
-            Vector2 hitPosition = ray.getPosition();
-            Vector2 wallHitCoordinates = hitPosition.cpy()
-                    .sub((float) Math.floor(hitPosition.x), (float) Math.floor(hitPosition.y));
+                // Fish eye fix
+                float distance = (float) (hit.distance() * Math.abs(Math.sin(plane.angleRad() - rayDirection.angleRad())));
+                float hitSide = hit.position().x % 1 == 0 ? 0 : 1;
 
-            int texelX_X = Texture.SIZE - (int)(wallHitCoordinates.x * Texture.SIZE) - 1;
-            int texelX_Y = Texture.SIZE - (int)(wallHitCoordinates.y * Texture.SIZE) - 1;
-            int texelX = Math.min(texelX_X, texelX_Y);
+                // Texture coordinates
+                Vector2 hitPosition = hit.position();
+                Vector2 wallHitCoordinates = hitPosition.cpy()
+                        .sub((float) Math.floor(hitPosition.x), (float) Math.floor(hitPosition.y));
 
-            int screenHeight = (int) viewportSize.y;
-            int marginalObjectHeight = (int) (screenHeight / distance);
+                int texelX_X = Texture.SIZE - (int)(wallHitCoordinates.x * Texture.SIZE) - 1;
+                int texelX_Y = Texture.SIZE - (int)(wallHitCoordinates.y * Texture.SIZE) - 1;
+                int texelX = Math.min(texelX_X, texelX_Y);
 
-            int horizon = screenHeight / 2;
-            int eyeLevel = marginalObjectHeight / 2;
-            int floorLevel = eyeLevel + horizon;
+                int screenHeight = (int) viewportSize.y;
+                int marginalObjectHeight = (int) (screenHeight / distance);
 
-            float objectHeight = hit.result().getHeight() * marginalObjectHeight;
-            int objectTop = (int) (floorLevel - objectHeight / 2);
-            int objectBottom = floorLevel;
+                int horizon = screenHeight / 2;
+                int eyeLevel = marginalObjectHeight / 2;
+                int floorLevel = eyeLevel + horizon;
 
-            float texelStep = 1f * Texture.SIZE / marginalObjectHeight;
-            float texelPosition = texelStep;
+                float objectHeight = hit.result().getHeight() * marginalObjectHeight;
+                int objectTop = (int) (floorLevel - objectHeight / 2);
+                int objectBottom = floorLevel;
 
-            float colorScale = 1 - (hitSide * 0.33f);
+                float texelStep = 1f * Texture.SIZE / marginalObjectHeight;
+                float texelPosition = texelStep;
 
-            for(int y = objectTop; y < objectBottom; y++) {
-                int texelY = (int)texelPosition & (Texture.SIZE - 1);
-                texelPosition += texelStep;
+                float colorScale = 1 - (hitSide * 0.33f);
 
-                Texture texture = hit.result().getTexture(hitSide);
-                Color color = texture.getRGB(texelX, texelY);
+                for(int k = objectTop; k < objectBottom; k++) {
+                    int texelY = (int)texelPosition & (Texture.SIZE - 1);
+                    texelPosition += texelStep;
 
-                if(y >= 0 && y < (int) viewportSize.y) {
-                    screenBuffer[i + y * (int) viewportSize.x] = color.scaled(colorScale);
+                    Texture texture = hit.result().getTexture(hitSide);
+                    Color color = texture.getRGB(texelX, texelY);
+
+                    if(k >= 0 && k < (int) viewportSize.y) {
+                        screenBuffer[i + k * (int) viewportSize.x] = color.scaled(colorScale);
+                    }
                 }
+
             }
         }
 

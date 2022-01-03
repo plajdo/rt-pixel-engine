@@ -1,6 +1,7 @@
 package sk.bytecode.bludisko.rt.game.blocks.walls;
 
 import sk.bytecode.bludisko.rt.game.blocks.Block;
+import sk.bytecode.bludisko.rt.game.graphics.BlockType;
 import sk.bytecode.bludisko.rt.game.graphics.Ray;
 import sk.bytecode.bludisko.rt.game.graphics.Texture;
 import sk.bytecode.bludisko.rt.game.math.MathUtils;
@@ -16,11 +17,11 @@ public class RedWall extends Block {
 
     @Override
     public float getHeight() {
-        return 3f;
+        return 5f;
     }
 
     @Override
-    public float hitDistance(Ray ray) {
-        return 0;
+    public Ray.Result hitDistance(Ray ray) {
+        return new Ray.Result(BlockType.OPAQUE, 0);
     }
 }

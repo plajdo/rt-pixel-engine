@@ -1,6 +1,7 @@
 package sk.bytecode.bludisko.rt.game.blocks.technical;
 
 import sk.bytecode.bludisko.rt.game.blocks.Block;
+import sk.bytecode.bludisko.rt.game.graphics.BlockType;
 import sk.bytecode.bludisko.rt.game.graphics.Ray;
 import sk.bytecode.bludisko.rt.game.graphics.Texture;
 import sk.bytecode.bludisko.rt.game.math.MathUtils;
@@ -24,8 +25,8 @@ public class MissingBlock extends Block {
     }
 
     @Override
-    public float hitDistance(Ray ray) {
-        return 0;
+    public Ray.Result hitDistance(Ray ray) {
+        return new Ray.Result(BlockType.TRANSLUCENT, 0);
     }
 
 }
