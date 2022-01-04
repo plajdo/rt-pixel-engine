@@ -22,14 +22,14 @@ public class BlockRay extends Ray {
 
             Block[] blocks = map.getBlocksAt(position);
             for(Block block : blocks) {
-                Ray.Result result = block.hitDistance(this);
-                switch(result.action()) {
+                RayAction action = block.hitAction(this);
+                switch(action) {
                     case ADD -> {
-                        position.add(direction.cpy().scl(result.distance()));
+                        //position.add(direction.cpy().scl(result.distance()));
                         hits.add(new Ray.Hit<>(block, this.position.cpy(), distance));
                     }
                     case STOP -> {
-                        position.add(direction.cpy().scl(result.distance()));
+                        //position.add(direction.cpy().scl(result.distance()));
                         hits.add(new Ray.Hit<>(block, this.position.cpy(), distance));
                         break castCycle;
                     }

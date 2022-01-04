@@ -118,16 +118,9 @@ public class Camera {
 
                     if(k >= 0 && k < (int) viewportSize.y) {
                         int currentColor = screenBuffer[i + k * (int) viewportSize.x];
-                        screenBuffer[i + k * (int) viewportSize.x] = color.fade(currentColor);
-
-                        /*if(((currentColor & MathUtils.INT_MSB_MASK) >>> 24) > 0) {
-                            screenBuffer[i + k * (int) viewportSize.x] = color.added(currentColor);
-                        } else {
-                            screenBuffer[i + k * (int) viewportSize.x] = color.scaled(colorScale);
-                        }*/
+                        screenBuffer[i + k * (int) viewportSize.x] = color.fade(currentColor).scaled(colorScale).argb();
                     }
                 }
-
             }
         }
 

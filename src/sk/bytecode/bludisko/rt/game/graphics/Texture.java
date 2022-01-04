@@ -21,16 +21,15 @@ public class Texture {
      * Creates an empty texture with dimensions 64 by 64.
      */
     public Texture() {
-        this.image = new BufferedImage(64, 64, BufferedImage.TYPE_INT_ARGB);
+        this.image = emptyImage();
     }
 
     /**
      * Loads a texture from file textureName.png.
      * @param textureName Texture name without file extension.
-     * @throws IOException When an error occurs during loading.
      */
-    public Texture(@NotNull String textureName) throws IOException {
-        image = ImageIO.read(new File(textureName + ".png"));
+    public Texture(@NotNull String textureName) {
+        this.image = loadImage(textureName);
     }
 
     /**
@@ -59,6 +58,21 @@ public class Texture {
 
     public Color getRGB(int x, int y) {
         return new Color(image.getRGB(x, y));
+    }
+
+    // MARK: - Private
+
+    private BufferedImage emptyImage() {
+        return new BufferedImage(64, 64, BufferedImage.TYPE_INT_ARGB);
+    }
+
+    private BufferedImage loadImage(String textureName) {
+        try {
+            return ImageIO.read(new File("res/textures/" + textureName + ".png"));
+        } catch(IOException e) {
+            System.err.println("Could not load texture: " + e.getLocalizedMessage());
+            return emptyImage();
+        }
     }
 
 }

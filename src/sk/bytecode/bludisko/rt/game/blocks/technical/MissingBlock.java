@@ -25,8 +25,8 @@ public class MissingBlock extends Block {
     }
 
     @Override
-    public Ray.Result hitDistance(Ray ray) {
-        return new Ray.Result(RayAction.ADD, 0);
+    public RayAction hitAction(Ray ray) {
+        return RayAction.ADD;
     }
 
 }

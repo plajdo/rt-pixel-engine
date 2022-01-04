@@ -1,13 +1,13 @@
-package sk.bytecode.bludisko.rt.game.blocks.technical;
+package sk.bytecode.bludisko.rt.game.blocks.walls;
 
 import sk.bytecode.bludisko.rt.game.blocks.Block;
-import sk.bytecode.bludisko.rt.game.graphics.RayAction;
 import sk.bytecode.bludisko.rt.game.graphics.Ray;
+import sk.bytecode.bludisko.rt.game.graphics.RayAction;
 import sk.bytecode.bludisko.rt.game.graphics.Texture;
 
-public class Air extends Block {
+public class BlackTiles extends Block {
 
-    private final Texture texture = new Texture();
+    private final Texture texture = new Texture("darkWallTile");
 
     @Override
     public Texture getTexture(float side) {
@@ -16,12 +16,12 @@ public class Air extends Block {
 
     @Override
     public float getHeight() {
-        return 0;
+        return 12f;
     }
 
     @Override
     public RayAction hitAction(Ray ray) {
-        return RayAction.SKIP;
+        return RayAction.STOP;
     }
 
 }

@@ -1,7 +1,5 @@
 package sk.bytecode.bludisko.rt.game.math;
 
-import org.jetbrains.annotations.Contract;
-
 public final class MathUtils {
 
     public static final float PI = (float) Math.PI;
@@ -51,15 +49,19 @@ public final class MathUtils {
      * @param fraction
      * @return
      */
-    public static Vector2 part(Vector2 v, float fraction) {
+    public static Vector2 fractionRound(Vector2 v, float fraction) {
         return new Vector2(
-                Math.abs(MathUtils.roundToFraction(v.x, fraction) - v.x),
-                Math.abs(MathUtils.roundToFraction(v.y, fraction) - v.y)
+                Math.abs(MathUtils.fractionRound(v.x, fraction) - v.x),
+                Math.abs(MathUtils.fractionRound(v.y, fraction) - v.y)
         );
     }
 
-    public static float roundToFraction(float number, float fraction) {
+    public static float fractionRound(float number, float fraction) {
         return Math.round(number * fraction) / fraction;
+    }
+
+    public static int gcd(int a, int b) {
+        return b == 0 ? a : gcd(b, a % b);
     }
 
 }

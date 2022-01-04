@@ -1,4 +1,4 @@
-package sk.bytecode.bludisko.rt.game.blocks.walls;
+package sk.bytecode.bludisko.rt.game.blocks.technical;
 
 import sk.bytecode.bludisko.rt.game.blocks.Block;
 import sk.bytecode.bludisko.rt.game.graphics.RayAction;
@@ -24,18 +24,19 @@ public class HalfWall extends Block {
         return 2f;
     }
 
-    public Ray.Result hitDistance(Ray ray) {
+    public RayAction hitAction(Ray ray) {
         var angle = ray.getDirection().angleRad();
         var distance = Math.abs((float)(0.5d / Math.sin(angle)));
 
-        //ray.step();
+        ray.setTileSize(new Vector2(0.5f, 0.5f));
+        var position = ray.getPosition();
 
-
-        if(distance < 1f) {
-            return new Ray.Result(RayAction.ADD, distance);
+        if((position.y % 1) - 0.5f < MathUtils.FLOAT_ROUNDING_ERROR && (position.y % 1) - 0.5f >= 0) {
+            ray.setTileSize(new Vector2(1f, 1f));
+            return RayAction.ADD;
         }
 
-        return new Ray.Result(RayAction.SKIP, -1);
+        return RayAction.SKIP;
     }
 
 }

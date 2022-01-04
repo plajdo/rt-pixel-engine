@@ -6,10 +6,11 @@ import sk.bytecode.bludisko.rt.game.graphics.Ray;
 import sk.bytecode.bludisko.rt.game.graphics.Texture;
 import sk.bytecode.bludisko.rt.game.math.MathUtils;
 
-public class RedWall extends Block {
+public class WhiteTiles extends Block {
 
     //private final Texture texture = new Texture((x, y) -> MathUtils.INT_MSB_MASK | 65536 * 192 * ((x % 16) & (y % 16)));
-    private final Texture texture = new Texture((x, y) -> 0xFF3F0000);
+    //private final Texture texture = new Texture((x, y) -> 0xFF3F0000);
+    private final Texture texture = new Texture("wallTile");
 
     @Override
     public Texture getTexture(float side) {
@@ -18,11 +19,11 @@ public class RedWall extends Block {
 
     @Override
     public float getHeight() {
-        return 5f;
+        return 12f;
     }
 
     @Override
-    public Ray.Result hitDistance(Ray ray) {
-        return new Ray.Result(RayAction.STOP, 0);
+    public RayAction hitAction(Ray ray) {
+        return RayAction.STOP;
     }
 }
