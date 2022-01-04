@@ -1,15 +1,18 @@
 package sk.bytecode.bludisko.rt.game.blocks.walls;
 
 import sk.bytecode.bludisko.rt.game.blocks.Block;
-import sk.bytecode.bludisko.rt.game.graphics.BlockType;
+import sk.bytecode.bludisko.rt.game.graphics.RayAction;
 import sk.bytecode.bludisko.rt.game.graphics.Ray;
 import sk.bytecode.bludisko.rt.game.graphics.Texture;
 import sk.bytecode.bludisko.rt.game.math.MathUtils;
+import sk.bytecode.bludisko.rt.game.math.Vector2;
 
 public class HalfWall extends Block {
 
-    private final Texture texture = new Texture((x, y) -> MathUtils.INT_MSB_MASK |
-            (256 * (y * 128 / 64 + x * 128 / 64) + 65536 * (y * 128 / 64 + x * 128 / 64)));
+    //private final Texture texture = new Texture((x, y) -> 0x3F000000 |
+    //        (256 * (y * 128 / 64 + x * 128 / 64) + 65536 * (y * 128 / 64 + x * 128 / 64)));
+
+    private final Texture texture = new Texture((x, y) -> 0x3FBCD2F5);
 
     @Override
     public Texture getTexture(float side) {
@@ -22,19 +25,17 @@ public class HalfWall extends Block {
     }
 
     public Ray.Result hitDistance(Ray ray) {
-        var positionInBlock = MathUtils.decimalPart(ray.getPosition());
+        var angle = ray.getDirection().angleRad();
+        var distance = Math.abs((float)(0.5d / Math.sin(angle)));
 
-        var innerRay = new Ray(positionInBlock, ray.getDirection());
-        innerRay.step();
+        //ray.step();
 
-        var hitPosition = innerRay.getPosition();
-        var distance = innerRay.getDistance();
 
-        if(hitPosition.x == 0) {
-            return new Ray.Result(BlockType.TRANSLUCENT, distance);
+        if(distance < 1f) {
+            return new Ray.Result(RayAction.ADD, distance);
         }
 
-        return new Ray.Result(BlockType.TRANSPARENT, -1);
+        return new Ray.Result(RayAction.SKIP, -1);
     }
 
 }

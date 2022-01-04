@@ -28,12 +28,13 @@ public final class GameScreen extends Screen implements GameInputManagerDelegate
     }
 
     private void setupMap() {
-        this.map = new GameMap("testMap", 0, 0);
+        this.map = new GameMap("testMap3", 0, 0);
     }
 
     // TODO: setup player
     private void setupCamera() {
-        Vector2 cameraPosition = new Vector2(21f, 13f);
+        //Vector2 cameraPosition = new Vector2(21f, 13f);
+        Vector2 cameraPosition = new Vector2(2f, 5f);
         Vector2 cameraDirection = new Vector2(0, 1);
         this.camera = new Camera(map.getWallMap(), cameraPosition, cameraDirection);
     }

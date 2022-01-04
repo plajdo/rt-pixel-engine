@@ -15,22 +15,24 @@ public class BlockRay extends Ray {
         this.map = map;
     }
 
-    public ArrayList<Ray.Hit<Block>> cast(int steps) {
+    public ArrayList<Ray.Hit<Block>> cast(int maxSteps) {
         ArrayList<Ray.Hit<Block>> hits = new ArrayList<>();
-        castCycle: for(int i = 0; i < steps; i++) {
+        castCycle: for(int i = 0; i < maxSteps; i++) {
             step();
 
-            Block block = map.getBlockAt(position);
-            Ray.Result result = block.hitDistance(this);
-
-            switch(result.type()) {
-                case TRANSLUCENT -> {
-                    hits.add(new Ray.Hit<>(block, this.position.cpy(), distance));
-                }
-                case OPAQUE -> {
-                    hits.add(new Ray.Hit<>(block, this.position.cpy(), distance));
-                    position.add(direction.cpy().scl(result.distance()));
-                    break castCycle;
+            Block[] blocks = map.getBlocksAt(position);
+            for(Block block : blocks) {
+                Ray.Result result = block.hitDistance(this);
+                switch(result.action()) {
+                    case ADD -> {
+                        position.add(direction.cpy().scl(result.distance()));
+                        hits.add(new Ray.Hit<>(block, this.position.cpy(), distance));
+                    }
+                    case STOP -> {
+                        position.add(direction.cpy().scl(result.distance()));
+                        hits.add(new Ray.Hit<>(block, this.position.cpy(), distance));
+                        break castCycle;
+                    }
                 }
             }
         }

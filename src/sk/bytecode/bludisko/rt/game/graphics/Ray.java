@@ -6,7 +6,7 @@ import sk.bytecode.bludisko.rt.game.math.Vector2;
 public class Ray {
 
     public static record Hit<T>(T result, Vector2 position, float distance) {}
-    public static record Result(BlockType type, float distance) {}
+    public static record Result(RayAction action, float distance) {}
 
     protected Vector2 position;
     protected Vector2 startingPosition;
@@ -33,8 +33,8 @@ public class Ray {
     public void updateDirection(Vector2 direction) {
         this.direction = direction.cpy();
         this.marginalTileDistance = new Vector2(
-                Math.abs(direction.y / direction.x),
-                Math.abs(direction.x / direction.y)
+                Math.abs(direction.y / direction.x) * tileSize.x,
+                Math.abs(direction.x / direction.y) * tileSize.y
         );
         this.sign = new Vector2(
                 Math.copySign(1f, direction.x),

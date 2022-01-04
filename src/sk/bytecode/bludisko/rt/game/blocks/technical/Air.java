@@ -1,7 +1,7 @@
 package sk.bytecode.bludisko.rt.game.blocks.technical;
 
 import sk.bytecode.bludisko.rt.game.blocks.Block;
-import sk.bytecode.bludisko.rt.game.graphics.BlockType;
+import sk.bytecode.bludisko.rt.game.graphics.RayAction;
 import sk.bytecode.bludisko.rt.game.graphics.Ray;
 import sk.bytecode.bludisko.rt.game.graphics.Texture;
 
@@ -21,7 +21,7 @@ public class Air extends Block {
 
     @Override
     public Ray.Result hitDistance(Ray ray) {
-        return new Ray.Result(BlockType.TRANSPARENT, -1);
+        return new Ray.Result(RayAction.SKIP, -1);
     }
 
 }

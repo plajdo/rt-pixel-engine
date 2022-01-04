@@ -1,14 +1,15 @@
 package sk.bytecode.bludisko.rt.game.blocks.walls;
 
 import sk.bytecode.bludisko.rt.game.blocks.Block;
-import sk.bytecode.bludisko.rt.game.graphics.BlockType;
+import sk.bytecode.bludisko.rt.game.graphics.RayAction;
 import sk.bytecode.bludisko.rt.game.graphics.Ray;
 import sk.bytecode.bludisko.rt.game.graphics.Texture;
 import sk.bytecode.bludisko.rt.game.math.MathUtils;
 
 public class RedWall extends Block {
 
-    private final Texture texture = new Texture((x, y) -> MathUtils.INT_MSB_MASK | 65536 * 192 * ((x % 16) & (y % 16)));
+    //private final Texture texture = new Texture((x, y) -> MathUtils.INT_MSB_MASK | 65536 * 192 * ((x % 16) & (y % 16)));
+    private final Texture texture = new Texture((x, y) -> 0xFF3F0000);
 
     @Override
     public Texture getTexture(float side) {
@@ -22,6 +23,6 @@ public class RedWall extends Block {
 
     @Override
     public Ray.Result hitDistance(Ray ray) {
-        return new Ray.Result(BlockType.OPAQUE, 0);
+        return new Ray.Result(RayAction.STOP, 0);
     }
 }

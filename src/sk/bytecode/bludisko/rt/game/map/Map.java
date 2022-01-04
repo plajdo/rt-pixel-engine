@@ -11,6 +11,10 @@ public class Map {
     @Serializable
     private final Integer[][] tiles;
 
+    public Map(Integer[][] tiles) {
+        this.tiles = tiles;
+    }
+
     public Map(int heightX, int widthY) {
         tiles = new Integer[heightX][widthY];
     }
@@ -39,17 +43,19 @@ public class Map {
         tiles[x][y] = value;
     }
 
-    public Block getBlockAt(Vector2 position) {
+    public Block[] getBlocksAt(Vector2 position) {
         boolean onEdge = coordinatesOnBlockEdge(position);
 
         Block centerBlock = BlockManager.getBlock(getTile((int) position.x, (int) position.y));
-        if(!onEdge || centerBlock != BlockManager.getBlock(0)) {
-            return centerBlock;
+        if(!onEdge) {
+            return new Block[] { centerBlock };
         }
         if(position.x % 1 == 0) {
-            return BlockManager.getBlock(getTile((int) position.x - 1, (int) position.y));
+            Block neighbouringBlockX = BlockManager.getBlock(getTile((int) position.x - 1, (int) position.y));
+            return new Block[] { centerBlock, neighbouringBlockX };
         } else {
-            return BlockManager.getBlock(getTile((int) position.x, (int) position.y - 1));
+            Block neighbouringBlockY = BlockManager.getBlock(getTile((int) position.x, (int) position.y - 1));
+            return new Block[] { centerBlock, neighbouringBlockY };
         }
     }
 

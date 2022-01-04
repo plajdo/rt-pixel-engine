@@ -117,7 +117,14 @@ public class Camera {
                     Color color = texture.getRGB(texelX, texelY);
 
                     if(k >= 0 && k < (int) viewportSize.y) {
-                        screenBuffer[i + k * (int) viewportSize.x] = color.scaled(colorScale);
+                        int currentColor = screenBuffer[i + k * (int) viewportSize.x];
+                        screenBuffer[i + k * (int) viewportSize.x] = color.fade(currentColor);
+
+                        /*if(((currentColor & MathUtils.INT_MSB_MASK) >>> 24) > 0) {
+                            screenBuffer[i + k * (int) viewportSize.x] = color.added(currentColor);
+                        } else {
+                            screenBuffer[i + k * (int) viewportSize.x] = color.scaled(colorScale);
+                        }*/
                     }
                 }
 
