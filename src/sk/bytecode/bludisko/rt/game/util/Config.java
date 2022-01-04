@@ -1,7 +1,5 @@
 package sk.bytecode.bludisko.rt.game.util;
 
-import sk.bytecode.bludisko.rt.game.serialization.Serializable;
-
 import java.awt.event.KeyEvent;
 
 public class Config {
@@ -19,7 +17,7 @@ public class Config {
 
     public static class Display {
 
-        public static final float DRAWING_QUALITY = 1f;
+        public static final float DRAWING_QUALITY = 0.5f;
         public static final int RENDER_DISTANCE = 100;
 
     }

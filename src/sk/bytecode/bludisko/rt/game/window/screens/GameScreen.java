@@ -95,6 +95,7 @@ public final class GameScreen extends Screen implements GameInputManagerDelegate
     @Override
     public void didUpdateRotation(Vector2 rotation) {
         camera.rotate(rotation.x * MathUtils.degreesToRadians);
+        camera.setPitch(rotation.y * 0.1f);
     }
 
 }

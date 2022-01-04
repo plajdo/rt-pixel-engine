@@ -36,6 +36,7 @@ public final class Window {
         this.setupCanvas();
         this.setupFrame();
         this.setupScreen(screen);
+        this.frame.requestFocus();
     }
 
     private void setupCanvas() {

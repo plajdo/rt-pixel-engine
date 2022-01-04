@@ -11,7 +11,8 @@ import java.util.function.ToIntBiFunction;
 
 public class Texture {
 
-    public static final int SIZE = 64;
+    public static final int WIDTH = 64;
+    public static final int HEIGHT = 64;
 
     private final BufferedImage image;
 
@@ -39,14 +40,14 @@ public class Texture {
      *                       returns an int representing 32-bit colour.
      */
     public Texture(@NotNull ToIntBiFunction<Integer, Integer> texelGenerator) {
-        int[] texelArray = new int[SIZE * SIZE];
-        for(int x = 0; x < SIZE; x++) {
-            for(int y = 0; y < SIZE; y++) {
-                texelArray[(x * SIZE) + y] = texelGenerator.applyAsInt(x, y);
+        int[] texelArray = new int[64 * 64];
+        for(int x = 0; x < 64; x++) {
+            for(int y = 0; y < 64; y++) {
+                texelArray[(x * 64) + y] = texelGenerator.applyAsInt(x, y);
             }
         }
 
-        BufferedImage generatedImage = new BufferedImage(SIZE, SIZE, BufferedImage.TYPE_INT_ARGB);
+        BufferedImage generatedImage = new BufferedImage(64, 64, BufferedImage.TYPE_INT_ARGB);
         final int[] imageTexelArray = ((DataBufferInt) generatedImage.getRaster().getDataBuffer()).getData();
 
         System.arraycopy(texelArray, 0, imageTexelArray, 0, texelArray.length);
@@ -56,7 +57,7 @@ public class Texture {
 
     // MARK: - Public
 
-    public Color getRGB(int x, int y) {
+    public Color getColor(int x, int y) {
         return new Color(image.getRGB(x, y));
     }
 

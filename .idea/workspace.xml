@@ -13,18 +13,12 @@
     <list default="true" id="b56b9792-09b5-4a62-8384-5317f301f33f" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/res/maps/testMap3_walls.map" beforeDir="false" afterPath="$PROJECT_DIR$/res/maps/testMap3_walls.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/blocks/Block.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/blocks/Block.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/blocks/BlockManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/blocks/BlockManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/blocks/technical/Air.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/blocks/technical/Air.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/blocks/technical/MissingBlock.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/blocks/technical/MissingBlock.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/blocks/walls/HalfWall.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/blocks/technical/HalfWall.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/blocks/walls/RedWall.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/blocks/walls/WhiteTiles.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/graphics/BlockRay.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/graphics/BlockRay.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/entities/Entity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/entities/Entity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/graphics/Camera.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/graphics/Camera.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/graphics/Color.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/graphics/Color.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/graphics/Ray.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/graphics/Ray.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/graphics/Texture.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/graphics/Texture.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/math/MathUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/math/MathUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/input/GameInputManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/input/GameInputManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/util/Config.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/util/Config.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/window/screens/GameScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/window/screens/GameScreen.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test/MapTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/MapTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -199,7 +193,7 @@
       <workItem from="1641125443827" duration="2741000" />
       <workItem from="1641130657867" duration="40800000" />
       <workItem from="1641236160602" duration="23760000" />
-      <workItem from="1641310902064" duration="14304000" />
+      <workItem from="1641310902064" duration="21617000" />
     </task>
     <servers />
   </component>
@@ -247,7 +241,7 @@
           <condition expression="i&gt;319" language="JAVA" />
           <dependency id="0" />
           <url>file://$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/graphics/Camera.java</url>
-          <line>69</line>
+          <line>96</line>
           <option name="timeStamp" value="60" />
         </line-breakpoint>
       </breakpoints>
