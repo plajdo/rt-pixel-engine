@@ -1,49 +1,63 @@
 package sk.bytecode.bludisko.rt.game.map;
 
+import sk.bytecode.bludisko.rt.game.math.Vector2;
+import sk.bytecode.bludisko.rt.game.serialization.Serializable;
 import sk.bytecode.bludisko.rt.game.serialization.Tag;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.net.URL;
 
 public class GameMap {
 
-    private Map walls;
-    private Map walkable;
+    @Serializable private final Map walls;
+    @Serializable private final Map walkable;
+    @Serializable private final Map floor;
 
-    // MARK: - Constructor
+    @Serializable private final Vector2 spawnLocation;
+    @Serializable private final Vector2 spawnDirection;
 
-    public GameMap(String mapName, int width, int height) {
-        walls = new Map(height, width);
-        walkable = new Map(height, width);
+    // MARK: - Initialize
 
+    public static GameMap fromFile(String name) {
         try {
-            loadMaps(mapName);
+            var inputStream = new FileInputStream("res/maps/" + name);
+            byte[] mapBytes = inputStream.readAllBytes();
+            inputStream.close();
+
+            return Tag.fromBytes(mapBytes, GameMap.class).getContent();
         } catch(IOException e) {
-            System.err.println("Could not load map due to exception: " + e.getLocalizedMessage());
+            throw new RuntimeException("Could not load map!\nOriginal exception: " + e.getLocalizedMessage());
         }
+    }
+
+    public GameMap(Map walls, Map walkable, Map floor, Vector2 spawnLocation, Vector2 spawnDirection) {
+        this.walls = walls;
+        this.walkable = walkable;
+        this.floor = floor;
+        this.spawnLocation = spawnLocation;
+        this.spawnDirection = spawnDirection;
     }
 
     // MARK: - Public
 
-    public Map getWallMap() {
+    public Map walls() {
         return walls;
     }
 
-    // MARK: - Private
-
-    private void loadMaps(String name) throws IOException {
-        this.walls = loadMap(name + "_walls");
-        this.walkable = loadMap(name + "_walkable");
+    public Map walkable() {
+        return walkable;
     }
 
-    private Map loadMap(String name) throws IOException {
-        var inputStream = new FileInputStream("res/maps/" + name + ".map");
-        byte[] mapBytes = inputStream.readAllBytes();
+    public Map floor() {
+        return floor;
+    }
 
-        inputStream.close();
+    public Vector2 getSpawnLocation() {
+        return spawnLocation;
+    }
 
-        return Tag.fromBytes(mapBytes, Map.class).getContent();
+    public Vector2 getSpawnDirection() {
+        return spawnDirection;
     }
 
 }

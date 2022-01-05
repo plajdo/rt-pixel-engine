@@ -36,8 +36,8 @@ public class Texture {
     /**
      * Generate texture based on provided generator.
      * Texture is always 64x64 ARGB.
-     * @param texelGenerator Texel generator. Accepts [x, y] as its parameters,
-     *                       returns an int representing 32-bit colour.
+     * @param texelGenerator Texel generator. Accepts (x, y) as its parameters,
+     *                       returns an int representing 32-bit ARGB colour for pixel with coordinates (x, y).
      */
     public Texture(@NotNull ToIntBiFunction<Integer, Integer> texelGenerator) {
         int[] texelArray = new int[64 * 64];

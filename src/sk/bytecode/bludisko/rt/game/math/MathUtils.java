@@ -64,4 +64,8 @@ public final class MathUtils {
         return b == 0 ? a : gcd(b, a % b);
     }
 
+    public static int clamp(int value, int min, int max) {
+        return value > max ? max : Math.max(value, min);
+    }
+
 }

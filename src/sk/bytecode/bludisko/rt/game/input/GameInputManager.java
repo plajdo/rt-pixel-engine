@@ -68,14 +68,14 @@ public class GameInputManager extends InputManager {
             this.mouseLocked = !this.mouseLocked;
         }
 
-        withDelegate(d -> d.didUpdateDirection(toVector(this.direction)));
+        withDelegate(d -> d.didUpdateMovementDirection(toVector(this.direction)));
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
         toggleDirectionOff(e.getKeyCode());
 
-        withDelegate(d -> d.didUpdateDirection(toVector(this.direction)));
+        withDelegate(d -> d.didUpdateMovementDirection(toVector(this.direction)));
     }
 
     // MARK: - MouseListener

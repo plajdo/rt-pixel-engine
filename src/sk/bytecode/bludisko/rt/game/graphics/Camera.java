@@ -1,8 +1,8 @@
 package sk.bytecode.bludisko.rt.game.graphics;
 
 import sk.bytecode.bludisko.rt.game.blocks.Block;
-import sk.bytecode.bludisko.rt.game.blocks.BlockManager;
-import sk.bytecode.bludisko.rt.game.map.Map;
+import sk.bytecode.bludisko.rt.game.entities.Entity;
+import sk.bytecode.bludisko.rt.game.map.GameMap;
 import sk.bytecode.bludisko.rt.game.math.MathUtils;
 import sk.bytecode.bludisko.rt.game.math.Vector2;
 import sk.bytecode.bludisko.rt.game.util.Config;
@@ -11,88 +11,71 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
+import java.lang.ref.WeakReference;
 
 public class Camera {
 
-    private Map map;
+    private WeakReference<Entity> bindedEntity;
+    private GameMap map;
 
-    private final Vector2 position;
-    private final Vector2 direction;
-    private final Vector2 plane;
+    private Vector2 position;
+    private Vector2 direction;
+    private Vector2 plane;
 
     private float positionZ;
     private float pitch;
 
-    private final Vector2 viewportSize;
+    private Vector2 viewportSize;
     private Rectangle screenSize;
 
-    public Vector2 movementVector = Vector2.Zero;
-    public float speed = 1.5f;
+    // MARK: - Constructor
 
-    public Camera(Map map, Vector2 position, Vector2 direction) {
-        this.position = position;
-        this.direction = direction;
-        this.plane = direction.cpy().rotate90(-1).scl(2f / 3f);
-        this.pitch = 0f;
+    public Camera(Entity entity) {
+        this.position = new Vector2(0f, 0f);
         this.positionZ = 0f;
 
-        this.map = map;
+        this.direction = new Vector2(0f, -1f);
+        this.pitch = 0;
 
-        this.viewportSize = new Vector2(160, 90);
-        this.screenSize = new Rectangle(160, 90);
+        this.plane = direction.cpy().rotate90(-1).scl(2f / 3f);
+        this.viewportSize = new Vector2(320, 240);
+        this.screenSize = new Rectangle(320, 240);
+
+        this.bindedEntity = new WeakReference<>(entity);
     }
 
-    public void rotate(float angleDeg) {
-        direction.rotateDeg(angleDeg);
-        plane.rotateDeg(angleDeg);
-    }
+    // MARK: - Game loop
 
-    public void setPitch(float pitch) {
-        this.pitch += pitch;
-        if(this.pitch < -200) {
-            this.pitch = -200;
-        }
-        if(this.pitch > 200) {
-            this.pitch = 200;
-        }
-    }
+    public synchronized void draw(Graphics graphics) {
+        BufferedImage bufferedImage = new BufferedImage(
+                (int) viewportSize.x,
+                (int) viewportSize.y,
+                BufferedImage.TYPE_INT_ARGB
+        );
+        final int[] screenBuffer = ((DataBufferInt) bufferedImage.getRaster().getDataBuffer()).getData();
 
-    public void tick(float dt) {
-        position.add(movementVector.cpy().scl(dt).scl(speed).rotateRad(direction.angleRad()));
-    }
+        drawFloor(screenBuffer);
+        drawWalls(screenBuffer);
 
-    public void draw(Graphics graphics) {
-        synchronized(this) {
-            BufferedImage bufferedImage = new BufferedImage(
-                    (int) viewportSize.x,
-                    (int) viewportSize.y,
-                    BufferedImage.TYPE_INT_ARGB
-            );
-            final int[] screenBuffer = ((DataBufferInt) bufferedImage.getRaster().getDataBuffer()).getData();
+        int width = (int) (viewportSize.x / Config.Display.DRAWING_QUALITY);
+        int height = (int) (viewportSize.y / Config.Display.DRAWING_QUALITY);
+        int imgTopLeftX = (screenSize.width / 2) - (width / 2);
+        int imgTopLeftY = (screenSize.height / 2) - (height / 2);
 
-            drawFloor(screenBuffer);
-            drawWalls(screenBuffer);
-
-            int width = (int) (viewportSize.x / Config.Display.DRAWING_QUALITY);
-            int height = (int) (viewportSize.y / Config.Display.DRAWING_QUALITY);
-            int imgTopLeftX = (screenSize.width / 2) - (width / 2);
-            int imgTopLeftY = (screenSize.height / 2) - (height / 2);
-
-            graphics.setColor(java.awt.Color.green);
-            graphics.drawImage(bufferedImage, imgTopLeftX, imgTopLeftY, width, height, null);
-            graphics.drawString(this.position.toString(), 0, 50);
-        }
+        graphics.setColor(java.awt.Color.green);
+        graphics.drawImage(bufferedImage, imgTopLeftX, imgTopLeftY, width, height, null);
+        graphics.drawString(this.position.toString(), 0, 50);
     }
 
     private void drawWalls(final int[] screenBuffer) {
         for(int i = 0; i < (int) viewportSize.x; i++) {
             float screenX = 2f * i / (int) viewportSize.x - 1f;
             Vector2 rayDirection = new Vector2(
-                    this.direction.x + plane.x * screenX,
-                    this.direction.y + plane.y * screenX
+                    this.direction.x + this.plane.x * screenX,
+                    this.direction.y + this.plane.y * screenX
             ).nor();
 
-            var ray = new BlockRay(this.position, rayDirection, map);
+            var ray = new BlockRay(map.walls(), this.position.cpy(), rayDirection);
             var zBuffer = ray.cast(Config.Display.RENDER_DISTANCE);
 
             for(int j = zBuffer.size() - 1; j >= 0; j--) {
@@ -122,13 +105,16 @@ public class Camera {
                 int objectTop = (int) ((floorLevel - objectHeight / 2) + pitch + (positionZ / distance));
                 int objectBottom = (int) (floorLevel + pitch + (positionZ / distance));
 
+                int loopStart = MathUtils.clamp(objectTop, 0, screenHeight);
+                int loopEnd = MathUtils.clamp(objectBottom, 0, screenHeight);
+
                 float texelStep = 1f * Texture.HEIGHT / marginalObjectHeight;
-                float texelPosition = texelStep;
+                float texelPosition = texelStep * Math.max(-objectTop, 1);
 
                 float colorScale = 1 - (hitSide * 0.33f);
 
-                for(int k = objectTop; k < objectBottom; k++) {
-                    int texelY = (int)texelPosition & (Texture.WIDTH - 1);
+                for(int k = loopStart; k < loopEnd; k++) {
+                    int texelY = (int)texelPosition & (Texture.HEIGHT - 1);
                     texelPosition += texelStep;
 
                     Texture texture = hit.result().getTexture(hitSide);
@@ -168,35 +154,77 @@ public class Camera {
                     .add(rayDirectionLeft.cpy().scl(floorDistance));
 
             for(int x = 0; x < screenWidth; x++) {
-                int tileX = (int)floorCoordinates.x;
-                int tileY = (int)floorCoordinates.y;
-
                 Vector2 floorTilePosition = MathUtils.decimalPart(floorCoordinates);
                 int textureX = (int) Math.min(Texture.WIDTH * floorTilePosition.x, Texture.WIDTH - 1);
                 int textureY = (int) Math.min(Texture.HEIGHT * floorTilePosition.y, Texture.HEIGHT - 1);
 
                 floorCoordinates.add(marginalFloorDistance);
 
-                int color = BlockManager.getBlock(1).getTexture(0).getColor(textureX, textureY).argb();
+                int color = map.floor()
+                        .getBlocksAt(floorCoordinates)[0]
+                        .getTexture(0)
+                        .getColor(textureX, textureY)
+                        .argb();
 
                 screenBuffer[x + y * screenWidth] = color;
             }
         }
     }
 
-    public void setScreenSize(Rectangle size) {
-        synchronized(this) {
-            this.screenSize = size;
+    // MARK: - Private
 
-            var width = Math.max(size.width, size.height);
-            var height = width / 1.33333f;
+    private void updateCameraPlane() {
+        this.plane.set(
+                direction.cpy()
+                        .rotate90(-1)
+                        .scl(2f / 3f)
+                        .scl((float) screenSize.width / (float) screenSize.height / 1.33333f)
+        );
+    }
 
-            this.viewportSize.set(
-                    width * Config.Display.DRAWING_QUALITY,
-                    height * Config.Display.DRAWING_QUALITY
-            );
-            this.plane.set(direction.cpy().rotate90(-1).scl(2f / 3f).scl(width / height / 1.33333f));
+    // MARK: - Modifiers
+
+    public synchronized void move(Vector2 length) {
+        position.add(length);
+    }
+
+    public synchronized void rotate(float angleDeg, float pitch) {
+        direction.rotateDeg(angleDeg);
+        plane.rotateDeg(angleDeg);
+
+        this.pitch += pitch;
+        if(this.pitch < -200) {
+            this.pitch = -200;
         }
+        if(this.pitch > 200) {
+            this.pitch = 200;
+        }
+    }
+
+    public void bind(Entity entity) {
+        this.map = entity.getMap();
+        this.position.set(entity.getPosition());
+        this.direction.set(entity.getDirection());
+
+        this.positionZ = entity.getPositionZ();
+        this.pitch = entity.getPitch();
+
+        updateCameraPlane();
+    }
+
+    // MARK: - Setters
+
+    public synchronized void setScreenSize(Rectangle size) {
+        this.screenSize = size;
+
+        var width = Math.max(size.width, size.height);
+        var height = width / 1.33333f;
+
+        this.viewportSize.set(
+                width * Config.Display.DRAWING_QUALITY,
+                height * Config.Display.DRAWING_QUALITY
+        );
+        updateCameraPlane();
     }
 
 }

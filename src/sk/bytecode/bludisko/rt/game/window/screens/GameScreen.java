@@ -3,17 +3,14 @@ package sk.bytecode.bludisko.rt.game.window.screens;
 import sk.bytecode.bludisko.rt.game.entities.Player;
 import sk.bytecode.bludisko.rt.game.graphics.Camera;
 import sk.bytecode.bludisko.rt.game.input.GameInputManager;
-import sk.bytecode.bludisko.rt.game.input.GameInputManagerDelegate;
 import sk.bytecode.bludisko.rt.game.input.InputManager;
 import sk.bytecode.bludisko.rt.game.map.GameMap;
-import sk.bytecode.bludisko.rt.game.math.MathUtils;
-import sk.bytecode.bludisko.rt.game.math.Vector2;
 import sk.bytecode.bludisko.rt.game.window.Window;
 
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
-public final class GameScreen extends Screen implements GameInputManagerDelegate {
+public final class GameScreen extends Screen {
 
     private final InputManager gameInput = new GameInputManager();
 
@@ -25,24 +22,28 @@ public final class GameScreen extends Screen implements GameInputManagerDelegate
 
     public GameScreen() {
         setupMap();
-        setupCamera();
+        setupPlayer();
         setupInput();
     }
 
     private void setupMap() {
-        this.map = new GameMap("testMap3", 0, 0);
+        this.map = GameMap.fromFile("testMap3.map");
     }
 
-    // TODO: setup player
-    private void setupCamera() {
-        //Vector2 cameraPosition = new Vector2(21f, 13f);
-        Vector2 cameraPosition = new Vector2(2f, 5f);
-        Vector2 cameraDirection = new Vector2(0, 1);
-        this.camera = new Camera(map.getWallMap(), cameraPosition, cameraDirection);
+    private void setupPlayer() {
+        this.player = new Player(
+                this.map,
+                this.map.getSpawnLocation(),
+                this.map.getSpawnDirection(),
+                0f,
+                0f
+        );
+        this.camera = new Camera(this.player);
+        player.setCamera(this.camera);
     }
 
     private void setupInput() {
-        gameInput.setDelegate(this);
+        gameInput.setDelegate(this.player);
         gameInput.setMouseLocked(true);
     }
 
@@ -78,26 +79,12 @@ public final class GameScreen extends Screen implements GameInputManagerDelegate
     @Override
     public void tick(float dt) {
         super.tick(dt);
-
-        camera.tick(dt);
+        player.tick(dt);
     }
 
     @Override
     public void draw(Graphics graphics) {
         camera.draw(graphics);
-    }
-
-    // MARK: - Input manager
-
-    @Override
-    public void didUpdateDirection(Vector2 direction) {
-        camera.movementVector = direction;
-    }
-
-    @Override
-    public void didUpdateRotation(Vector2 rotation) {
-        camera.rotate(rotation.x * MathUtils.degreesToRadians);
-        camera.setPitch(rotation.y * 0.1f);
     }
 
 }

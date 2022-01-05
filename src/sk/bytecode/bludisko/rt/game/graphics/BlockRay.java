@@ -7,12 +7,8 @@ import sk.bytecode.bludisko.rt.game.math.Vector2;
 import java.util.ArrayList;
 
 public class BlockRay extends Ray {
-
-    private final Map map;
-
-    public BlockRay(Vector2 position, Vector2 direction, Map map) {
-        super(position, direction);
-        this.map = map;
+    public BlockRay(Map map, Vector2 position, Vector2 direction) {
+        super(map, position, direction);
     }
 
     public ArrayList<Ray.Hit<Block>> cast(int maxSteps) {
@@ -24,12 +20,8 @@ public class BlockRay extends Ray {
             for(Block block : blocks) {
                 RayAction action = block.hitAction(this);
                 switch(action) {
-                    case ADD -> {
-                        //position.add(direction.cpy().scl(result.distance()));
-                        hits.add(new Ray.Hit<>(block, this.position.cpy(), distance));
-                    }
+                    case ADD -> hits.add(new Hit<>(block, this.position.cpy(), distance));
                     case STOP -> {
-                        //position.add(direction.cpy().scl(result.distance()));
                         hits.add(new Ray.Hit<>(block, this.position.cpy(), distance));
                         break castCycle;
                     }
