@@ -17,9 +17,15 @@ public class Config {
 
     public static class Display {
 
-        public static final float DRAWING_QUALITY = 0.5f;
-        public static final int RENDER_DISTANCE = 100;
+        public static float DRAWING_QUALITY = 1f;
+        public static int RENDER_DISTANCE = 100;
 
     }
 
 }
+
+/*
+
+TODO: prepočítať pitch/positionZ zo screen pixelov na uhly/metre
+
+ */

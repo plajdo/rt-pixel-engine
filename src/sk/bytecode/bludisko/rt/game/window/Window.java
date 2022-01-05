@@ -2,6 +2,7 @@ package sk.bytecode.bludisko.rt.game.window;
 
 import org.jetbrains.annotations.NotNull;
 import sk.bytecode.bludisko.rt.game.input.InputManager;
+import sk.bytecode.bludisko.rt.game.util.Config;
 import sk.bytecode.bludisko.rt.game.window.screens.Screen;
 
 import javax.swing.*;
@@ -13,7 +14,7 @@ import java.awt.image.BufferedImage;
 
 public final class Window {
 
-    private final static int FRAMERATE = 24;
+    private final static int FRAMERATE = 60;
     private final static float FRAME_TIME = 1000f / FRAMERATE;
 
     private final Dimension windowSize;
@@ -146,13 +147,14 @@ public final class Window {
             long currentTime = System.currentTimeMillis();
 
             float deltaMilliseconds = currentTime - lastFrameTime;
+            updateDrawingQuality(deltaMilliseconds);
+
             if(deltaMilliseconds > FRAME_TIME) {
                 lastFrameTime = System.currentTimeMillis();
 
                 float deltaSeconds = deltaMilliseconds * 0.001f;
                 tick(deltaSeconds);
                 drawFrame();
-
             } else {
                 synchronized (this) {
                     wait((long)FRAME_TIME / 2);
@@ -163,6 +165,29 @@ public final class Window {
 
     private void tick(float delta) {
         screen.tick(delta);
+    }
+
+    private void updateDrawingQuality(float dt) {
+        if(dt > FRAME_TIME * 2) {
+            Config.Display.DRAWING_QUALITY *= 0.9f;
+            screen.screenDidChangeBounds(
+                    new Rectangle(
+                            this.windowSize.width,
+                            this.windowSize.height
+                    )
+            );
+        }
+        if(dt < FRAME_TIME / 2) {
+            if(Config.Display.DRAWING_QUALITY < 1) {
+                Config.Display.DRAWING_QUALITY *= 1.1f;
+                screen.screenDidChangeBounds(
+                        new Rectangle(
+                                this.windowSize.width,
+                                this.windowSize.height
+                        )
+                );
+            }
+        }
     }
 
     // MARK: - Graphics

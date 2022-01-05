@@ -2,7 +2,6 @@ package sk.bytecode.bludisko.rt.game.graphics;
 
 import sk.bytecode.bludisko.rt.game.blocks.Block;
 import sk.bytecode.bludisko.rt.game.blocks.BlockManager;
-import sk.bytecode.bludisko.rt.game.entities.Entity;
 import sk.bytecode.bludisko.rt.game.map.Map;
 import sk.bytecode.bludisko.rt.game.math.MathUtils;
 import sk.bytecode.bludisko.rt.game.math.Vector2;
@@ -63,29 +62,28 @@ public class Camera {
     }
 
     public void draw(Graphics graphics) {
-        BufferedImage bufferedImage = new BufferedImage(
-                (int) viewportSize.x,
-                (int) viewportSize.y,
-                BufferedImage.TYPE_INT_ARGB
-        );
-        final int[] screenBuffer = ((DataBufferInt) bufferedImage.getRaster().getDataBuffer()).getData();
-
         synchronized(this) {
+            BufferedImage bufferedImage = new BufferedImage(
+                    (int) viewportSize.x,
+                    (int) viewportSize.y,
+                    BufferedImage.TYPE_INT_ARGB
+            );
+            final int[] screenBuffer = ((DataBufferInt) bufferedImage.getRaster().getDataBuffer()).getData();
+
             drawFloor(screenBuffer);
             drawWalls(screenBuffer);
+
+            int width = (int) (viewportSize.x / Config.Display.DRAWING_QUALITY);
+            int height = (int) (viewportSize.y / Config.Display.DRAWING_QUALITY);
+            int imgTopLeftX = (screenSize.width / 2) - (width / 2);
+            int imgTopLeftY = (screenSize.height / 2) - (height / 2);
+
+            graphics.setColor(java.awt.Color.green);
+            graphics.drawImage(bufferedImage, imgTopLeftX, imgTopLeftY, width, height, null);
+            graphics.drawString(this.position.toString(), 0, 50);
         }
-
-        int width = (int) (viewportSize.x / Config.Display.DRAWING_QUALITY);
-        int height = (int) (viewportSize.y / Config.Display.DRAWING_QUALITY);
-        int imgTopLeftX = (screenSize.width / 2) - (width / 2);
-        int imgTopLeftY = (screenSize.height / 2) - (height / 2);
-
-        graphics.setColor(java.awt.Color.green);
-        graphics.drawImage(bufferedImage, imgTopLeftX, imgTopLeftY, width, height, null);
-        graphics.drawString(this.position.toString(), 0, 50);
     }
 
-    @SuppressWarnings("UnnecessaryLocalVariable")
     private void drawWalls(final int[] screenBuffer) {
         for(int i = 0; i < (int) viewportSize.x; i++) {
             float screenX = 2f * i / (int) viewportSize.x - 1f;
@@ -121,8 +119,8 @@ public class Camera {
                 int floorLevel = eyeLevel + horizon;
 
                 float objectHeight = hit.result().getHeight() * marginalObjectHeight;
-                int objectTop = (int) ((floorLevel - objectHeight / 2) + pitch);
-                int objectBottom = (int) (floorLevel + pitch);
+                int objectTop = (int) ((floorLevel - objectHeight / 2) + pitch + (positionZ / distance));
+                int objectBottom = (int) (floorLevel + pitch + (positionZ / distance));
 
                 float texelStep = 1f * Texture.HEIGHT / marginalObjectHeight;
                 float texelPosition = texelStep;
@@ -197,6 +195,7 @@ public class Camera {
                     width * Config.Display.DRAWING_QUALITY,
                     height * Config.Display.DRAWING_QUALITY
             );
+            this.plane.set(direction.cpy().rotate90(-1).scl(2f / 3f).scl(width / height / 1.33333f));
         }
     }
 

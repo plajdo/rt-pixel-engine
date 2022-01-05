@@ -1,5 +1,6 @@
 package sk.bytecode.bludisko.rt.game.window.screens;
 
+import sk.bytecode.bludisko.rt.game.entities.Player;
 import sk.bytecode.bludisko.rt.game.graphics.Camera;
 import sk.bytecode.bludisko.rt.game.input.GameInputManager;
 import sk.bytecode.bludisko.rt.game.input.GameInputManagerDelegate;
@@ -16,6 +17,7 @@ public final class GameScreen extends Screen implements GameInputManagerDelegate
 
     private final InputManager gameInput = new GameInputManager();
 
+    private Player player;
     private Camera camera;
     private GameMap map;
 

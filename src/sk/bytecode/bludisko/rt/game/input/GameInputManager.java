@@ -64,6 +64,7 @@ public class GameInputManager extends InputManager {
         toggleDirectionOn(e.getKeyCode());
 
         if(e.getKeyCode() == Config.Keybinds.LOCK_MOUSE) {
+            robot.mouseMove(0, 0);
             this.mouseLocked = !this.mouseLocked;
         }
 
