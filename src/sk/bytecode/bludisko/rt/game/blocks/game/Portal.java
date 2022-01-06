@@ -1,4 +1,4 @@
-package sk.bytecode.bludisko.rt.game.blocks.walls;
+package sk.bytecode.bludisko.rt.game.blocks.game;
 
 import sk.bytecode.bludisko.rt.game.blocks.Block;
 import sk.bytecode.bludisko.rt.game.graphics.*;
@@ -40,11 +40,6 @@ public class Portal extends Block {
     @Override
     public float getHeight() {
         return height;
-    }
-
-    @Override
-    public boolean hasPriority() {
-        return false;
     }
 
     @Override

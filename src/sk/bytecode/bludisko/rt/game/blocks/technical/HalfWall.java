@@ -24,11 +24,6 @@ public class HalfWall extends Block {
     }
 
     @Override
-    public boolean hasPriority() {
-        return false;
-    }
-
-    @Override
     public Vector2 getCoordinates() {
         return coordinates;
     }

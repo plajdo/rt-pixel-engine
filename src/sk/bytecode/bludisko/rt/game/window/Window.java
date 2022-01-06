@@ -31,7 +31,7 @@ public final class Window {
 
     public Window(@NotNull Screen screen) {
         this.windowSize = new Dimension(640, 480);
-        this.frame = new JFrame("bludisko_rt");
+        this.frame = new JFrame("rt_portal_demo");
         this.canvas = new Canvas();
 
         this.setupCanvas();

@@ -1,4 +1,4 @@
-package sk.bytecode.bludisko.rt.game.blocks.walls;
+package sk.bytecode.bludisko.rt.game.blocks.game;
 
 import sk.bytecode.bludisko.rt.game.blocks.technical.SideWall;
 import sk.bytecode.bludisko.rt.game.graphics.Side;

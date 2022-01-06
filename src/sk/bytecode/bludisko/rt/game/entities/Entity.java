@@ -1,6 +1,5 @@
 package sk.bytecode.bludisko.rt.game.entities;
 
-import sk.bytecode.bludisko.rt.game.map.GameMap;
 import sk.bytecode.bludisko.rt.game.map.World;
 import sk.bytecode.bludisko.rt.game.math.Vector2;
 
@@ -22,7 +21,7 @@ public abstract class Entity {
 
     public abstract void tick(float dt);
 
-    public World getWorlod() {
+    public World getWorld() {
         return world;
     }
 

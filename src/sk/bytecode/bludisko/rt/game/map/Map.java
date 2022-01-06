@@ -7,7 +7,7 @@ import sk.bytecode.bludisko.rt.game.math.MathUtils;
 import sk.bytecode.bludisko.rt.game.math.Vector2;
 import sk.bytecode.bludisko.rt.game.serialization.Serializable;
 
-public class Map {
+public final class Map {
 
     @Serializable
     private final Integer[][] tiles;

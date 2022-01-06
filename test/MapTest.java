@@ -77,7 +77,7 @@ public class MapTest {
         var mapWalkable = new Map(walkable);
         var mapFloor = new Map(floor);
 
-        var gameMap = new GameMap(mapWalls, mapFloor, spawn, spawnDir);
+        var gameMap = new GameMap(mapWalls, mapFloor, spawn, spawnDir, 0x00000000);
 
         Tag<GameMap> mapTag = new ObjectTag<>(gameMap);
 
@@ -97,14 +97,14 @@ public class MapTest {
                 { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
                 { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
                 { 0, 0, 0, 0, 0, 0, 0, 1, 2, 8, 1, 1, 0, 0, 0, 0, 0 },
-                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0 },
-                { 0, 0, 0, 1, 1, 1, 1, 1, 3, 3, 0, 1, 0, 0, 0, 0, 0 },
-                { 0, 0, 0, 1, 0, 0, 0, 7, 0, 0, 4, 1, 0, 0, 0, 0, 0 },
-                { 0, 0, 0, 1, 0, 0, 0, 6, 0, 0, 4, 1, 0, 0, 0, 0, 0 },
-                { 0, 0, 0, 0, 0, 0, 0, 0, 5, 5, 0, 1, 0, 0, 0, 0, 0 },
-                { 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0 },
-                { 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0 },
-                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+                { 0, 0, 0, 0, 0, 0, 0,11, 0, 0, 0, 2, 0, 0, 0, 0, 0 },
+                { 0, 0, 0, 0, 1, 1, 1, 1, 3, 3, 0, 2, 0, 0, 0, 0, 0 },
+                { 0, 0, 0, 0, 1, 0, 0, 7, 0, 0, 4, 2, 0, 0, 0, 0, 0 },
+                { 0, 0, 0, 0,13, 0, 0, 6, 0, 0, 4, 2, 0, 0, 0, 0, 0 },
+                { 0, 0, 0, 0, 1, 0, 0, 0, 5, 5, 0, 2, 0, 0, 0, 0, 0 },
+                { 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0 },
+                { 0, 0, 0, 0, 0, 1, 1, 1,10, 9, 1, 1, 0, 0, 0, 0, 0 },
+                { 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0 },
                 { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
                 { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }
         };
@@ -132,7 +132,9 @@ public class MapTest {
         var mapWalls = new Map(walls);
         var mapFloor = new Map(floor);
 
-        var gameMap = new GameMap(mapWalls, mapFloor, spawn, spawnDir);
+        var ceilingColor = 0xFF989898;
+
+        var gameMap = new GameMap(mapWalls, mapFloor, spawn, spawnDir, ceilingColor);
 
         Tag<GameMap> mapTag = new ObjectTag<>(gameMap);
 

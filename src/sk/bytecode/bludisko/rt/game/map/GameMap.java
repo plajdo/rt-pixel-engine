@@ -7,7 +7,7 @@ import sk.bytecode.bludisko.rt.game.serialization.Tag;
 import java.io.FileInputStream;
 import java.io.IOException;
 
-public class GameMap {
+public final class GameMap {
 
     @Serializable private final Map walls;
     @Serializable private final Map floor;
@@ -15,7 +15,9 @@ public class GameMap {
     @Serializable private final Vector2 spawnLocation;
     @Serializable private final Vector2 spawnDirection;
 
-    // MARK: - Initialize
+    @Serializable private int ceilingColor;
+
+    // MARK: - Create from file
 
     public static GameMap load(String name) {
         try {
@@ -33,11 +35,12 @@ public class GameMap {
         }
     }
 
-    public GameMap(Map walls, Map floor, Vector2 spawnLocation, Vector2 spawnDirection) {
+    public GameMap(Map walls, Map floor, Vector2 spawnLocation, Vector2 spawnDirection, int ceilingColor) {
         this.walls = walls;
         this.floor = floor;
         this.spawnLocation = spawnLocation;
         this.spawnDirection = spawnDirection;
+        this.ceilingColor = ceilingColor;
     }
 
     // MARK: - Public
@@ -58,4 +61,7 @@ public class GameMap {
         return spawnDirection;
     }
 
+    public int getCeilingColor() {
+        return ceilingColor;
+    }
 }

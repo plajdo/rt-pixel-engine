@@ -23,11 +23,6 @@ public class Air extends Block {
     }
 
     @Override
-    public boolean hasPriority() {
-        return false;
-    }
-
-    @Override
     public Vector2 getCoordinates() {
         return coordinates;
     }

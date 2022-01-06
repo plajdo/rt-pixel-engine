@@ -31,7 +31,9 @@ public final class GameScreen extends Screen {
     private void setupPlayer() {
         this.player = new Player(currentWorld);
         this.camera = new Camera();
-        player.setCamera(this.camera);
+
+        this.player.setCamera(this.camera);
+        this.currentWorld.setPlayer(player);
     }
 
     private void setupInput() {

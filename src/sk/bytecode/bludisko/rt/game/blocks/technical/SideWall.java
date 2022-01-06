@@ -26,12 +26,6 @@ public class SideWall extends Block {
     }
 
     @Override
-    @Deprecated
-    public boolean hasPriority() {
-        return false;
-    }
-
-    @Override
     public Vector2 getCoordinates() {
         return coordinates;
     }

@@ -1,28 +1,25 @@
-package sk.bytecode.bludisko.rt.game.blocks.technical;
+package sk.bytecode.bludisko.rt.game.blocks.game;
 
 import sk.bytecode.bludisko.rt.game.blocks.Block;
 import sk.bytecode.bludisko.rt.game.graphics.*;
 import sk.bytecode.bludisko.rt.game.math.Vector2;
 
-public class MissingBlock extends Block {
+public class Doors extends Block {
 
     private final Vector2 coordinates;
 
-    public MissingBlock(Vector2 coordinates) {
+    public Doors(Vector2 coordinates) {
         this.coordinates = coordinates;
     }
 
     @Override
     public Texture getTexture(Side side) {
-        if(side == Side.EAST || side == Side.WEST) {
-            return TextureManager.getGenerated(3);
-        }
-        return TextureManager.getGenerated(4);
+        return TextureManager.getTexture(12);
     }
 
     @Override
     public float getHeight() {
-        return 2f;
+        return 4;
     }
 
     @Override
@@ -32,7 +29,6 @@ public class MissingBlock extends Block {
 
     @Override
     public RayAction hitAction(Ray ray) {
-        return RayAction.ADD;
+        return RayAction.STOP;
     }
-
 }

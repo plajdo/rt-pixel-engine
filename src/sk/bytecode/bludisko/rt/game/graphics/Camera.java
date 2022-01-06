@@ -11,6 +11,7 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
+import java.util.Arrays;
 
 public class Camera {
 
@@ -50,6 +51,7 @@ public class Camera {
         );
         final int[] screenBuffer = ((DataBufferInt) bufferedImage.getRaster().getDataBuffer()).getData();
 
+        drawCeiling(screenBuffer);
         drawFloor(screenBuffer);
         drawWalls(screenBuffer);
 
@@ -141,8 +143,8 @@ public class Camera {
         for(int y = horizon + (int) pitch; y < (int) viewportSize.y; y++) {
             if(y < 0) continue;
 
-            float cameraY = y - screenHeight / 2f - pitch;
-            float cameraZ = 0.5f * screenHeight + positionZ;
+            float cameraY = y - (screenHeight / 2f) - pitch;
+            float cameraZ = (screenHeight / 2f) + positionZ;
 
             float floorDistance = cameraZ / cameraY;
 
@@ -166,6 +168,10 @@ public class Camera {
                 screenBuffer[x + y * screenWidth] = color;
             }
         }
+    }
+
+    private void drawCeiling(int[] buffer) {
+        Arrays.fill(buffer, map.getCeilingColor());
     }
 
     // MARK: - Private
@@ -199,7 +205,7 @@ public class Camera {
     }
 
     public void bind(Entity entity) {
-        this.map = entity.getMap();
+        this.map = entity.getWorld().getMap();
         this.position.set(entity.getPosition());
         this.direction.set(entity.getDirection());
 

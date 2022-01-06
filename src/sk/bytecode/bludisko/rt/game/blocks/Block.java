@@ -10,7 +10,7 @@ public abstract class Block {
 
     public abstract Texture getTexture(Side side);
     public abstract float getHeight();
-    public abstract boolean hasPriority();
+
     public abstract Vector2 getCoordinates();
     public abstract RayAction hitAction(Ray ray);
 

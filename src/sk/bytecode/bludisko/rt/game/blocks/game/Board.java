@@ -1,35 +1,30 @@
-package sk.bytecode.bludisko.rt.game.blocks.walls;
+package sk.bytecode.bludisko.rt.game.blocks.game;
 
 import sk.bytecode.bludisko.rt.game.blocks.Block;
 import sk.bytecode.bludisko.rt.game.graphics.*;
 import sk.bytecode.bludisko.rt.game.math.Vector2;
 
-public class BlackTiles extends Block {
+public class Board extends Block {
 
     private final Vector2 coordinates;
-    private final float height;
+    private final int number;
 
-    public BlackTiles(Vector2 coordinates, float height) {
+    public Board(Vector2 coordinates, int number) {
         this.coordinates = coordinates;
-        this.height = height;
+        this.number = number;
     }
 
     @Override
     public Texture getTexture(Side side) {
-        return switch((int) height) {
-            default -> TextureManager.getTexture(1);
-            case 4 -> TextureManager.getTexture(3);
-        };
+        if(this.number == 0) {
+            return TextureManager.getTexture(6);
+        }
+        return TextureManager.getTexture(2);
     }
 
     @Override
     public float getHeight() {
-        return height;
-    }
-
-    @Override
-    public boolean hasPriority() {
-        return false;
+        return 4;
     }
 
     @Override
@@ -41,5 +36,4 @@ public class BlackTiles extends Block {
     public RayAction hitAction(Ray ray) {
         return RayAction.STOP;
     }
-
 }

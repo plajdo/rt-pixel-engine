@@ -2,7 +2,7 @@ package sk.bytecode.bludisko.rt.game.blocks;
 
 import sk.bytecode.bludisko.rt.game.blocks.technical.Air;
 import sk.bytecode.bludisko.rt.game.blocks.technical.MissingBlock;
-import sk.bytecode.bludisko.rt.game.blocks.walls.*;
+import sk.bytecode.bludisko.rt.game.blocks.game.*;
 import sk.bytecode.bludisko.rt.game.graphics.Side;
 import sk.bytecode.bludisko.rt.game.math.Vector2;
 
@@ -25,11 +25,13 @@ public class BlockManager {
             case 7 -> new Portal(Side.EAST, Portal.Color.ORANGE, coordinates, 4);
             case 8 -> new Portal(Side.SOUTH, Portal.Color.BLUE, coordinates, 4);
 
-            //case 9 -> ...
-            //case 10 -> ...
-            // case 11 -> ...
+            case 9 -> new WallWindow(coordinates, false);
+            case 10 -> new WallWindow(coordinates, true);
+            case 11 -> new Board(coordinates, 0);
 
-            case 12 -> new FloorTiles(coordinates); // Floor tiles
+            case 12 -> new FloorTiles(coordinates);
+
+            case 13 -> new Doors(coordinates);
         };
     }
 }

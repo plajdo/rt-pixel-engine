@@ -41,12 +41,16 @@ public class TextureManager {
 
         loadedTextures[4] = new Texture("portal/bluePortal_2");
         loadedTextures[5] = new Texture("portal/orangePortal_2");
-        //loadedTextures[6] = new Texture("bluePortalTall");
+        loadedTextures[6] = new Texture("wall/board_0");
 
         loadedTextures[7] = new Texture("glass/glass");
         loadedTextures[8] = new Texture("glass/glass_2");
 
         loadedTextures[9] = new Texture("floor/darkFloorTile");
+
+        loadedTextures[10] = new Texture("wall/wallWindow");
+        loadedTextures[11] = new Texture("wall/wallWindowMirrored");
+        loadedTextures[12] = new Texture("wall/doors");
     }
 
     private static void generateTextures() {
