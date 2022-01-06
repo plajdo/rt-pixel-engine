@@ -2,29 +2,41 @@ package sk.bytecode.bludisko.rt.game.entities;
 
 import sk.bytecode.bludisko.rt.game.graphics.Camera;
 import sk.bytecode.bludisko.rt.game.graphics.DistanceRay;
-import sk.bytecode.bludisko.rt.game.graphics.Ray;
 import sk.bytecode.bludisko.rt.game.input.GameInputManagerDelegate;
-import sk.bytecode.bludisko.rt.game.map.GameMap;
+import sk.bytecode.bludisko.rt.game.map.Map;
+import sk.bytecode.bludisko.rt.game.map.World;
 import sk.bytecode.bludisko.rt.game.math.MathUtils;
 import sk.bytecode.bludisko.rt.game.math.Vector2;
-import sun.misc.Unsafe;
 
 public class Player extends Entity implements GameInputManagerDelegate {
+
+    private Map worldWallMap;
 
     private Camera camera;
     private Vector2 movementVector;
 
-    private float walkingSpeed;
+    private float walkingSpeed = 1.75f;
 
     // MARK: - Constructor
 
-    public Player(GameMap map, Vector2 position, Vector2 direction, float positionZ, float pitch) {
-        super(map, position, direction, positionZ, pitch);
+    public Player(World world) {
+        super(
+                world,
+                world.getMap().getSpawnLocation(),
+                world.getMap().getSpawnDirection(),
+                50f,
+                0f
+        );
+
         this.movementVector = new Vector2(0f, 0f);
-        this.walkingSpeed = 1.5f;
+        this.worldWallMap = world.getMap().walls();
     }
 
     // MARK: - Public
+
+    public void setWorld(World world) {
+        this.world = world;
+    }
 
     public void setCamera(Camera camera) {
         this.camera = camera;
@@ -50,23 +62,27 @@ public class Player extends Entity implements GameInputManagerDelegate {
         this.rotate(rotation.x * MathUtils.degreesToRadians, rotation.y * 0.1f);
     }
 
-    // MARK: - Private
-
-    private boolean canMove(Vector2 direction, float distance) {
-        var movementRay = new DistanceRay(this.map.walkable(), this.position.cpy(), direction.cpy().nor());
-        var hit = movementRay.cast(distance);
-
-        return hit < 0;
+    @Override
+    public void didUpdateSprintingStatus(boolean isSprinting) {
+        this.walkingSpeed = isSprinting ? 2.5f : 1.75f;
     }
 
+    // MARK: - Private
+
     private void move(float dt) {
-        var distance = movementVector.cpy()
+        var movementVector = this.movementVector.cpy()
                 .scl(walkingSpeed)
                 .scl(dt)
                 .rotateRad(direction.angleRad());
 
-        if(canMove(distance, distance.len())) {
-            position.add(distance);
+        var movementRay = new DistanceRay(this.worldWallMap, this.position.cpy(), direction.cpy().nor());
+        var nextHitDistance = movementRay.cast(movementVector.len());
+
+        if(Float.isNaN(nextHitDistance)) {
+            position.set(movementRay.getPosition());
+            direction.set(movementRay.getDirection());
+        } else if(nextHitDistance == -1) {
+            position.add(movementVector);
         }
     }
 

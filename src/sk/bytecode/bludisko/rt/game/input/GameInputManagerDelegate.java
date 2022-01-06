@@ -6,5 +6,6 @@ public interface GameInputManagerDelegate {
 
     void didUpdateMovementDirection(Vector2 direction);
     void didUpdateRotation(Vector2 rotation);
+    void didUpdateSprintingStatus(boolean isSprinting);
 
 }

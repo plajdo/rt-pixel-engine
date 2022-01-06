@@ -16,7 +16,7 @@ public class SideWall extends Block {
     }
 
     @Override
-    public Texture getTexture(float side) {
+    public Texture getTexture(Side side) {
         return TextureManager.getGenerated(6);
     }
 

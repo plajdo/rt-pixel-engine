@@ -54,7 +54,7 @@ public class Ray {
 
         Vector2 nextTileDistance;
         if(sign.x > 0 && sign.y > 0) {
-            nextTileDistance = new Vector2(tileSize).sub(positionInTile); // TODO: optimalizovať ify
+            nextTileDistance = new Vector2(tileSize).sub(positionInTile);
 
         } else if(sign.x > 0 && sign.y < 0) {
             nextTileDistance = new Vector2(tileSize.x - positionInTile.x, 0 + positionInTile.y);

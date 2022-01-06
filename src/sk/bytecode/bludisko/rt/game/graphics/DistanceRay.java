@@ -21,9 +21,13 @@ public class DistanceRay extends Ray {
         while(distance < maxLength) {
             Block[] blocks = map.getBlocksAt(position);
             for(Block block : blocks) {
-                if(!(block instanceof Air)) {
-                    return distance;
+                RayAction hit = block.hitAction(this);
+                if(hit == RayAction.SKIP) {
+                    continue;
+                } else if(hit == RayAction.TELEPORT) {
+                    return Float.NaN;
                 }
+                return distance;
             }
             step();
         }

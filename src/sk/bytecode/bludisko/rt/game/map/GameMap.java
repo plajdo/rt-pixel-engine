@@ -10,7 +10,6 @@ import java.io.IOException;
 public class GameMap {
 
     @Serializable private final Map walls;
-    @Serializable private final Map walkable;
     @Serializable private final Map floor;
 
     @Serializable private final Vector2 spawnLocation;
@@ -25,8 +24,7 @@ public class GameMap {
             inputStream.close();
 
             var gameMap = Tag.fromBytes(mapBytes, GameMap.class).getContent();
-            gameMap.walls.generateObjects(); // TODO: fancier?
-            gameMap.walkable.generateObjects();
+            gameMap.walls.generateObjects();
             gameMap.floor.generateObjects();
 
             return gameMap;
@@ -35,9 +33,8 @@ public class GameMap {
         }
     }
 
-    public GameMap(Map walls, Map walkable, Map floor, Vector2 spawnLocation, Vector2 spawnDirection) {
+    public GameMap(Map walls, Map floor, Vector2 spawnLocation, Vector2 spawnDirection) {
         this.walls = walls;
-        this.walkable = walkable;
         this.floor = floor;
         this.spawnLocation = spawnLocation;
         this.spawnDirection = spawnDirection;
@@ -47,10 +44,6 @@ public class GameMap {
 
     public Map walls() {
         return walls;
-    }
-
-    public Map walkable() {
-        return walkable;
     }
 
     public Map floor() {

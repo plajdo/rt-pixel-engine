@@ -1,10 +1,7 @@
 package sk.bytecode.bludisko.rt.game.blocks.technical;
 
 import sk.bytecode.bludisko.rt.game.blocks.Block;
-import sk.bytecode.bludisko.rt.game.graphics.RayAction;
-import sk.bytecode.bludisko.rt.game.graphics.Ray;
-import sk.bytecode.bludisko.rt.game.graphics.Texture;
-import sk.bytecode.bludisko.rt.game.graphics.TextureManager;
+import sk.bytecode.bludisko.rt.game.graphics.*;
 import sk.bytecode.bludisko.rt.game.math.Vector2;
 
 public class Air extends Block {
@@ -16,7 +13,7 @@ public class Air extends Block {
     }
 
     @Override
-    public Texture getTexture(float side) {
+    public Texture getTexture(Side side) {
         return TextureManager.getEmpty();
     }
 

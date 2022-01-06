@@ -47,6 +47,10 @@ public class GameInputManager extends InputManager {
         return directionVector;
     }
 
+    private void toggleSprint(boolean toggle) {
+        withDelegate(d -> d.didUpdateSprintingStatus(toggle));
+    }
+
     private void withDelegate(Consumer<GameInputManagerDelegate> action) {
         GameInputManagerDelegate delegate;
         if((this.delegate != null) && (delegate = this.delegate.get()) != null) {
@@ -67,6 +71,9 @@ public class GameInputManager extends InputManager {
             robot.mouseMove(0, 0);
             this.mouseLocked = !this.mouseLocked;
         }
+        if(e.getKeyCode() == Config.Keybinds.SPRINT) {
+            toggleSprint(true);
+        }
 
         withDelegate(d -> d.didUpdateMovementDirection(toVector(this.direction)));
     }
@@ -74,6 +81,10 @@ public class GameInputManager extends InputManager {
     @Override
     public void keyReleased(KeyEvent e) {
         toggleDirectionOff(e.getKeyCode());
+
+        if(e.getKeyCode() == Config.Keybinds.SPRINT) {
+            toggleSprint(false);
+        }
 
         withDelegate(d -> d.didUpdateMovementDirection(toVector(this.direction)));
     }

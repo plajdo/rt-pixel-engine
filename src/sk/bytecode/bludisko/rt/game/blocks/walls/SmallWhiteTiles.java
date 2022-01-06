@@ -4,10 +4,11 @@ import sk.bytecode.bludisko.rt.game.graphics.Ray;
 import sk.bytecode.bludisko.rt.game.graphics.RayAction;
 import sk.bytecode.bludisko.rt.game.math.Vector2;
 
+@Deprecated
 public class SmallWhiteTiles extends WhiteTiles {
 
     public SmallWhiteTiles(Vector2 coordinates) {
-        super(coordinates);
+        super(coordinates, 4);
     }
 
     @Override

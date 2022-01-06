@@ -1,31 +1,30 @@
 package sk.bytecode.bludisko.rt.game.blocks.walls;
 
 import sk.bytecode.bludisko.rt.game.blocks.Block;
-import sk.bytecode.bludisko.rt.game.graphics.Ray;
-import sk.bytecode.bludisko.rt.game.graphics.RayAction;
-import sk.bytecode.bludisko.rt.game.graphics.Texture;
-import sk.bytecode.bludisko.rt.game.graphics.TextureManager;
+import sk.bytecode.bludisko.rt.game.graphics.*;
 import sk.bytecode.bludisko.rt.game.math.Vector2;
 
 public class WhiteTiles extends Block {
 
-    //private final Texture texture = new Texture((x, y) -> MathUtils.INT_MSB_MASK | 65536 * 192 * ((x % 16) & (y % 16)));
-    //private final Texture texture = new Texture((x, y) -> 0xFF3F0000);
-
     private final Vector2 coordinates;
+    private final float height;
 
-    public WhiteTiles(Vector2 coordinates) {
+    public WhiteTiles(Vector2 coordinates, float height) {
         this.coordinates = coordinates;
+        this.height = height;
     }
 
     @Override
-    public Texture getTexture(float side) {
-        return TextureManager.getTexture(2);
+    public Texture getTexture(Side side) {
+        return switch((int) height) {
+            default -> TextureManager.getTexture(0);
+            case 4 -> TextureManager.getTexture(2);
+        };
     }
 
     @Override
     public float getHeight() {
-        return 12f;
+        return height;
     }
 
     @Override

@@ -1,5 +1,3 @@
-package test;
-
 import sk.bytecode.bludisko.rt.game.serialization.Serializable;
 import sk.bytecode.bludisko.rt.game.serialization.*;
 

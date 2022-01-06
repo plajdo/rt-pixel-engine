@@ -79,7 +79,8 @@ public class Camera {
 
                 // Fish eye fix
                 float distance = (float) (hit.distance() * Math.abs(Math.sin(plane.angleRad() - rayDirection.angleRad())));
-                float hitSide = hit.position().x % 1 == 0 ? 0 : 1;
+
+                Side hitSide = hit.result().getHitSide(hit.position());
 
                 Vector2 hitPosition = hit.position();
                 Vector2 wallHitCoordinates = hitPosition.cpy()
@@ -111,7 +112,7 @@ public class Camera {
                 float texelStep = 1f * textureHeight / (marginalObjectHeight * hit.result().getHeight() / 2);
                 float texelPosition = texelStep * Math.max(-objectTop, 1);
 
-                float colorScale = 1 - (hitSide * 0.33f);
+                float colorScale = 1 - ((hitSide == Side.EAST || hitSide == Side.WEST ? 0 : 1) * 0.33f);
 
                 for(int k = loopStart; k < loopEnd; k++) {
                     int texelY = (int)texelPosition & (textureHeight - 1);
@@ -153,7 +154,7 @@ public class Camera {
                     .add(rayDirectionLeft.cpy().scl(floorDistance));
 
             for(int x = 0; x < screenWidth; x++) {
-                Texture texture = map.floor().getBlocksAt(floorCoordinates)[0].getTexture(0);
+                Texture texture = map.floor().getBlocksAt(floorCoordinates)[0].getTexture(Side.NONE);
                 Vector2 floorTilePosition = MathUtils.decimalPart(floorCoordinates);
                 int textureX = (int) Math.min(texture.getWidth() * floorTilePosition.x, texture.getWidth() - 1);
                 int textureY = (int) Math.min(texture.getHeight() * floorTilePosition.y, texture.getHeight() - 1);

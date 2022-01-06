@@ -4,6 +4,7 @@ public enum RayAction {
 
     STOP,
     ADD,
-    SKIP
+    SKIP,
+    TELEPORT
 
 }

@@ -20,9 +20,12 @@ public class BlockRay extends Ray {
             Block[] blocks = map.getBlocksAt(position);
 
             for(Block block : blocks) {
+                Vector2 rayPosition = this.position.cpy();
                 RayAction action = block.hitAction(this);
+
                 switch(action) {
                     case ADD -> hits.add(new Hit<>(block, this.position.cpy(), distance));
+                    case TELEPORT -> hits.add(new Hit<>(block, rayPosition, distance));
                     case STOP -> {
                         hits.add(new Hit<>(block, this.position.cpy(), distance));
                         break castCycle;

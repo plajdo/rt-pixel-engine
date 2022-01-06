@@ -12,6 +12,7 @@ public class Config {
         public static final int RIGHT = KeyEvent.VK_D;
 
         public static final int LOCK_MOUSE = KeyEvent.VK_ESCAPE;
+        public static final int SPRINT = KeyEvent.VK_CONTROL;
 
     }
 
@@ -23,9 +24,3 @@ public class Config {
     }
 
 }
-
-/*
-
-TODO: prepočítať pitch/positionZ zo screen pixelov na uhly/metre
-
- */

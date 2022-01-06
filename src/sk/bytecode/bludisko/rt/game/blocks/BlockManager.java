@@ -2,7 +2,6 @@ package sk.bytecode.bludisko.rt.game.blocks;
 
 import sk.bytecode.bludisko.rt.game.blocks.technical.Air;
 import sk.bytecode.bludisko.rt.game.blocks.technical.MissingBlock;
-import sk.bytecode.bludisko.rt.game.blocks.technical.SideWall;
 import sk.bytecode.bludisko.rt.game.blocks.walls.*;
 import sk.bytecode.bludisko.rt.game.graphics.Side;
 import sk.bytecode.bludisko.rt.game.math.Vector2;
@@ -15,10 +14,22 @@ public class BlockManager {
             default -> new MissingBlock(coordinates);
             case 0 -> new Air(coordinates);
 
-            case 1 -> new WhiteTiles(coordinates);
-            case 2 -> new BlackTiles(coordinates);
+            case 1 -> new WhiteTiles(coordinates, 4);
+            case 2 -> new BlackTiles(coordinates, 4);
 
-            case 3 -> new PortalWall(coordinates);
+            case 3 -> new GlassPane(Side.SOUTH, coordinates, 4);
+            case 4 -> new GlassPane(Side.WEST, coordinates, 4);
+            case 5 -> new GlassPane(Side.NORTH, coordinates, 4);
+            case 6 -> new GlassPane(Side.EAST, coordinates, 4);
+
+            case 7 -> new Portal(Side.EAST, Portal.Color.ORANGE, coordinates, 4);
+            case 8 -> new Portal(Side.SOUTH, Portal.Color.BLUE, coordinates, 4);
+
+            //case 9 -> ...
+            //case 10 -> ...
+            // case 11 -> ...
+
+            case 12 -> new FloorTiles(coordinates); // Floor tiles
         };
     }
 }
