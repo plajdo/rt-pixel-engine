@@ -22,7 +22,7 @@ public class SideWall extends Block {
 
     @Override
     public float getHeight() {
-        return 2;
+        return 2f;
     }
 
     @Override

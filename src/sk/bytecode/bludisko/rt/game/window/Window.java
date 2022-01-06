@@ -40,6 +40,8 @@ public final class Window {
         this.frame.requestFocus();
     }
 
+    // MARK: - Private
+
     private void setupCanvas() {
         this.canvas.setPreferredSize(windowSize);
     }

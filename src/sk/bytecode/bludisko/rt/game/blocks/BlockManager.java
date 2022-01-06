@@ -14,16 +14,16 @@ public class BlockManager {
             default -> new MissingBlock(coordinates);
             case 0 -> new Air(coordinates);
 
-            case 1 -> new WhiteTiles(coordinates, 4);
-            case 2 -> new BlackTiles(coordinates, 4);
+            case 1 -> new WhiteTiles(coordinates);
+            case 2 -> new BlackTiles(coordinates);
 
-            case 3 -> new GlassPane(Side.SOUTH, coordinates, 4);
-            case 4 -> new GlassPane(Side.WEST, coordinates, 4);
-            case 5 -> new GlassPane(Side.NORTH, coordinates, 4);
-            case 6 -> new GlassPane(Side.EAST, coordinates, 4);
+            case 3 -> new GlassPane(Side.SOUTH, coordinates);
+            case 4 -> new GlassPane(Side.WEST, coordinates);
+            case 5 -> new GlassPane(Side.NORTH, coordinates);
+            case 6 -> new GlassPane(Side.EAST, coordinates);
 
-            case 7 -> new Portal(Side.EAST, Portal.Color.ORANGE, coordinates, 4);
-            case 8 -> new Portal(Side.SOUTH, Portal.Color.BLUE, coordinates, 4);
+            case 7 -> new Portal(Side.EAST, Portal.Color.ORANGE, coordinates);
+            case 8 -> new Portal(Side.SOUTH, Portal.Color.BLUE, coordinates);
 
             case 9 -> new WallWindow(coordinates, false);
             case 10 -> new WallWindow(coordinates, true);

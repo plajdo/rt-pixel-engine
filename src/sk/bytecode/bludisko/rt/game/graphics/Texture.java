@@ -52,20 +52,6 @@ public class Texture {
         image = generatedImage;
     }
 
-    // MARK: - Public
-
-    public Color getColor(int x, int y) {
-        return new Color(image.getRGB(x, y));
-    }
-
-    public int getWidth() {
-        return image.getWidth();
-    }
-
-    public int getHeight() {
-        return image.getHeight();
-    }
-
     // MARK: - Private
 
     private BufferedImage emptyImage() {
@@ -80,6 +66,20 @@ public class Texture {
             System.err.println("Could not load texture: " + e.getLocalizedMessage());
             return emptyImage();
         }
+    }
+
+    // MARK: - Getters
+
+    public Color getColor(int x, int y) {
+        return new Color(image.getRGB(x, y));
+    }
+
+    public int getWidth() {
+        return image.getWidth();
+    }
+
+    public int getHeight() {
+        return image.getHeight();
     }
 
 }

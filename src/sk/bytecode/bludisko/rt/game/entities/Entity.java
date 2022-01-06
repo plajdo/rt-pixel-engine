@@ -11,6 +11,8 @@ public abstract class Entity {
     protected Vector2 direction;
     protected float pitch;
 
+    // MARK: - Constructor
+
     public Entity(World world, Vector2 position, Vector2 direction, float positionZ, float pitch) {
         this.world = world;
         this.position = position;
@@ -20,6 +22,8 @@ public abstract class Entity {
     }
 
     public abstract void tick(float dt);
+
+    // MARK: - Getters
 
     public World getWorld() {
         return world;

@@ -1,13 +1,13 @@
 package sk.bytecode.bludisko.rt.game.math;
 
+import static java.lang.Math.PI;
+
 public final class MathUtils {
 
-    public static final float PI = (float) Math.PI;
+    public static final float radiansToDegrees = (float) (180f / PI);
+    public static final float degreesToRadians = (float) (PI / 180f);
 
-    public static final float radiansToDegrees = 180f / PI;
-    public static final float degreesToRadians = PI / 180f;
-
-    public static final float FLOAT_ROUNDING_ERROR = 0.000001f; // 32 bits
+    public static final float FLOAT_ROUNDING_ERROR = 0.000001f;
     public static final int INT_MSB_MASK = 0xFF000000;
     
     public static boolean isZero (float value) {
@@ -16,14 +16,6 @@ public final class MathUtils {
 
     public static boolean isZero (float value, float tolerance) {
         return Math.abs(value) <= tolerance;
-    }
-
-    public static float sin(float value) {
-        return (float) Math.sin(value);
-    }
-
-    public static float roundAway(float value) {
-        return (float) (Math.ceil(Math.abs(value)) * Math.signum(value));
     }
 
     /**

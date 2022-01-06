@@ -13,19 +13,16 @@ public final class Map {
     private final Integer[][] tiles;
     private Block[][] blocks;
 
-    @Deprecated
+    // MARK: - Constructor
+
     public Map(Integer[][] tiles) {
         this.tiles = tiles;
         this.blocks = null;
     }
 
-    @Deprecated
-    public Map(int heightX, int widthY) {
-        tiles = new Integer[heightX][widthY];
-        this.blocks = new Block[heightX][widthY];
-    }
+    // MARK: - Package
 
-    public void generateObjects() {
+    void generateObjects() {
         int heightX = tiles.length;
         int widthY = tiles[0].length;
 
@@ -38,6 +35,18 @@ public final class Map {
         }
         this.blocks = blocks;
     }
+
+    // MARK: - Private
+
+    private boolean coordinatesOnBlockEdge(Vector2 position) {
+        Vector2 positionInBlockCoords = MathUtils.decimalPart(position);
+        return positionInBlockCoords.x == 0 ||
+                positionInBlockCoords.y == 0 ||
+                positionInBlockCoords.x == 1 ||
+                positionInBlockCoords.y == 1;
+    }
+
+    // MARK: - Getters
 
     public int getWidth() {
         return blocks[0].length;
@@ -71,14 +80,6 @@ public final class Map {
             Block neighbouringBlockY = getBlock((int) position.x, (int) position.y - 1);
             return new Block[] { centerBlock, neighbouringBlockY };
         }
-    }
-
-    private boolean coordinatesOnBlockEdge(Vector2 position) {
-        Vector2 positionInBlockCoords = MathUtils.decimalPart(position);
-        return positionInBlockCoords.x == 0 ||
-               positionInBlockCoords.y == 0 ||
-               positionInBlockCoords.x == 1 ||
-               positionInBlockCoords.y == 1;
     }
 
 }

@@ -7,24 +7,19 @@ import sk.bytecode.bludisko.rt.game.math.Vector2;
 public class WhiteTiles extends Block {
 
     private final Vector2 coordinates;
-    private final float height;
 
-    public WhiteTiles(Vector2 coordinates, float height) {
+    public WhiteTiles(Vector2 coordinates) {
         this.coordinates = coordinates;
-        this.height = height;
     }
 
     @Override
     public Texture getTexture(Side side) {
-        return switch((int) height) {
-            default -> TextureManager.getTexture(0);
-            case 4 -> TextureManager.getTexture(2);
-        };
+        return TextureManager.getTexture(2);
     }
 
     @Override
     public float getHeight() {
-        return height;
+        return 4f;
     }
 
     @Override

@@ -18,18 +18,6 @@ public class TextureManager {
         noTexture = new Texture();
     }
 
-    public static Texture getTexture(int texture) {
-        return loadedTextures[texture];
-    }
-
-    public static Texture getGenerated(int texture) {
-        return generatedTextures[texture];
-    }
-
-    public static Texture getEmpty() {
-        return noTexture;
-    }
-
     // MARK: - Private
 
     private static void loadTextures() {
@@ -68,6 +56,20 @@ public class TextureManager {
         generatedTextures[5] = new Texture((x, y) -> 0x3FBCD2F5);
         generatedTextures[6] = new Texture((x, y) -> 0xFF5F3F00);
         generatedTextures[7] = new Texture((x, y) -> 0xFF3F5F00);
+    }
+
+    // MARK: - Getters
+
+    public static Texture getTexture(int texture) {
+        return loadedTextures[texture];
+    }
+
+    public static Texture getGenerated(int texture) {
+        return generatedTextures[texture];
+    }
+
+    public static Texture getEmpty() {
+        return noTexture;
     }
 
 }

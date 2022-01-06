@@ -15,9 +15,9 @@ public final class GameMap {
     @Serializable private final Vector2 spawnLocation;
     @Serializable private final Vector2 spawnDirection;
 
-    @Serializable private int ceilingColor;
+    @Serializable private final int ceilingColor;
 
-    // MARK: - Create from file
+    // MARK: - Static Initializer
 
     public static GameMap load(String name) {
         try {
@@ -35,6 +35,8 @@ public final class GameMap {
         }
     }
 
+    // MARK: - Constructor
+
     public GameMap(Map walls, Map floor, Vector2 spawnLocation, Vector2 spawnDirection, int ceilingColor) {
         this.walls = walls;
         this.floor = floor;
@@ -43,7 +45,7 @@ public final class GameMap {
         this.ceilingColor = ceilingColor;
     }
 
-    // MARK: - Public
+    // MARK: - Getters
 
     public Map walls() {
         return walls;
@@ -64,4 +66,5 @@ public final class GameMap {
     public int getCeilingColor() {
         return ceilingColor;
     }
+
 }

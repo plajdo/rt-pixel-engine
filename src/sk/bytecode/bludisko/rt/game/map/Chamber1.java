@@ -7,9 +7,13 @@ import javax.swing.JOptionPane;
 
 public class Chamber1 extends World {
 
+    // MARK: - Constructor
+
     public Chamber1() {
         setupMap();
     }
+
+    // MARK: - Game loop
 
     @Override
     public void tick(float dt) {
@@ -26,6 +30,8 @@ public class Chamber1 extends World {
             }
         }
     }
+
+    // MARK: - Private
 
     private void setupMap() {
         this.map = GameMap.load("chamber1");

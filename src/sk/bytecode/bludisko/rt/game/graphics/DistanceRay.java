@@ -6,9 +6,13 @@ import sk.bytecode.bludisko.rt.game.math.Vector2;
 
 public class DistanceRay extends Ray {
 
+    // MARK: - Constructor
+
     public DistanceRay(Map map, Vector2 position, Vector2 direction) {
         super(map, position, direction);
     }
+
+    // MARK: - Public
 
     public float cast(float maxLength) {
         step();

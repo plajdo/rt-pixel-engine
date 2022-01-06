@@ -15,12 +15,10 @@ public class Portal extends Block {
     private final Vector2 coordinates;
     private final Side side;
     private final Portal.Color color;
-    private final float height;
     private Portal otherPortal;
 
-    public Portal(Side side, Portal.Color color, Vector2 coordinates, float height) {
+    public Portal(Side side, Portal.Color color, Vector2 coordinates) {
         this.coordinates = coordinates;
-        this.height = height;
         this.color = color;
         this.side = side;
     }
@@ -39,7 +37,7 @@ public class Portal extends Block {
 
     @Override
     public float getHeight() {
-        return height;
+        return 4f;
     }
 
     @Override
@@ -71,17 +69,21 @@ public class Portal extends Block {
 
     public Vector2 getExitOffset() {
         return switch(side) {
+            case NONE -> null;
+            case NORTH -> null;
             case EAST -> new Vector2(0f, 1f);
             case SOUTH -> new Vector2(1f, 0f);
-            default -> throw new IllegalStateException("Unexpected value: " + side);
+            case WEST -> null;
         };
     }
 
     public Vector2 getExitRotation() {
         return switch(side) {
-            default -> new Vector2(1f, 0f);
+            case NONE -> null;
+            case NORTH -> null;
             case EAST -> new Vector2(0f, 1f);
             case SOUTH -> new Vector2(1f, 0f);
+            case WEST -> null;
         };
     }
 

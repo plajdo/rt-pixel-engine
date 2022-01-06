@@ -36,6 +36,7 @@ public class Player extends Entity implements GameInputManagerDelegate {
 
     public void setWorld(World world) {
         this.world = world;
+        this.worldWallMap = world.getMap().walls();
     }
 
     public void setCamera(Camera camera) {

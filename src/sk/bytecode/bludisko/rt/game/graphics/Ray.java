@@ -6,8 +6,6 @@ import sk.bytecode.bludisko.rt.game.math.Vector2;
 
 public class Ray {
 
-    public static record Hit<T>(T result, Vector2 position, float distance) {}
-
     protected Map map;
     protected Vector2 position;
     protected Vector2 startingPosition;
@@ -17,6 +15,8 @@ public class Ray {
     private Vector2 marginalTileDistance;
     private Vector2 tileSize;
     private Vector2 sign;
+
+    // MARK: - Constructor
 
     public Ray(Map map, Vector2 position, Vector2 direction, Vector2 tileSize) {
         this(map, position, direction);
@@ -32,17 +32,7 @@ public class Ray {
         updateDirection(direction);
     }
 
-    public void updateDirection(Vector2 direction) {
-        this.direction = direction.cpy();
-        this.marginalTileDistance = new Vector2(
-                Math.abs(direction.y / direction.x),
-                Math.abs(direction.x / direction.y)
-        );
-        this.sign = new Vector2(
-                Math.copySign(1f, direction.x),
-                Math.copySign(1f, direction.y)
-        );
-    }
+    // MARK: - Tracing algorithm
 
     public void step() {
         Vector2 positionInTile;
@@ -88,6 +78,22 @@ public class Ray {
         }
     }
 
+    // MARK: - Public
+
+    public void updateDirection(Vector2 direction) {
+        this.direction = direction.cpy();
+        this.marginalTileDistance = new Vector2(
+                Math.abs(direction.y / direction.x),
+                Math.abs(direction.x / direction.y)
+        );
+        this.sign = new Vector2(
+                Math.copySign(1f, direction.x),
+                Math.copySign(1f, direction.y)
+        );
+    }
+
+    // MARK: - Getters
+
     public Vector2 getPosition() {
         return position;
     }
@@ -99,6 +105,8 @@ public class Ray {
     public float getDistance() {
         return distance;
     }
+
+    // MARK: - Setters
 
     public void setTileSize(Vector2 tileSize) {
         this.tileSize = tileSize;
