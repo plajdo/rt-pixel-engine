@@ -31,7 +31,7 @@ public class BlockRay extends Ray {
             }
         }
 
-        hits.sort((o1, o2) -> o1.result().hasPriority() ? -1 : 0);
+        hits.sort((o1, o2) -> o1.result().hasPriority() ? -1 : 0); //TODO: treba ešte prioritu?
         return hits;
     }
 

@@ -34,10 +34,13 @@ public class TextureManager {
 
     private static void loadTextures() {
         loadedTextures = new Texture[50];
-        loadedTextures[0] = new Texture("wallTile");
-        loadedTextures[1] = new Texture("darkWallTile");
-        loadedTextures[2] = new Texture("bluePortal");
-        loadedTextures[3] = new Texture("orangePortal");
+        loadedTextures[0] = new Texture("walls/wallTile_1");
+        loadedTextures[1] = new Texture("walls/darkWallTile_1");
+        loadedTextures[2] = new Texture("walls/wallTile_6");
+        loadedTextures[3] = new Texture("walls/darkWallTile_6");
+        loadedTextures[4] = new Texture("bluePortal");
+        loadedTextures[5] = new Texture("orangePortal");
+        loadedTextures[6] = new Texture("bluePortalTall");
     }
 
     private static void generateTextures() {

@@ -11,9 +11,6 @@ import java.util.function.ToIntBiFunction;
 
 public class Texture {
 
-    public static final int WIDTH = 64;
-    public static final int HEIGHT = 64;
-
     private final BufferedImage image;
 
     // MARK: - Constructor
@@ -61,6 +58,14 @@ public class Texture {
         return new Color(image.getRGB(x, y));
     }
 
+    public int getWidth() {
+        return image.getWidth();
+    }
+
+    public int getHeight() {
+        return image.getHeight();
+    }
+
     // MARK: - Private
 
     private BufferedImage emptyImage() {
@@ -71,6 +76,7 @@ public class Texture {
         try {
             return ImageIO.read(new File("res/textures/" + textureName + ".png"));
         } catch(IOException e) {
+            e.printStackTrace();
             System.err.println("Could not load texture: " + e.getLocalizedMessage());
             return emptyImage();
         }

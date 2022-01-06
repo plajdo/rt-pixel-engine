@@ -11,7 +11,6 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
-import java.lang.ref.WeakReference;
 
 public class Camera {
 
@@ -86,8 +85,12 @@ public class Camera {
                 Vector2 wallHitCoordinates = hitPosition.cpy()
                         .sub((float) Math.floor(hitPosition.x), (float) Math.floor(hitPosition.y));
 
-                int texelX_X = Texture.WIDTH - (int)(wallHitCoordinates.x * Texture.WIDTH) - 1;
-                int texelX_Y = Texture.WIDTH - (int)(wallHitCoordinates.y * Texture.WIDTH) - 1;
+                Texture texture = hit.result().getTexture(hitSide);
+                int textureWidth = texture.getWidth();
+                int textureHeight = texture.getHeight();
+
+                int texelX_X = textureWidth - (int)(wallHitCoordinates.x * textureWidth) - 1;
+                int texelX_Y = textureWidth - (int)(wallHitCoordinates.y * textureWidth) - 1;
                 int texelX = Math.min(texelX_X, texelX_Y);
 
                 int screenWidth = (int) viewportSize.x;
@@ -105,16 +108,15 @@ public class Camera {
                 int loopStart = MathUtils.clamp(objectTop, 0, screenHeight);
                 int loopEnd = MathUtils.clamp(objectBottom, 0, screenHeight);
 
-                float texelStep = 1f * Texture.HEIGHT / marginalObjectHeight;
+                float texelStep = 1f * textureHeight / (marginalObjectHeight * hit.result().getHeight() / 2);
                 float texelPosition = texelStep * Math.max(-objectTop, 1);
 
                 float colorScale = 1 - (hitSide * 0.33f);
 
                 for(int k = loopStart; k < loopEnd; k++) {
-                    int texelY = (int)texelPosition & (Texture.HEIGHT - 1);
+                    int texelY = (int)texelPosition & (textureHeight - 1);
                     texelPosition += texelStep;
 
-                    Texture texture = hit.result().getTexture(hitSide);
                     Color color = texture.getColor(texelX, texelY);
 
                     if(k >= 0 && k < screenHeight) {
@@ -151,17 +153,14 @@ public class Camera {
                     .add(rayDirectionLeft.cpy().scl(floorDistance));
 
             for(int x = 0; x < screenWidth; x++) {
+                Texture texture = map.floor().getBlocksAt(floorCoordinates)[0].getTexture(0);
                 Vector2 floorTilePosition = MathUtils.decimalPart(floorCoordinates);
-                int textureX = (int) Math.min(Texture.WIDTH * floorTilePosition.x, Texture.WIDTH - 1);
-                int textureY = (int) Math.min(Texture.HEIGHT * floorTilePosition.y, Texture.HEIGHT - 1);
+                int textureX = (int) Math.min(texture.getWidth() * floorTilePosition.x, texture.getWidth() - 1);
+                int textureY = (int) Math.min(texture.getHeight() * floorTilePosition.y, texture.getHeight() - 1);
 
                 floorCoordinates.add(marginalFloorDistance);
 
-                int color = map.floor()
-                        .getBlocksAt(floorCoordinates)[0]
-                        .getTexture(0)
-                        .getColor(textureX, textureY)
-                        .argb();
+                int color = texture.getColor(textureX, textureY).argb();
 
                 screenBuffer[x + y * screenWidth] = color;
             }

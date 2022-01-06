@@ -7,17 +7,17 @@ import sk.bytecode.bludisko.rt.game.graphics.Texture;
 import sk.bytecode.bludisko.rt.game.graphics.TextureManager;
 import sk.bytecode.bludisko.rt.game.math.Vector2;
 
-public class BlackTiles extends Block {
+public class PortalWall extends Block {
 
     private final Vector2 coordinates;
 
-    public BlackTiles(Vector2 coordinates) {
+    public PortalWall(Vector2 coordinates) {
         this.coordinates = coordinates;
     }
 
     @Override
     public Texture getTexture(float side) {
-        return TextureManager.getTexture(3);
+        return TextureManager.getTexture(6);
     }
 
     @Override
@@ -37,7 +37,10 @@ public class BlackTiles extends Block {
 
     @Override
     public RayAction hitAction(Ray ray) {
-        return RayAction.STOP;
+        var angle = ray.getDirection().angleRad();
+        ray.getDirection().rotateRad((float) Math.PI + angle);
+
+        return RayAction.ADD;
     }
 
 }
