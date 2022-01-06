@@ -8,12 +8,16 @@ import java.util.ArrayList;
 
 public class BlockRay extends Ray {
 
+    // MARK: - Constructor
+
     public BlockRay(Map map, Vector2 position, Vector2 direction) {
         super(map, position, direction);
     }
 
-    public ArrayList<Ray.Hit<Block>> cast(int maxSteps) {
-        ArrayList<Ray.Hit<Block>> hits = new ArrayList<>();
+    // MARK: - Public
+
+    public ArrayList<RayHit<Block>> cast(int maxSteps) {
+        ArrayList<RayHit<Block>> hits = new ArrayList<>();
         castCycle: for(int i = 0; i < maxSteps; i++) {
             step();
 
@@ -24,10 +28,10 @@ public class BlockRay extends Ray {
                 RayAction action = block.hitAction(this);
 
                 switch(action) {
-                    case ADD -> hits.add(new Hit<>(block, this.position.cpy(), distance));
-                    case TELEPORT -> hits.add(new Hit<>(block, rayPosition, distance));
+                    case ADD -> hits.add(new RayHit<>(block, this.position.cpy(), distance));
+                    case TELEPORT -> hits.add(new RayHit<>(block, rayPosition, distance));
                     case STOP -> {
-                        hits.add(new Hit<>(block, this.position.cpy(), distance));
+                        hits.add(new RayHit<>(block, this.position.cpy(), distance));
                         break castCycle;
                     }
                 }

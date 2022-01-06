@@ -17,14 +17,14 @@ public class Camera {
 
     private GameMap map;
 
-    private Vector2 position;
-    private Vector2 direction;
-    private Vector2 plane;
+    private final Vector2 position;
+    private final Vector2 direction;
+    private final Vector2 plane;
 
     private float positionZ;
     private float pitch;
 
-    private Vector2 viewportSize;
+    private final Vector2 viewportSize;
     private Rectangle screenSize;
 
     // MARK: - Constructor
@@ -77,7 +77,7 @@ public class Camera {
             var zBuffer = ray.cast(Config.Display.RENDER_DISTANCE);
 
             for(int j = zBuffer.size() - 1; j >= 0; j--) {
-                Ray.Hit<Block> hit = zBuffer.get(j);
+                RayHit<Block> hit = zBuffer.get(j);
 
                 // Fish eye fix
                 float distance = (float) (hit.distance() * Math.abs(Math.sin(plane.angleRad() - rayDirection.angleRad())));

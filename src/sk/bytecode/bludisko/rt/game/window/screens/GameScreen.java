@@ -85,7 +85,7 @@ public final class GameScreen extends Screen {
     // MARK: - Public
 
     public void setWorld(World world) {
-
+        // nothing yet
     }
 
 }
