@@ -7,6 +7,7 @@ import sk.bytecode.bludisko.rt.game.math.Vector2;
 import java.util.ArrayList;
 
 public class BlockRay extends Ray {
+
     public BlockRay(Map map, Vector2 position, Vector2 direction) {
         super(map, position, direction);
     }
@@ -17,18 +18,20 @@ public class BlockRay extends Ray {
             step();
 
             Block[] blocks = map.getBlocksAt(position);
+
             for(Block block : blocks) {
                 RayAction action = block.hitAction(this);
                 switch(action) {
                     case ADD -> hits.add(new Hit<>(block, this.position.cpy(), distance));
                     case STOP -> {
-                        hits.add(new Ray.Hit<>(block, this.position.cpy(), distance));
+                        hits.add(new Hit<>(block, this.position.cpy(), distance));
                         break castCycle;
                     }
                 }
             }
         }
 
+        hits.sort((o1, o2) -> o1.result().hasPriority() ? -1 : 0);
         return hits;
     }
 

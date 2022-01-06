@@ -2,6 +2,7 @@ package sk.bytecode.bludisko.rt.game.map;
 
 import sk.bytecode.bludisko.rt.game.blocks.Block;
 import sk.bytecode.bludisko.rt.game.blocks.BlockManager;
+import sk.bytecode.bludisko.rt.game.blocks.technical.Air;
 import sk.bytecode.bludisko.rt.game.math.MathUtils;
 import sk.bytecode.bludisko.rt.game.math.Vector2;
 import sk.bytecode.bludisko.rt.game.serialization.Serializable;
@@ -10,51 +11,64 @@ public class Map {
 
     @Serializable
     private final Integer[][] tiles;
+    private Block[][] blocks;
 
+    @Deprecated
     public Map(Integer[][] tiles) {
         this.tiles = tiles;
+        this.blocks = null;
     }
 
+    @Deprecated
     public Map(int heightX, int widthY) {
         tiles = new Integer[heightX][widthY];
+        this.blocks = new Block[heightX][widthY];
+    }
+
+    public void generateObjects() {
+        int heightX = tiles.length;
+        int widthY = tiles[0].length;
+
+        Block[][] blocks = new Block[heightX][widthY];
+        for(int x = 0; x < heightX; x++) {
+            for(int y = 0; y < widthY; y++) {
+                var tile = tiles[x][y];
+                blocks[x][y] = BlockManager.createBlock(tile, x, y);
+            }
+        }
+        this.blocks = blocks;
     }
 
     public int getWidth() {
-        return tiles[0].length;
+        return blocks[0].length;
     }
 
     public int getHeight() {
-        return tiles.length;
+        return blocks.length;
     }
 
-    public int getTile(int x, int y) {
+    public Block getBlock(int x, int y) {
         if(x < 0 || y < 0) {
-            return 0;
+            return new Air(new Vector2(x, y));
         }
         if(x >= getHeight() || y >= getWidth()) {
-            return 0;
+            return new Air(new Vector2(x, y));
         }
-        var value = tiles[x][y];
-        return value == null ? 0 : value;
-    }
-
-    public void setTile(int x, int y, int value) {
-        //TODO: proper check
-        tiles[x][y] = value;
+        return blocks[x][y];
     }
 
     public Block[] getBlocksAt(Vector2 position) {
         boolean onEdge = coordinatesOnBlockEdge(position);
 
-        Block centerBlock = BlockManager.getBlock(getTile((int) position.x, (int) position.y));
+        Block centerBlock = getBlock((int) position.x, (int) position.y);
         if(!onEdge) {
             return new Block[] { centerBlock };
         }
         if(position.x % 1 == 0) {
-            Block neighbouringBlockX = BlockManager.getBlock(getTile((int) position.x - 1, (int) position.y));
+            Block neighbouringBlockX = getBlock((int) position.x - 1, (int) position.y);
             return new Block[] { centerBlock, neighbouringBlockX };
         } else {
-            Block neighbouringBlockY = BlockManager.getBlock(getTile((int) position.x, (int) position.y - 1));
+            Block neighbouringBlockY = getBlock((int) position.x, (int) position.y - 1);
             return new Block[] { centerBlock, neighbouringBlockY };
         }
     }

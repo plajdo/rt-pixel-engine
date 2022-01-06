@@ -2,6 +2,8 @@ package sk.bytecode.bludisko.rt.game.graphics;
 
 import sk.bytecode.bludisko.rt.game.blocks.Block;
 import sk.bytecode.bludisko.rt.game.blocks.BlockManager;
+import sk.bytecode.bludisko.rt.game.blocks.technical.Air;
+import sk.bytecode.bludisko.rt.game.blocks.walls.Portal;
 import sk.bytecode.bludisko.rt.game.map.Map;
 import sk.bytecode.bludisko.rt.game.math.Vector2;
 
@@ -19,7 +21,7 @@ public class DistanceRay extends Ray {
         while(distance < maxLength) {
             Block[] blocks = map.getBlocksAt(position);
             for(Block block : blocks) {
-                if(block != BlockManager.getBlock(0)) {
+                if(!(block instanceof Air)) {
                     return distance;
                 }
             }

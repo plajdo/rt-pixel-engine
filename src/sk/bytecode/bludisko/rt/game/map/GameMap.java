@@ -18,13 +18,18 @@ public class GameMap {
 
     // MARK: - Initialize
 
-    public static GameMap fromFile(String name) {
+    public static GameMap load(String name) {
         try {
-            var inputStream = new FileInputStream("res/maps/" + name);
+            var inputStream = new FileInputStream("res/maps/" + name + ".map");
             byte[] mapBytes = inputStream.readAllBytes();
             inputStream.close();
 
-            return Tag.fromBytes(mapBytes, GameMap.class).getContent();
+            var gameMap = Tag.fromBytes(mapBytes, GameMap.class).getContent();
+            gameMap.walls.generateObjects(); // TODO: fancier?
+            gameMap.walkable.generateObjects();
+            gameMap.floor.generateObjects();
+
+            return gameMap;
         } catch(IOException e) {
             throw new RuntimeException("Could not load map!\nOriginal exception: " + e.getLocalizedMessage());
         }

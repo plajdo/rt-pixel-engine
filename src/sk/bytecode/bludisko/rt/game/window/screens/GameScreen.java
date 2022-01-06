@@ -1,5 +1,6 @@
 package sk.bytecode.bludisko.rt.game.window.screens;
 
+import sk.bytecode.bludisko.rt.game.blocks.walls.Portal;
 import sk.bytecode.bludisko.rt.game.entities.Player;
 import sk.bytecode.bludisko.rt.game.graphics.Camera;
 import sk.bytecode.bludisko.rt.game.input.GameInputManager;
@@ -27,7 +28,18 @@ public final class GameScreen extends Screen {
     }
 
     private void setupMap() {
-        this.map = GameMap.fromFile("testMap3.map");
+        this.map = GameMap.load("testMap3");
+
+        var otherPortal = ((Portal) this.map.walls().getBlock(4, 6));
+        var portal = ((Portal) this.map.walls().getBlock(7, 4));
+        portal.setOtherPortal(otherPortal);
+        otherPortal.setOtherPortal(portal);
+
+        var portal3 = ((Portal) this.map.walls().getBlock(7, 9));
+        var portal4 = ((Portal) this.map.walls().getBlock(12, 8));
+        portal3.setOtherPortal(portal4);
+        portal4.setOtherPortal(portal3);
+
     }
 
     private void setupPlayer() {
@@ -35,10 +47,10 @@ public final class GameScreen extends Screen {
                 this.map,
                 this.map.getSpawnLocation(),
                 this.map.getSpawnDirection(),
-                0f,
+                50f,
                 0f
         );
-        this.camera = new Camera(this.player);
+        this.camera = new Camera();
         player.setCamera(this.camera);
     }
 

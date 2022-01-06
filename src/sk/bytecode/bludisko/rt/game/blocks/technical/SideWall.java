@@ -1,25 +1,23 @@
 package sk.bytecode.bludisko.rt.game.blocks.technical;
 
-import org.junit.platform.engine.TestExecutionResult;
 import sk.bytecode.bludisko.rt.game.blocks.Block;
-import sk.bytecode.bludisko.rt.game.graphics.Ray;
-import sk.bytecode.bludisko.rt.game.graphics.RayAction;
-import sk.bytecode.bludisko.rt.game.graphics.Side;
-import sk.bytecode.bludisko.rt.game.graphics.Texture;
+import sk.bytecode.bludisko.rt.game.graphics.*;
 import sk.bytecode.bludisko.rt.game.math.MathUtils;
+import sk.bytecode.bludisko.rt.game.math.Vector2;
 
 public class SideWall extends Block {
 
-    private final Texture texture = new Texture((x, y) -> 0xFF5F3F00);
+    private final Vector2 coordinates;
     private final Side side;
 
-    public SideWall(Side side) {
+    public SideWall(Side side, Vector2 coordinates) {
+        this.coordinates = coordinates;
         this.side = side;
     }
 
     @Override
     public Texture getTexture(float side) {
-        return texture;
+        return TextureManager.getGenerated(6);
     }
 
     @Override
@@ -28,19 +26,39 @@ public class SideWall extends Block {
     }
 
     @Override
+    @Deprecated
+    public boolean hasPriority() {
+        return false;
+    }
+
+    @Override
+    public Vector2 getCoordinates() {
+        return coordinates;
+    }
+
+    @Override
     public RayAction hitAction(Ray ray) {
         var position = ray.getPosition();
         var positionInBlock = MathUtils.decimalPart(position);
 
-        if(this.side == Side.NORTH && positionInBlock.x == 0 && position.x % 2 == 0) {
+        if(this.side == Side.NORTH && positionInBlock.x == 0 && position.x % 2 == getCoordinates().x % 2) {
             return RayAction.ADD;
 
-        } else if(this.side == Side.EAST && positionInBlock.y == 0 && position.y % 2 == 0) {
+        } else if(this.side == Side.SOUTH && positionInBlock.x == 0 && position.x % 2 != getCoordinates().x % 2) {
             return RayAction.ADD;
 
+        } else if(this.side == Side.WEST && positionInBlock.y == 0 && position.y % 2 == getCoordinates().y % 2) {
+            return RayAction.ADD;
+
+        } else if(this.side == Side.EAST && positionInBlock.y == 0 && position.y % 2 != getCoordinates().y % 2) {
+            return RayAction.ADD;
         }
 
         return RayAction.SKIP;
+    }
+
+    public Side getSide() {
+        return side;
     }
 
 }

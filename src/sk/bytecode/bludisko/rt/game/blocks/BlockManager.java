@@ -1,42 +1,32 @@
 package sk.bytecode.bludisko.rt.game.blocks;
 
-import org.jetbrains.annotations.NotNull;
 import sk.bytecode.bludisko.rt.game.blocks.technical.Air;
 import sk.bytecode.bludisko.rt.game.blocks.technical.MissingBlock;
 import sk.bytecode.bludisko.rt.game.blocks.technical.SideWall;
-import sk.bytecode.bludisko.rt.game.blocks.technical.TunnelWall;
 import sk.bytecode.bludisko.rt.game.blocks.walls.BlackTiles;
+import sk.bytecode.bludisko.rt.game.blocks.walls.Portal;
+import sk.bytecode.bludisko.rt.game.blocks.walls.SmallWhiteTiles;
 import sk.bytecode.bludisko.rt.game.blocks.walls.WhiteTiles;
 import sk.bytecode.bludisko.rt.game.graphics.Side;
+import sk.bytecode.bludisko.rt.game.math.Vector2;
 
 public class BlockManager {
 
-    private final static Block MISSING = new MissingBlock();
-    private final static Block AIR = new Air();
-
-    private final static Block WALL_OUTER_WHITE = new WhiteTiles();
-    private final static Block WALL_OUTER_BLACK = new BlackTiles();
-
-    private final static Block WALL_3 = new TunnelWall(Side.EASTWEST);
-    private final static Block WALL_4 = new TunnelWall(Side.NORTHSOUTH);
-    private final static Block WALL_5 = new SideWall(Side.NORTH);
-    private final static Block WALL_6 = new SideWall(Side.WEST);
-    private final static Block WALL_7 = new SideWall(Side.EAST);
-    private final static Block WALL_8 = new SideWall(Side.SOUTH);
-
-    @NotNull
-    public static Block getBlock(int id) {
+    public static Block createBlock(int id, int x, int y) {
+        var coordinates = new Vector2(x, y);
         return switch(id) {
-            default -> MISSING;
-            case 0 -> AIR;
-            case 1 -> WALL_OUTER_WHITE;
-            case 2 -> WALL_OUTER_BLACK;
-            case 3 -> WALL_3;
-            case 4 -> WALL_4;
-            case 5 -> WALL_5;
-            case 6 -> WALL_6;
-            case 7 -> WALL_7;
-            case 8 -> WALL_8;
+            default -> new MissingBlock(coordinates);
+            case 0 -> new Air(coordinates);
+
+            case 1 -> new WhiteTiles(coordinates);
+            case 2 -> new BlackTiles(coordinates);
+
+            case 3 -> new SmallWhiteTiles(coordinates);
+
+            case 10 -> new Portal(Side.SOUTH, Portal.Color.BLUE, null, coordinates);
+            case 11 -> new Portal(Side.NORTH, Portal.Color.ORANGE, null, coordinates);
+            case 12 -> new Portal(Side.EAST, Portal.Color.BLUE, null, coordinates);
+            case 13 -> new Portal(Side.WEST, Portal.Color.ORANGE, null, coordinates);
         };
     }
 }

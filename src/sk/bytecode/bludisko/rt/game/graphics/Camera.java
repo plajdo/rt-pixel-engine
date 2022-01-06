@@ -15,7 +15,6 @@ import java.lang.ref.WeakReference;
 
 public class Camera {
 
-    private WeakReference<Entity> bindedEntity;
     private GameMap map;
 
     private Vector2 position;
@@ -30,7 +29,7 @@ public class Camera {
 
     // MARK: - Constructor
 
-    public Camera(Entity entity) {
+    public Camera() {
         this.position = new Vector2(0f, 0f);
         this.positionZ = 0f;
 
@@ -40,8 +39,6 @@ public class Camera {
         this.plane = direction.cpy().rotate90(-1).scl(2f / 3f);
         this.viewportSize = new Vector2(320, 240);
         this.screenSize = new Rectangle(320, 240);
-
-        this.bindedEntity = new WeakReference<>(entity);
     }
 
     // MARK: - Game loop

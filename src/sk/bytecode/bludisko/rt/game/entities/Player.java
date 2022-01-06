@@ -2,6 +2,7 @@ package sk.bytecode.bludisko.rt.game.entities;
 
 import sk.bytecode.bludisko.rt.game.graphics.Camera;
 import sk.bytecode.bludisko.rt.game.graphics.DistanceRay;
+import sk.bytecode.bludisko.rt.game.graphics.Ray;
 import sk.bytecode.bludisko.rt.game.input.GameInputManagerDelegate;
 import sk.bytecode.bludisko.rt.game.map.GameMap;
 import sk.bytecode.bludisko.rt.game.math.MathUtils;

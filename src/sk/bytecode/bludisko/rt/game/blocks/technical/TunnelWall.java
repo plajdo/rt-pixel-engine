@@ -1,29 +1,38 @@
 package sk.bytecode.bludisko.rt.game.blocks.technical;
 
 import sk.bytecode.bludisko.rt.game.blocks.Block;
-import sk.bytecode.bludisko.rt.game.graphics.Ray;
-import sk.bytecode.bludisko.rt.game.graphics.RayAction;
-import sk.bytecode.bludisko.rt.game.graphics.Side;
-import sk.bytecode.bludisko.rt.game.graphics.Texture;
+import sk.bytecode.bludisko.rt.game.graphics.*;
 import sk.bytecode.bludisko.rt.game.math.MathUtils;
+import sk.bytecode.bludisko.rt.game.math.Vector2;
 
 public class TunnelWall extends Block {
 
-    private final Texture texture = new Texture((x, y) -> 0xFF3F5F00);
+    private final Vector2 coordinates;
     private final Side side;
 
-    public TunnelWall(Side side) {
+    public TunnelWall(Side side, Vector2 coordinates) {
+        this.coordinates = coordinates;
         this.side = side;
     }
 
     @Override
     public Texture getTexture(float side) {
-        return texture;
+        return TextureManager.getGenerated(7);
     }
 
     @Override
     public float getHeight() {
         return 2;
+    }
+
+    @Override
+    public boolean hasPriority() {
+        return true;
+    }
+
+    @Override
+    public Vector2 getCoordinates() {
+        return coordinates;
     }
 
     @Override

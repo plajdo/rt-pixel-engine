@@ -1,5 +1,3 @@
-package test;
-
 import org.junit.jupiter.api.Test;
 import sk.bytecode.bludisko.rt.game.math.MathUtils;
 import sk.bytecode.bludisko.rt.game.math.Vector2;
