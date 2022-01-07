@@ -13,10 +13,10 @@ import sk.bytecode.bludisko.rt.game.math.Vector2;
  */
 public class Ray {
 
-    protected Vector2 position;
-    protected Vector2 startingPosition;
-    protected Vector2 direction;
-    protected float distance;
+    private Vector2 position;
+    private Vector2 startingPosition;
+    private Vector2 direction;
+    private float distance;
 
     private Vector2 marginalTileDistance;
     private Vector2 tileSize;
@@ -47,7 +47,7 @@ public class Ray {
         this.startingPosition = position.cpy();
         this.tileSize = new Vector2(1, 1);
 
-        updateDirection(direction);
+        this.updateDirection(direction);
     }
 
     // MARK: - Tracing algorithm
@@ -60,45 +60,45 @@ public class Ray {
      */
     public void step() {
         Vector2 positionInTile;
-        if(tileSize.x != 1 || tileSize.y != 1) {
-            positionInTile = MathUtils.fractionRound(position, MathUtils.gcd((int) (1f / tileSize.x), (int) (1f / tileSize.y)));
+        if (this.tileSize.x != 1 || this.tileSize.y != 1) {
+            positionInTile = MathUtils.fractionRound(this.position, MathUtils.gcd((int)(1f / this.tileSize.x), (int)(1f / this.tileSize.y)));
         } else {
-            positionInTile = MathUtils.decimalPart(position);
+            positionInTile = MathUtils.decimalPart(this.position);
         }
 
         Vector2 nextTileDistance;
-        if(sign.x > 0 && sign.y > 0) {
-            nextTileDistance = new Vector2(tileSize).sub(positionInTile);
+        if (this.sign.x > 0 && this.sign.y > 0) {
+            nextTileDistance = new Vector2(this.tileSize).sub(positionInTile);
 
-        } else if(sign.x > 0 && sign.y < 0) {
-            nextTileDistance = new Vector2(tileSize.x - positionInTile.x, 0 + positionInTile.y);
+        } else if (this.sign.x > 0 && this.sign.y < 0) {
+            nextTileDistance = new Vector2(this.tileSize.x - positionInTile.x, 0 + positionInTile.y);
 
-        } else if(sign.x < 0 && sign.y > 0) {
-            nextTileDistance = new Vector2(0 + positionInTile.x, tileSize.y - positionInTile.y);
+        } else if (this.sign.x < 0 && this.sign.y > 0) {
+            nextTileDistance = new Vector2(0 + positionInTile.x, this.tileSize.y - positionInTile.y);
 
         } else {
             nextTileDistance = new Vector2(0 + positionInTile.x, 0 + positionInTile.y);
         }
 
-        if(nextTileDistance.x == 0) {
-            nextTileDistance.x = tileSize.x;
+        if (nextTileDistance.x == 0) {
+            nextTileDistance.x = this.tileSize.x;
         }
-        if(nextTileDistance.y == 0) {
-            nextTileDistance.y = tileSize.y;
+        if (nextTileDistance.y == 0) {
+            nextTileDistance.y = this.tileSize.y;
         }
 
         Vector2 nextStepDistance = nextTileDistance.cpy()
                 .scl(
-                        Math.abs((float) (1D / Math.sin((Math.PI / 2) - direction.angleRad()))),
-                        Math.abs((float) (1D / Math.sin((Math.PI / 2) - ((Math.PI / 2) - direction.angleRad()))))
+                        Math.abs((float)(1D / Math.sin((Math.PI / 2) - this.direction.angleRad()))),
+                        Math.abs((float)(1D / Math.sin((Math.PI / 2) - ((Math.PI / 2) - this.direction.angleRad()))))
                 );
 
-        if(nextStepDistance.x < nextStepDistance.y) {
-            position.add(nextTileDistance.x * sign.x, marginalTileDistance.x * nextTileDistance.x * sign.y);
-            distance += nextStepDistance.x;
+        if (nextStepDistance.x < nextStepDistance.y) {
+            this.position.add(nextTileDistance.x * this.sign.x, this.marginalTileDistance.x * nextTileDistance.x * this.sign.y);
+            this.distance += nextStepDistance.x;
         } else {
-            position.add(marginalTileDistance.y * nextTileDistance.y * sign.x, nextTileDistance.y  * sign.y);
-            distance += nextStepDistance.y;
+            this.position.add(this.marginalTileDistance.y * nextTileDistance.y * this.sign.x, nextTileDistance.y  * this.sign.y);
+            this.distance += nextStepDistance.y;
         }
     }
 
@@ -124,7 +124,7 @@ public class Ray {
     // MARK: - Getters
 
     public Vector2 getPosition() {
-        return position;
+        return this.position;
     }
 
     public Vector2 getDirection() {
@@ -135,7 +135,7 @@ public class Ray {
      * @return Distance the ray had travelled from its origin.
      */
     public float getDistance() {
-        return distance;
+        return this.distance;
     }
 
     // MARK: - Setters
@@ -149,4 +149,45 @@ public class Ray {
     public void setTileSize(Vector2 tileSize) {
         this.tileSize = tileSize;
     }
+
+    protected void setPosition(Vector2 position) {
+        this.position = position;
+    }
+
+    protected Vector2 getStartingPosition() {
+        return this.startingPosition;
+    }
+
+    protected void setStartingPosition(Vector2 startingPosition) {
+        this.startingPosition = startingPosition;
+    }
+
+    protected void setDirection(Vector2 direction) {
+        this.direction = direction;
+    }
+
+    protected void setDistance(float distance) {
+        this.distance = distance;
+    }
+
+    protected Vector2 getMarginalTileDistance() {
+        return this.marginalTileDistance;
+    }
+
+    protected void setMarginalTileDistance(Vector2 marginalTileDistance) {
+        this.marginalTileDistance = marginalTileDistance;
+    }
+
+    protected Vector2 getTileSize() {
+        return this.tileSize;
+    }
+
+    protected Vector2 getSign() {
+        return this.sign;
+    }
+
+    protected void setSign(Vector2 sign) {
+        this.sign = sign;
+    }
+
 }

@@ -15,7 +15,7 @@ public class TextureManager {
 
     // MARK: - Constructor
 
-    private TextureManager() {}
+    private TextureManager() { }
 
     // MARK: - Public
 

@@ -3,7 +3,6 @@ package sk.bytecode.bludisko.rt.game.window.screens;
 import sk.bytecode.bludisko.rt.game.window.Window;
 import sk.bytecode.bludisko.rt.game.input.InputManager;
 
-import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.lang.ref.WeakReference;
@@ -14,7 +13,7 @@ import java.lang.ref.WeakReference;
  */
 public abstract class Screen {
 
-    protected WeakReference<Window> window;
+    private WeakReference<Window> window;
 
     // MARK: - Game loop
 
@@ -23,10 +22,10 @@ public abstract class Screen {
      * Called every frame before rendering. Should contain
      * logic that's used to update information for renderer to draw
      * a new frame.
-     * @param dt
+     * @param dt Time passed since the last frame render
      */
     public void tick(float dt) {
-        getInputManager().tick(dt);
+        this.getInputManager().tick(dt);
     }
 
     /**
@@ -54,7 +53,7 @@ public abstract class Screen {
      * @param window Window that the Screen will be displayed on.
      */
     public void screenWillAppear(Window window) {
-        this.window = new WeakReference<>(window);
+        this.setWindow(new WeakReference<>(window));
     }
 
     /**
@@ -62,7 +61,7 @@ public abstract class Screen {
      * about to tick and draw the first frame.
      * @see Screen#draw(Graphics)
      */
-    public void screenDidAppear() {}
+    public void screenDidAppear() { }
 
     /**
      * Called every time the Window is resized.
@@ -73,4 +72,11 @@ public abstract class Screen {
         this.getInputManager().updateWindowDimensions(bounds);
     }
 
+    protected WeakReference<Window> getWindow() {
+        return this.window;
+    }
+
+    protected void setWindow(WeakReference<Window> window) {
+        this.window = window;
+    }
 }

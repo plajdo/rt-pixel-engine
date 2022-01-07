@@ -7,8 +7,8 @@ import static java.lang.Math.PI;
  */
 public final class MathUtils {
 
-    public static final float radiansToDegrees = (float) (180f / PI);
-    public static final float degreesToRadians = (float) (PI / 180f);
+    public static final float RADIANS_TO_DEGREES = (float)(180f / PI);
+    public static final float DEGREES_TO_RADIANS = (float)(PI / 180f);
 
     public static final float FLOAT_ROUNDING_ERROR = 0.000001f;
     public static final int INT_MSB_MASK = 0xFF000000;
@@ -30,8 +30,8 @@ public final class MathUtils {
      */
     public static Vector2 decimalPart(Vector2 v) {
         return new Vector2(
-                (float) Math.abs(Math.floor(v.x) - v.x),
-                (float) Math.abs(Math.floor(v.y) - v.y)
+                (float)Math.abs(Math.floor(v.x) - v.x),
+                (float)Math.abs(Math.floor(v.y) - v.y)
         );
     }
 

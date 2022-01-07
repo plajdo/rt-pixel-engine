@@ -45,17 +45,17 @@ public class BlockRay extends Ray {
         castCycle: for(int i = 0; i < maxSteps; i++) {
             step();
 
-            Block[] blocks = map.getBlocksAt(position);
+            Block[] blocks = this.map.getBlocksAt(this.getPosition());
 
             for(Block block : blocks) {
-                Vector2 rayPosition = this.position.cpy();
+                Vector2 rayPosition = this.getPosition().cpy();
                 RayAction action = block.hitAction(this);
 
                 switch(action) {
-                    case ADD -> hits.add(new RayHit<>(block, this.position.cpy(), distance));
-                    case TELEPORT -> hits.add(new RayHit<>(block, rayPosition, distance));
+                    case ADD -> hits.add(new RayHit<>(block, this.getPosition().cpy(), getDistance()));
+                    case TELEPORT -> hits.add(new RayHit<>(block, rayPosition, getDistance()));
                     case STOP -> {
-                        hits.add(new RayHit<>(block, this.position.cpy(), distance));
+                        hits.add(new RayHit<>(block, this.getPosition().cpy(), getDistance()));
                         break castCycle;
                     }
                 }

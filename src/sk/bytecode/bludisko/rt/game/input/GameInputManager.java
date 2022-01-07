@@ -55,9 +55,9 @@ public class GameInputManager extends InputManager {
         withDelegate(d -> d.didUpdateSprintingStatus(toggle));
     }
 
-    private void withDelegate(Consumer<GameInputManagerDelegate> action) {
-        GameInputManagerDelegate delegate;
-        if((this.delegate != null) && (delegate = this.delegate.get()) != null) {
+    private void withDelegate(Consumer<IGameInputManagerDelegate> action) {
+        IGameInputManagerDelegate delegate;
+        if((this.getDelegate() != null) && (delegate = this.getDelegate().get()) != null) {
             action.accept(delegate);
         }
     }
@@ -72,8 +72,8 @@ public class GameInputManager extends InputManager {
         toggleDirectionOn(e.getKeyCode());
 
         if(e.getKeyCode() == Config.Keybinds.LOCK_MOUSE) {
-            robot.mouseMove(0, 0);
-            this.mouseLocked = !this.mouseLocked;
+            this.getRobot().mouseMove(0, 0);
+            this.setMouseLocked(!this.isMouseLocked());
         }
         if(e.getKeyCode() == Config.Keybinds.SPRINT) {
             toggleSprint(true);
@@ -120,8 +120,8 @@ public class GameInputManager extends InputManager {
     @Override
     public void mouseMoved(MouseEvent e) {
         var newPosition = e.getLocationOnScreen();
-        newPosition.translate(-this.windowDimensions.x, this.windowDimensions.y);
-        newPosition.translate(-this.windowDimensions.width / 2, -this.windowDimensions.height / 2);
+        newPosition.translate(-this.getWindowDimensions().x, this.getWindowDimensions().y);
+        newPosition.translate(-this.getWindowDimensions().width / 2, -this.getWindowDimensions().height / 2);
 
         withDelegate(d -> d.didUpdateRotation(new Vector2(-newPosition.x, -newPosition.y)));
     }

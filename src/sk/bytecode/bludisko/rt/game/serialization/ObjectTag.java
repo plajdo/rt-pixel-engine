@@ -25,8 +25,8 @@ public final class ObjectTag<T> extends Tag<T> {
         super(data);
 
         this.typeTag = new StringTag(data.getClass().getName());
-        this.fieldsTag = getFieldsTag(data.getClass());
-        this.bytes = getBytes();
+        this.fieldsTag = this.getFieldsTag(data.getClass());
+        this.bytes = this.getBytes();
     }
 
     // MARK: - Override
@@ -38,12 +38,12 @@ public final class ObjectTag<T> extends Tag<T> {
 
     @Override
     public int length() {
-        return bytes.length;
+        return this.bytes.length;
     }
 
     @Override
     public byte[] byteData() {
-        return bytes;
+        return this.bytes;
     }
 
     // MARK: - Private
@@ -62,24 +62,24 @@ public final class ObjectTag<T> extends Tag<T> {
             Field field = fromObject.getClass().getDeclaredField(fieldName);
             field.setAccessible(true);
             return field.get(fromObject);
-        } catch(ReflectiveOperationException e) {
+        } catch (ReflectiveOperationException e) {
             System.err.println(e.getLocalizedMessage());
         }
         return null;
     }
 
     private byte[] getBytes() {
-        final ArrayList<byte[]> subtagBytes = new ArrayList<>(fieldsTag.getContent().length);
-        for(String fieldName : fieldsTag) {
-            Object content = getFieldContent(data, fieldName);
+        final ArrayList<byte[]> subtagBytes = new ArrayList<>(this.fieldsTag.getContent().length);
+        for (String fieldName : this.fieldsTag) {
+            Object content = this.getFieldContent(data, fieldName);
             subtagBytes.add(Tag.fromObject(content).byteData());
         }
 
         var finalSize = subtagBytes.stream()
                 .mapToInt(e -> e.length)
                 .sum()
-                + typeTag.length()
-                + fieldsTag.length()
+                + this.typeTag.length()
+                + this.fieldsTag.length()
                 + 2; // Header & terminator tags
 
         var finalBytes = ByteBuffer.allocate(finalSize);

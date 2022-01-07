@@ -14,16 +14,16 @@ public class Chamber1 extends World {
     // MARK: - Constructor
 
     public Chamber1() {
-        setupMap();
+        this.setupMap();
     }
 
     // MARK: - Game loop
 
     @Override
     public void tick(float dt) {
-        Player player = playerRef.get();
-        if(player != null) {
-            if(playerAtDoors(player)) {
+        Player player = this.getPlayerRef().get();
+        if (player != null) {
+            if (this.playerAtDoors(player)) {
                 JOptionPane.showMessageDialog(
                         null,
                         "Vdaka za vyskusanie!\nFilip Sasala, 2022",
@@ -38,9 +38,9 @@ public class Chamber1 extends World {
     // MARK: - Private
 
     private void setupMap() {
-        this.map = GameMap.load("chamber1");
-        var p1 = ((Portal) map.walls().getBlock(7, 7));
-        var p2 = ((Portal) map.walls().getBlock(4, 9));
+        this.setMap(GameMap.load("chamber1"));
+        var p1 = ((Portal)this.getMap().walls().getBlock(7, 7));
+        var p2 = ((Portal)this.getMap().walls().getBlock(4, 9));
 
         p1.setOtherPortal(p2);
         p2.setOtherPortal(p1);

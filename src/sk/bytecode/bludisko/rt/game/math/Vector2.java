@@ -300,7 +300,7 @@ public class Vector2 {
      * @deprecated use {@link #angleDeg()} instead. */
     @Deprecated
     public float angle () {
-        float angle = (float)Math.atan2(y, x) * MathUtils.radiansToDegrees;
+        float angle = (float)Math.atan2(y, x) * MathUtils.RADIANS_TO_DEGREES;
         if (angle < 0) angle += 360;
         return angle;
     }
@@ -311,13 +311,13 @@ public class Vector2 {
      *             range. */
     @Deprecated
     public float angle (Vector2 reference) {
-        return (float)Math.atan2(crs(reference), dot(reference)) * MathUtils.radiansToDegrees;
+        return (float)Math.atan2(crs(reference), dot(reference)) * MathUtils.RADIANS_TO_DEGREES;
     }
 
     /** @return the angle in degrees of this vector (point) relative to the x-axis. Angles are towards the positive y-axis
      *         (typically counter-clockwise) and in the [0, 360) range. */
     public float angleDeg () {
-        float angle = (float)Math.atan2(y, x) * MathUtils.radiansToDegrees;
+        float angle = (float)Math.atan2(y, x) * MathUtils.RADIANS_TO_DEGREES;
         if (angle < 0) angle += 360;
         return angle;
     }
@@ -325,7 +325,7 @@ public class Vector2 {
     /** @return the angle in degrees of this vector (point) relative to the given vector. Angles are towards the positive y-axis
      *         (typically counter-clockwise.) in the [0, 360) range */
     public float angleDeg (Vector2 reference) {
-        float angle = (float)Math.atan2(reference.crs(this), reference.dot(this)) * MathUtils.radiansToDegrees;
+        float angle = (float)Math.atan2(reference.crs(this), reference.dot(this)) * MathUtils.RADIANS_TO_DEGREES;
         if (angle < 0) angle += 360;
         return angle;
     }
@@ -347,13 +347,13 @@ public class Vector2 {
      * @deprecated use {@link #setAngleDeg(float)} instead. */
     @Deprecated
     public Vector2 setAngle (float degrees) {
-        return setAngleRad(degrees * MathUtils.degreesToRadians);
+        return setAngleRad(degrees * MathUtils.DEGREES_TO_RADIANS);
     }
 
     /** Sets the angle of the vector in degrees relative to the x-axis, towards the positive y-axis (typically counter-clockwise).
      * @param degrees The angle in degrees to set. */
     public Vector2 setAngleDeg (float degrees) {
-        return setAngleRad(degrees * MathUtils.degreesToRadians);
+        return setAngleRad(degrees * MathUtils.DEGREES_TO_RADIANS);
     }
 
     /** Sets the angle of the vector in radians relative to the x-axis, towards the positive y-axis (typically counter-clockwise).
@@ -370,7 +370,7 @@ public class Vector2 {
      * @deprecated use {@link #rotateDeg(float)} instead. */
     @Deprecated
     public Vector2 rotate (float degrees) {
-        return rotateRad(degrees * MathUtils.degreesToRadians);
+        return rotateRad(degrees * MathUtils.DEGREES_TO_RADIANS);
     }
 
     /** Rotates the Vector2 by the given angle around reference vector, counter-clockwise assuming the y-axis points up.
@@ -385,7 +385,7 @@ public class Vector2 {
     /** Rotates the Vector2 by the given angle, counter-clockwise assuming the y-axis points up.
      * @param degrees the angle in degrees */
     public Vector2 rotateDeg (float degrees) {
-        return rotateRad(degrees * MathUtils.degreesToRadians);
+        return rotateRad(degrees * MathUtils.DEGREES_TO_RADIANS);
     }
 
     /** Rotates the Vector2 by the given angle, counter-clockwise assuming the y-axis points up.

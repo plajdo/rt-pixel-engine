@@ -39,26 +39,26 @@ public final class ArrayTag<T> extends Tag<T[]> implements Iterable<T> {
 
     @Override
     public int length() {
-        return bytes.length;
+        return this.bytes.length;
     }
 
     @Override
     public byte[] byteData() {
-        return bytes;
+        return this.bytes;
     }
 
     // MARK: - Private
 
     private byte[] getBytes() {
         final ArrayList<byte[]> subtagBytes = new ArrayList<>(data.length);
-        for(T tag : data) {
+        for (T tag : data) {
             subtagBytes.add(Tag.fromObject(tag).byteData());
         }
 
         var finalSize = subtagBytes.stream()
                 .mapToInt(e -> e.length)
                 .sum()
-                + typeTag.length()
+                + this.typeTag.length()
                 + 2; // Header & terminator tags
 
         var finalBytes = ByteBuffer.allocate(finalSize);

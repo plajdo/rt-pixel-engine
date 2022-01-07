@@ -1,7 +1,11 @@
 package sk.bytecode.bludisko.rt.game.blocks.game;
 
 import sk.bytecode.bludisko.rt.game.blocks.Block;
-import sk.bytecode.bludisko.rt.game.graphics.*;
+import sk.bytecode.bludisko.rt.game.graphics.Ray;
+import sk.bytecode.bludisko.rt.game.graphics.RayAction;
+import sk.bytecode.bludisko.rt.game.graphics.Side;
+import sk.bytecode.bludisko.rt.game.graphics.Texture;
+import sk.bytecode.bludisko.rt.game.graphics.TextureManager;
 import sk.bytecode.bludisko.rt.game.math.Vector2;
 
 public class WallWindow extends Block {
@@ -16,8 +20,8 @@ public class WallWindow extends Block {
 
     @Override
     public Texture getTexture(Side side) {
-        if(side == Side.NORTH) {
-            if(mirrored) {
+        if (side == Side.NORTH) {
+            if (this.mirrored) {
                 return TextureManager.getTexture(11);
             } else {
                 return TextureManager.getTexture(10);
@@ -33,7 +37,7 @@ public class WallWindow extends Block {
 
     @Override
     public Vector2 getCoordinates() {
-        return coordinates;
+        return this.coordinates;
     }
 
     @Override

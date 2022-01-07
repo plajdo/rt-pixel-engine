@@ -6,7 +6,7 @@ import sk.bytecode.bludisko.rt.game.math.Vector2;
  * Interface used to update Input Information to delegated objects.
  * Uses delegation.
  */
-public interface GameInputManagerDelegate {
+public interface IGameInputManagerDelegate {
 
     /**
      * Called when movement keys from keyboard are changed.

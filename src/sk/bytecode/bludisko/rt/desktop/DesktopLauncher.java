@@ -8,6 +8,7 @@ public class DesktopLauncher {
 
     /**
      * Loads and generates all textures and starts the game.
+     *
      * @param args Command line arguments
      */
     public static void main(String[] args) {

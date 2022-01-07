@@ -1,7 +1,11 @@
 package sk.bytecode.bludisko.rt.game.blocks.technical;
 
 import sk.bytecode.bludisko.rt.game.blocks.Block;
-import sk.bytecode.bludisko.rt.game.graphics.*;
+import sk.bytecode.bludisko.rt.game.graphics.Ray;
+import sk.bytecode.bludisko.rt.game.graphics.RayAction;
+import sk.bytecode.bludisko.rt.game.graphics.Side;
+import sk.bytecode.bludisko.rt.game.graphics.Texture;
+import sk.bytecode.bludisko.rt.game.graphics.TextureManager;
 import sk.bytecode.bludisko.rt.game.math.Vector2;
 
 /**
@@ -18,7 +22,7 @@ public class MissingBlock extends Block {
 
     @Override
     public Texture getTexture(Side side) {
-        if(side == Side.EAST || side == Side.WEST) {
+        if (side == Side.EAST || side == Side.WEST) {
             return TextureManager.getGenerated(3);
         }
         return TextureManager.getGenerated(4);
@@ -31,7 +35,7 @@ public class MissingBlock extends Block {
 
     @Override
     public Vector2 getCoordinates() {
-        return coordinates;
+        return this.coordinates;
     }
 
     @Override

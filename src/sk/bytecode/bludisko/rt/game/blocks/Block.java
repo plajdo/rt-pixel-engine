@@ -56,18 +56,18 @@ public abstract class Block {
      * @return Side of the block or {@link Side#NONE}
      */
     public Side getSide(Vector2 position) {
-        if(position.x % 1 == 0) {
+        if (position.x % 1 == 0) {
             // North-South
-            if(position.x % 2 == this.getCoordinates().x % 2) {
+            if (position.x % 2 == this.getCoordinates().x % 2) {
                 return Side.NORTH;
             } else {
                 return Side.SOUTH;
             }
 
         }
-        if(position.y % 1 == 0) {
+        if (position.y % 1 == 0) {
             // East-West
-            if(position.y % 2 == this.getCoordinates().y % 2) {
+            if (position.y % 2 == this.getCoordinates().y % 2) {
                 return Side.WEST;
             } else {
                 return Side.EAST;
@@ -79,7 +79,7 @@ public abstract class Block {
 
     @Override
     public String toString() {
-        return super.toString() + " " + getCoordinates();
+        return super.toString() + " " + this.getCoordinates();
     }
 
 }

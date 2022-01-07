@@ -8,12 +8,12 @@ import sk.bytecode.bludisko.rt.game.math.Vector2;
  */
 public abstract class Entity {
 
-    protected World world;
-    protected Vector2 position;
-    protected float positionZ;
+    private World world;
+    private Vector2 position;
+    private float positionZ;
 
-    protected Vector2 direction;
-    protected float pitch;
+    private Vector2 direction;
+    private float pitch;
 
     // MARK: - Constructor
 
@@ -37,23 +37,43 @@ public abstract class Entity {
     // MARK: - Getters
 
     public World getWorld() {
-        return world;
+        return this.world;
     }
 
     public Vector2 getPosition() {
-        return position;
+        return this.position;
     }
 
     public float getPositionZ() {
-        return positionZ;
+        return this.positionZ;
     }
 
     public Vector2 getDirection() {
-        return direction;
+        return this.direction;
     }
 
     public float getPitch() {
-        return pitch;
+        return this.pitch;
+    }
+
+    protected void setWorld(World world) {
+        this.world = world;
+    }
+
+    protected void setPosition(Vector2 position) {
+        this.position = position;
+    }
+
+    protected void setPositionZ(float positionZ) {
+        this.positionZ = positionZ;
+    }
+
+    protected void setDirection(Vector2 direction) {
+        this.direction = direction;
+    }
+
+    protected void setPitch(float pitch) {
+        this.pitch = pitch;
     }
 
 }

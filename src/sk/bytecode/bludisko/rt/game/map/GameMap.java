@@ -41,7 +41,7 @@ public final class GameMap {
             gameMap.floor.generateObjects();
 
             return gameMap;
-        } catch(IOException e) {
+        } catch (IOException e) {
             throw new RuntimeException("Could not load map!\nOriginal exception: " + e.getLocalizedMessage());
         }
     }
@@ -66,26 +66,26 @@ public final class GameMap {
      * @return Map containing walls and 3D objects.
      */
     public Map walls() {
-        return walls;
+        return this.walls;
     }
 
     /**
      * @return Map containing floor tiles.
      */
     public Map floor() {
-        return floor;
+        return this.floor;
     }
 
     public Vector2 getSpawnLocation() {
-        return spawnLocation;
+        return this.spawnLocation;
     }
 
     public Vector2 getSpawnDirection() {
-        return spawnDirection;
+        return this.spawnDirection;
     }
 
     public int getCeilingColor() {
-        return ceilingColor;
+        return this.ceilingColor;
     }
 
 }

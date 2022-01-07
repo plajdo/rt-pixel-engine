@@ -18,8 +18,20 @@ public class Config {
 
     public static class Display {
 
-        public static float DRAWING_QUALITY = 1f;
-        public static int RENDER_DISTANCE = 100;
+        private static float drawingQuality = 1f;
+        private static int renderDistance = 100;
+
+        public static void setDrawingQuality(float newDrawingQuality) {
+            Display.drawingQuality = newDrawingQuality;
+        }
+
+        public static float getDrawingQuality() {
+            return drawingQuality;
+        }
+
+        public static int getRenderDistance() {
+            return renderDistance;
+        }
 
     }
 

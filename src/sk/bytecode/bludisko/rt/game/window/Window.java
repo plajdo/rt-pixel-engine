@@ -5,8 +5,15 @@ import sk.bytecode.bludisko.rt.game.input.InputManager;
 import sk.bytecode.bludisko.rt.game.util.Config;
 import sk.bytecode.bludisko.rt.game.window.screens.Screen;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JFrame;
+import java.awt.Canvas;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Cursor;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.image.BufferStrategy;
@@ -17,7 +24,7 @@ import java.awt.image.BufferedImage;
  * Displays a {@link Screen} that splits the rendering pipeline further.
  * This class invokes every tick and draw call in the game loop
  * and handles global rendering quality settings. It also listens
- * for all system I-O events on the main window {@link Frame} and
+ * for all system I-O events on the main window {@link JFrame} and
  * handles window movement/resize events.
  *
  * @see Screen
@@ -28,8 +35,8 @@ import java.awt.image.BufferedImage;
  */
 public final class Window {
 
-    private final static int FRAMERATE = 60;
-    private final static float FRAME_TIME = 1000f / FRAMERATE;
+    private static final int FRAMERATE = 60;
+    private static final float FRAME_TIME = 1000f / FRAMERATE;
 
     private final Dimension windowSize;
     private final Canvas canvas;
@@ -63,12 +70,12 @@ public final class Window {
     // MARK: - Private
 
     private void setupCanvas() {
-        this.canvas.setPreferredSize(windowSize);
+        this.canvas.setPreferredSize(this.windowSize);
     }
 
     private void setupFrame() {
         this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.frame.addComponentListener(getResizeListener());
+        this.frame.addComponentListener(this.getResizeListener());
 
         this.frame.add(this.canvas);
 
@@ -94,7 +101,7 @@ public final class Window {
     }
 
     private void setupCursor() {
-        if(cursorVisible) {
+        if (this.cursorVisible) {
             this.frame.setCursor(Cursor.getDefaultCursor());
             return;
         }
@@ -113,16 +120,16 @@ public final class Window {
             @Override
             public void componentResized(ComponentEvent e) {
                 var component = e.getComponent();
-                if(screen != null && component != null) {
-                    updateBounds(component);
+                if (Window.this.screen != null && component != null) {
+                    Window.this.updateBounds(component);
                 }
             }
 
             @Override
             public void componentMoved(ComponentEvent e) {
                 var component = e.getComponent();
-                if(screen != null && component != null) {
-                    updateBounds(component);
+                if (Window.this.screen != null && component != null) {
+                    Window.this.updateBounds(component);
                 }
             }
         };
@@ -130,8 +137,8 @@ public final class Window {
 
     private void updateBounds(@NotNull Component component) {
         Rectangle bounds = component.getBounds();
-        screen.screenDidChangeBounds(bounds);
-        windowSize.setSize(bounds.width, bounds.height);
+        this.screen.screenDidChangeBounds(bounds);
+        this.windowSize.setSize(bounds.width, bounds.height);
     }
 
     // MARK: - Public
@@ -142,7 +149,7 @@ public final class Window {
      * @param screen Replacement screen
      */
     public void setScreen(@NotNull Screen screen) {
-        setupScreen(screen);
+        this.setupScreen(screen);
     }
 
     /**
@@ -159,7 +166,7 @@ public final class Window {
      * @return Bounds rectangle
      */
     public Rectangle canvasBounds() {
-        return canvas.getBounds();
+        return this.canvas.getBounds();
     }
 
     // MARK: - Game thread
@@ -172,7 +179,7 @@ public final class Window {
         this.running = true;
         Runnable gameThread = () -> {
             try {
-                startGameCycle();
+                this.startGameCycle();
             } catch (InterruptedException e) {
                 System.err.println(e.getLocalizedMessage());
             }
@@ -182,44 +189,44 @@ public final class Window {
 
     private void startGameCycle() throws InterruptedException {
         long lastFrameTime = 0;
-        while(running) {
+        while (this.running) {
             long currentTime = System.currentTimeMillis();
 
             float deltaMilliseconds = currentTime - lastFrameTime;
-            updateDrawingQuality(deltaMilliseconds);
+            this.updateDrawingQuality(deltaMilliseconds);
 
-            if(deltaMilliseconds > FRAME_TIME) {
+            if (deltaMilliseconds > FRAME_TIME) {
                 lastFrameTime = System.currentTimeMillis();
 
                 float deltaSeconds = deltaMilliseconds * 0.001f;
-                tick(deltaSeconds);
-                drawFrame();
+                this.tick(deltaSeconds);
+                this.drawFrame();
             } else {
                 synchronized (this) {
-                    wait((long)FRAME_TIME / 2);
+                    this.wait((long)FRAME_TIME / 2);
                 }
             }
         }
     }
 
     private void tick(float delta) {
-        screen.tick(delta);
+        this.screen.tick(delta);
     }
 
     private void updateDrawingQuality(float dt) {
-        if(dt > FRAME_TIME * 2) {
-            Config.Display.DRAWING_QUALITY *= 0.9f;
-            screen.screenDidChangeBounds(
+        if (dt > FRAME_TIME * 2) {
+            Config.Display.setDrawingQuality(Config.Display.getDrawingQuality() * 0.9f);
+            this.screen.screenDidChangeBounds(
                     new Rectangle(
                             this.windowSize.width,
                             this.windowSize.height
                     )
             );
         }
-        if(dt < FRAME_TIME / 2) {
-            if(Config.Display.DRAWING_QUALITY < 1) {
-                Config.Display.DRAWING_QUALITY *= 1.1f;
-                screen.screenDidChangeBounds(
+        if (dt < FRAME_TIME / 2) {
+            if (Config.Display.getDrawingQuality() < 1) {
+                Config.Display.setDrawingQuality(Config.Display.getDrawingQuality() * 1.1f);
+                this.screen.screenDidChangeBounds(
                         new Rectangle(
                                 this.windowSize.width,
                                 this.windowSize.height
@@ -233,15 +240,15 @@ public final class Window {
 
     private void drawFrame() {
         BufferStrategy bufferStrategy = this.canvas.getBufferStrategy();
-        if(bufferStrategy == null) {
+        if (bufferStrategy == null) {
             this.canvas.createBufferStrategy(2);
             return;
         }
 
         Graphics graphics = bufferStrategy.getDrawGraphics();
-        clearScreen(graphics);
+        this.clearScreen(graphics);
 
-        screen.draw(graphics);
+        this.screen.draw(graphics);
 
         graphics.dispose();
         bufferStrategy.show();
@@ -249,7 +256,7 @@ public final class Window {
 
     private void clearScreen(@NotNull Graphics graphics) {
         graphics.setColor(Color.BLACK);
-        graphics.fillRect(0, 0, windowSize.width, windowSize.height);
+        graphics.fillRect(0, 0, this.windowSize.width, this.windowSize.height);
     }
 
 }

@@ -32,17 +32,17 @@ public final class Map {
     // MARK: - Package
 
     void generateObjects() {
-        int heightX = tiles.length;
-        int widthY = tiles[0].length;
+        int heightX = this.tiles.length;
+        int widthY = this.tiles[0].length;
 
-        Block[][] blocks = new Block[heightX][widthY];
-        for(int x = 0; x < heightX; x++) {
-            for(int y = 0; y < widthY; y++) {
-                var tile = tiles[x][y];
-                blocks[x][y] = BlockManager.createBlock(tile, x, y);
+        Block[][] newBlocks = new Block[heightX][widthY];
+        for (int x = 0; x < heightX; x++) {
+            for (int y = 0; y < widthY; y++) {
+                var tile = this.tiles[x][y];
+                newBlocks[x][y] = BlockManager.createBlock(tile, x, y);
             }
         }
-        this.blocks = blocks;
+        this.blocks = newBlocks;
     }
 
     // MARK: - Private
@@ -61,14 +61,14 @@ public final class Map {
      * @return Map width
      */
     public int getWidth() {
-        return blocks[0].length;
+        return this.blocks[0].length;
     }
 
     /**
      * @return Map height
      */
     public int getHeight() {
-        return blocks.length;
+        return this.blocks.length;
     }
 
     /**
@@ -79,13 +79,13 @@ public final class Map {
      * @return Block at given coordinates
      */
     public Block getBlock(int x, int y) {
-        if(x < 0 || y < 0) {
+        if (x < 0 || y < 0) {
             return new Air(new Vector2(x, y));
         }
-        if(x >= getHeight() || y >= getWidth()) {
+        if (x >= this.getHeight() || y >= this.getWidth()) {
             return new Air(new Vector2(x, y));
         }
-        return blocks[x][y];
+        return this.blocks[x][y];
     }
 
     /**
@@ -96,17 +96,17 @@ public final class Map {
      * @return Array of 1 or 2 blocks
      */
     public Block[] getBlocksAt(Vector2 position) {
-        boolean onEdge = coordinatesOnBlockEdge(position);
+        boolean onEdge = this.coordinatesOnBlockEdge(position);
 
-        Block centerBlock = getBlock((int) position.x, (int) position.y);
-        if(!onEdge) {
+        Block centerBlock = this.getBlock((int)position.x, (int)position.y);
+        if (!onEdge) {
             return new Block[] { centerBlock };
         }
-        if(position.x % 1 == 0) {
-            Block neighbouringBlockX = getBlock((int) position.x - 1, (int) position.y);
+        if (position.x % 1 == 0) {
+            Block neighbouringBlockX = this.getBlock((int)position.x - 1, (int)position.y);
             return new Block[] { centerBlock, neighbouringBlockX };
         } else {
-            Block neighbouringBlockY = getBlock((int) position.x, (int) position.y - 1);
+            Block neighbouringBlockY = this.getBlock((int)position.x, (int)position.y - 1);
             return new Block[] { centerBlock, neighbouringBlockY };
         }
     }

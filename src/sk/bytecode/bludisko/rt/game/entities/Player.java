@@ -2,7 +2,7 @@ package sk.bytecode.bludisko.rt.game.entities;
 
 import sk.bytecode.bludisko.rt.game.graphics.Camera;
 import sk.bytecode.bludisko.rt.game.graphics.DistanceRay;
-import sk.bytecode.bludisko.rt.game.input.GameInputManagerDelegate;
+import sk.bytecode.bludisko.rt.game.input.IGameInputManagerDelegate;
 import sk.bytecode.bludisko.rt.game.map.Map;
 import sk.bytecode.bludisko.rt.game.map.World;
 import sk.bytecode.bludisko.rt.game.math.MathUtils;
@@ -11,7 +11,7 @@ import sk.bytecode.bludisko.rt.game.math.Vector2;
 /**
  * A Player object representing the real player. Handles input and moves the camera accordingly.
  */
-public class Player extends Entity implements GameInputManagerDelegate {
+public class Player extends Entity implements IGameInputManagerDelegate {
 
     private Map worldWallMap;
 
@@ -47,7 +47,7 @@ public class Player extends Entity implements GameInputManagerDelegate {
      * @param world New world
      */
     public void setWorld(World world) {
-        this.world = world;
+        super.setWorld(world);
         this.worldWallMap = world.getMap().walls();
     }
 
@@ -63,8 +63,8 @@ public class Player extends Entity implements GameInputManagerDelegate {
 
     @Override
     public void tick(float dt) {
-        move(dt);
-        camera.bind(this);
+        this.move(dt);
+        this.camera.bind(this);
     }
 
     // MARK: - Input
@@ -76,7 +76,7 @@ public class Player extends Entity implements GameInputManagerDelegate {
 
     @Override
     public void didUpdateRotation(Vector2 rotation) {
-        this.rotate(rotation.x * MathUtils.degreesToRadians, rotation.y * 0.1f);
+        this.rotate(rotation.x * MathUtils.DEGREES_TO_RADIANS, rotation.y * 0.1f);
     }
 
     @Override
@@ -87,31 +87,31 @@ public class Player extends Entity implements GameInputManagerDelegate {
     // MARK: - Private
 
     private void move(float dt) {
-        var movementVector = this.movementVector.cpy()
-                .scl(walkingSpeed)
+        var movVector = this.movementVector.cpy()
+                .scl(this.walkingSpeed)
                 .scl(dt)
-                .rotateRad(direction.angleRad());
+                .rotateRad(this.getDirection().angleRad());
 
-        var movementRay = new DistanceRay(this.worldWallMap, this.position.cpy(), movementVector.cpy().nor());
-        var nextHitDistance = movementRay.cast(movementVector.len());
+        var movementRay = new DistanceRay(this.worldWallMap, this.getPosition().cpy(), movVector.cpy().nor());
+        var nextHitDistance = movementRay.cast(movVector.len());
 
-        if(Float.isNaN(nextHitDistance)) {
-            position.set(movementRay.getPosition());
-            direction.set(movementRay.getDirection());
-        } else if(nextHitDistance == -1) {
-            position.add(movementVector);
+        if (Float.isNaN(nextHitDistance)) {
+            this.getPosition().set(movementRay.getPosition());
+            this.getDirection().set(movementRay.getDirection());
+        } else if (nextHitDistance == -1) {
+            this.getPosition().add(movVector);
         }
     }
 
     private void rotate(float angleDeg, float pitch) {
-        direction.rotateDeg(angleDeg);
+        this.getDirection().rotateDeg(angleDeg);
 
-        this.pitch += pitch;
-        if(this.pitch < -200) {
-            this.pitch = -200;
+        this.setPitch(this.getPitch() + pitch);
+        if (this.getPitch() < -200) {
+            this.setPitch(-200);
         }
-        if(this.pitch > 200) {
-            this.pitch = 200;
+        if (this.getPitch() > 200) {
+            this.setPitch(200);
         }
     }
 

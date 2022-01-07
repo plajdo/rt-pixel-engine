@@ -22,7 +22,7 @@ public final class BooleanTag extends PrimitiveTag<Boolean> {
     public byte[] byteData() {
         return ByteBuffer.allocate(this.length())
                 .put(this.id())
-                .put(this.data ? (byte) 1 : (byte) 0)
+                .put(this.data ? (byte)1 : (byte)0)
                 .array();
     }
 

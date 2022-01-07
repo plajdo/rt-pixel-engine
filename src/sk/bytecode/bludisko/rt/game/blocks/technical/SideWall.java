@@ -1,7 +1,11 @@
 package sk.bytecode.bludisko.rt.game.blocks.technical;
 
 import sk.bytecode.bludisko.rt.game.blocks.Block;
-import sk.bytecode.bludisko.rt.game.graphics.*;
+import sk.bytecode.bludisko.rt.game.graphics.Ray;
+import sk.bytecode.bludisko.rt.game.graphics.RayAction;
+import sk.bytecode.bludisko.rt.game.graphics.Side;
+import sk.bytecode.bludisko.rt.game.graphics.Texture;
+import sk.bytecode.bludisko.rt.game.graphics.TextureManager;
 import sk.bytecode.bludisko.rt.game.math.MathUtils;
 import sk.bytecode.bludisko.rt.game.math.Vector2;
 
@@ -31,7 +35,7 @@ public class SideWall extends Block {
 
     @Override
     public Vector2 getCoordinates() {
-        return coordinates;
+        return this.coordinates;
     }
 
     @Override
@@ -39,16 +43,16 @@ public class SideWall extends Block {
         var position = ray.getPosition();
         var positionInBlock = MathUtils.decimalPart(position);
 
-        if(this.side == Side.NORTH && positionInBlock.x == 0 && position.x % 2 == getCoordinates().x % 2) {
+        if (this.side == Side.NORTH && positionInBlock.x == 0 && position.x % 2 == this.getCoordinates().x % 2) {
             return RayAction.ADD;
 
-        } else if(this.side == Side.SOUTH && positionInBlock.x == 0 && position.x % 2 != getCoordinates().x % 2) {
+        } else if (this.side == Side.SOUTH && positionInBlock.x == 0 && position.x % 2 != this.getCoordinates().x % 2) {
             return RayAction.ADD;
 
-        } else if(this.side == Side.WEST && positionInBlock.y == 0 && position.y % 2 == getCoordinates().y % 2) {
+        } else if (this.side == Side.WEST && positionInBlock.y == 0 && position.y % 2 == this.getCoordinates().y % 2) {
             return RayAction.ADD;
 
-        } else if(this.side == Side.EAST && positionInBlock.y == 0 && position.y % 2 != getCoordinates().y % 2) {
+        } else if (this.side == Side.EAST && positionInBlock.y == 0 && position.y % 2 != this.getCoordinates().y % 2) {
             return RayAction.ADD;
         }
 

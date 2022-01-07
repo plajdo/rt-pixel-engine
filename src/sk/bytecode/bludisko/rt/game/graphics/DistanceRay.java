@@ -41,19 +41,19 @@ public class DistanceRay extends Ray {
      */
     public float cast(float maxLength) {
         step();
-        if(distance >= maxLength) {
+        if (this.getDistance() >= maxLength) {
             return -1;
         }
-        while(distance < maxLength) {
-            Block[] blocks = map.getBlocksAt(position);
-            for(Block block : blocks) {
+        while (this.getDistance() < maxLength) {
+            Block[] blocks = this.map.getBlocksAt(getPosition());
+            for (Block block : blocks) {
                 RayAction hit = block.hitAction(this);
-                if(hit == RayAction.SKIP) {
+                if (hit == RayAction.SKIP) {
                     continue;
-                } else if(hit == RayAction.TELEPORT) {
+                } else if (hit == RayAction.TELEPORT) {
                     return Float.NaN;
                 }
-                return distance;
+                return getDistance();
             }
             step();
         }

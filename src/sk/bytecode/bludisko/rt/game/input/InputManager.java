@@ -13,16 +13,16 @@ import java.lang.ref.WeakReference;
  * Default implementation handles mouse locking and should be always called
  * via super calls when implemented.
  * @see sk.bytecode.bludisko.rt.game.window.Window
- * @see GameInputManagerDelegate
+ * @see IGameInputManagerDelegate
  */
 public abstract class InputManager implements KeyListener, MouseInputListener {
 
-    protected WeakReference<GameInputManagerDelegate> delegate;
+    private WeakReference<IGameInputManagerDelegate> delegate;
 
-    protected Robot robot;
-    protected Rectangle windowDimensions;
+    private Robot robot;
+    private Rectangle windowDimensions;
 
-    protected boolean mouseLocked = false;
+    private boolean mouseLocked = false;
 
     // MARK: - Constructor
 
@@ -31,7 +31,7 @@ public abstract class InputManager implements KeyListener, MouseInputListener {
      * Might cause a warning/permissions request to show up on macOS systems.
      */
     public InputManager() {
-        createRobot();
+        this.createRobot();
     }
 
     // MARK: - Private
@@ -39,16 +39,16 @@ public abstract class InputManager implements KeyListener, MouseInputListener {
     private void createRobot() {
         try {
             this.robot = new Robot();
-        } catch(AWTException e) {
+        } catch (AWTException e) {
             throw new RuntimeException("Current environment does not support mouse input!");
         }
     }
 
     private void centerMouse() {
-        if(robot != null && windowDimensions != null) {
-            int centerX = windowDimensions.x + windowDimensions.width / 2;
-            int centerY = windowDimensions.y + windowDimensions.height / 2;
-            robot.mouseMove(centerX, centerY);
+        if (this.robot != null && this.windowDimensions != null) {
+            int centerX = this.windowDimensions.x + this.windowDimensions.width / 2;
+            int centerY = this.windowDimensions.y + this.windowDimensions.height / 2;
+            this.robot.mouseMove(centerX, centerY);
         }
     }
 
@@ -60,8 +60,8 @@ public abstract class InputManager implements KeyListener, MouseInputListener {
      * @param dt Time passed since the last frame has finished processing.
      */
     public void tick(float dt) {
-        if(mouseLocked) {
-            centerMouse();
+        if (this.mouseLocked) {
+            this.centerMouse();
         }
     }
 
@@ -69,9 +69,9 @@ public abstract class InputManager implements KeyListener, MouseInputListener {
      * Sets the delegate whose methods are called, when a change in input
      * is detected.
      * @param delegate Object implementing the delegate methods.
-     * @see GameInputManagerDelegate
+     * @see IGameInputManagerDelegate
      */
-    public void setDelegate(GameInputManagerDelegate delegate) {
+    public void setDelegate(IGameInputManagerDelegate delegate) {
         this.delegate = new WeakReference<>(delegate);
     }
 
@@ -91,4 +91,31 @@ public abstract class InputManager implements KeyListener, MouseInputListener {
         this.mouseLocked = locked;
     }
 
+    protected WeakReference<IGameInputManagerDelegate> getDelegate() {
+        return delegate;
+    }
+
+    protected void setDelegate(WeakReference<IGameInputManagerDelegate> delegate) {
+        this.delegate = delegate;
+    }
+
+    protected Robot getRobot() {
+        return robot;
+    }
+
+    protected void setRobot(Robot robot) {
+        this.robot = robot;
+    }
+
+    protected Rectangle getWindowDimensions() {
+        return windowDimensions;
+    }
+
+    protected void setWindowDimensions(Rectangle windowDimensions) {
+        this.windowDimensions = windowDimensions;
+    }
+
+    protected boolean isMouseLocked() {
+        return mouseLocked;
+    }
 }

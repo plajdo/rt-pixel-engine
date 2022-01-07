@@ -12,7 +12,7 @@ public final class StringTag extends Tag<String> {
         super(data);
 
         this.stringBytes = data.getBytes(StandardCharsets.UTF_8);
-        this.lengthTag = new IntTag(stringBytes.length);
+        this.lengthTag = new IntTag(this.stringBytes.length);
     }
 
     @Override

@@ -12,8 +12,8 @@ import java.lang.ref.WeakReference;
  */
 public abstract class World {
 
-    protected GameMap map;
-    protected WeakReference<Player> playerRef;
+    private GameMap map;
+    private WeakReference<Player> playerRef;
 
     /**
      * Game loop - logic.
@@ -27,7 +27,7 @@ public abstract class World {
      * @return Map of this world
      */
     public GameMap getMap() {
-        return map;
+        return this.map;
     }
 
     /**
@@ -39,4 +39,15 @@ public abstract class World {
         this.playerRef = new WeakReference<>(playerRef);
     }
 
+    protected void setMap(GameMap map) {
+        this.map = map;
+    }
+
+    protected WeakReference<Player> getPlayerRef() {
+        return this.playerRef;
+    }
+
+    protected void setPlayerRef(WeakReference<Player> playerRef) {
+        this.playerRef = playerRef;
+    }
 }

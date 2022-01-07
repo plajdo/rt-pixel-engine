@@ -24,7 +24,7 @@ public class Texture {
      * Creates an empty texture with dimensions 64 by 64.
      */
     public Texture() {
-        this.image = emptyImage();
+        this.image = this.emptyImage();
     }
 
     /**
@@ -32,7 +32,7 @@ public class Texture {
      * @param textureName Texture name without file extension.
      */
     public Texture(@NotNull String textureName) {
-        this.image = loadImage(textureName);
+        this.image = this.loadImage(textureName);
     }
 
     /**
@@ -43,18 +43,18 @@ public class Texture {
      */
     public Texture(@NotNull ToIntBiFunction<Integer, Integer> texelGenerator) {
         int[] texelArray = new int[64 * 64];
-        for(int x = 0; x < 64; x++) {
-            for(int y = 0; y < 64; y++) {
+        for (int x = 0; x < 64; x++) {
+            for (int y = 0; y < 64; y++) {
                 texelArray[(x * 64) + y] = texelGenerator.applyAsInt(x, y);
             }
         }
 
         BufferedImage generatedImage = new BufferedImage(64, 64, BufferedImage.TYPE_INT_ARGB);
-        final int[] imageTexelArray = ((DataBufferInt) generatedImage.getRaster().getDataBuffer()).getData();
+        final int[] imageTexelArray = ((DataBufferInt)generatedImage.getRaster().getDataBuffer()).getData();
 
         System.arraycopy(texelArray, 0, imageTexelArray, 0, texelArray.length);
 
-        image = generatedImage;
+        this.image = generatedImage;
     }
 
     // MARK: - Private
@@ -66,10 +66,10 @@ public class Texture {
     private BufferedImage loadImage(String textureName) {
         try {
             return ImageIO.read(new File("res/textures/" + textureName + ".png"));
-        } catch(IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
             System.err.println("Could not load texture: " + e.getLocalizedMessage());
-            return emptyImage();
+            return this.emptyImage();
         }
     }
 
@@ -82,21 +82,21 @@ public class Texture {
      * @see Color
      */
     public Color getColor(int x, int y) {
-        return new Color(image.getRGB(x, y));
+        return new Color(this.image.getRGB(x, y));
     }
 
     /**
      * @return Texture width in pixels
      */
     public int getWidth() {
-        return image.getWidth();
+        return this.image.getWidth();
     }
 
     /**
      * @return Texture height in pixels
      */
     public int getHeight() {
-        return image.getHeight();
+        return this.image.getHeight();
     }
 
 }

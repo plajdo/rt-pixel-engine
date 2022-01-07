@@ -3,6 +3,7 @@ package sk.bytecode.bludisko.rt.game.window.screens;
 import sk.bytecode.bludisko.rt.game.entities.Player;
 import sk.bytecode.bludisko.rt.game.graphics.Camera;
 import sk.bytecode.bludisko.rt.game.input.GameInputManager;
+import sk.bytecode.bludisko.rt.game.input.IGameInputManagerDelegate;
 import sk.bytecode.bludisko.rt.game.input.InputManager;
 import sk.bytecode.bludisko.rt.game.map.Chamber1;
 import sk.bytecode.bludisko.rt.game.map.World;
@@ -32,41 +33,41 @@ public final class GameScreen extends Screen {
      * Default constructor.
      * Constructs the GameScreen and sets up the Player and input.
      * @see Player
-     * @see sk.bytecode.bludisko.rt.game.input.GameInputManagerDelegate
+     * @see IGameInputManagerDelegate
      */
     public GameScreen() {
         this.currentWorld = new Chamber1();
 
-        setupPlayer();
-        setupInput();
+        this.setupPlayer();
+        this.setupInput();
     }
 
     private void setupPlayer() {
-        this.player = new Player(currentWorld);
+        this.player = new Player(this.currentWorld);
         this.camera = new Camera();
 
         this.player.setCamera(this.camera);
-        this.currentWorld.setPlayer(player);
+        this.currentWorld.setPlayer(this.player);
     }
 
     private void setupInput() {
-        gameInput.setDelegate(this.player);
-        gameInput.setMouseLocked(true);
+        this.gameInput.setDelegate(this.player);
+        this.gameInput.setMouseLocked(true);
     }
 
     // MARK: - Screen
 
     @Override
     public InputManager getInputManager() {
-        return gameInput;
+        return this.gameInput;
     }
 
     @Override
     public void screenDidAppear() {
         super.screenDidAppear();
 
-        Window window = this.window.get();
-        if(window != null) {
+        Window window = this.getWindow().get();
+        if (window != null) {
             window.setCursorVisible(false);
         }
     }
@@ -75,9 +76,9 @@ public final class GameScreen extends Screen {
     public void screenDidChangeBounds(Rectangle bounds) {
         super.screenDidChangeBounds(bounds);
 
-        var window = this.window.get();
-        if(window != null) {
-            camera.setScreenSize(window.canvasBounds());
+        var window = this.getWindow().get();
+        if (window != null) {
+            this.camera.setScreenSize(window.canvasBounds());
         }
     }
 
@@ -86,13 +87,13 @@ public final class GameScreen extends Screen {
     @Override
     public void tick(float dt) {
         super.tick(dt);
-        player.tick(dt);
-        currentWorld.tick(dt);
+        this.player.tick(dt);
+        this.currentWorld.tick(dt);
     }
 
     @Override
     public void draw(Graphics graphics) {
-        camera.draw(graphics);
+        this.camera.draw(graphics);
     }
 
     // MARK: - Public
