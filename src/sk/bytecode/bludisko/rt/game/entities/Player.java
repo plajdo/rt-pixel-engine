@@ -92,7 +92,7 @@ public class Player extends Entity implements GameInputManagerDelegate {
                 .scl(dt)
                 .rotateRad(direction.angleRad());
 
-        var movementRay = new DistanceRay(this.worldWallMap, this.position.cpy(), direction.cpy().nor());
+        var movementRay = new DistanceRay(this.worldWallMap, this.position.cpy(), movementVector.cpy().nor());
         var nextHitDistance = movementRay.cast(movementVector.len());
 
         if(Float.isNaN(nextHitDistance)) {
