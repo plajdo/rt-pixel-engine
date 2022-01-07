@@ -52,12 +52,15 @@ public class BlockRay extends Ray {
                 RayAction action = block.hitAction(this);
 
                 switch(action) {
-                    case ADD -> hits.add(new RayHit<>(block, this.position.cpy(), distance));
-                    case TELEPORT -> hits.add(new RayHit<>(block, rayPosition, distance));
-                    case STOP -> {
+                    case ADD:
+                        hits.add(new RayHit<>(block, this.position.cpy(), distance));
+                        break;
+                    case TELEPORT:
+                        hits.add(new RayHit<>(block, rayPosition, distance));
+                        break;
+                    case STOP:
                         hits.add(new RayHit<>(block, this.position.cpy(), distance));
                         break castCycle;
-                    }
                 }
             }
         }

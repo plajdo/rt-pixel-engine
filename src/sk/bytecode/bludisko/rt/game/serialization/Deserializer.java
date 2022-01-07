@@ -20,22 +20,36 @@ final class Deserializer<T> {
     @SuppressWarnings("unchecked")
     Tag<T> deserialize() throws NotSerializableException {
         int tagIdentifier = data[offset];
-        Tag<?> newTag = switch (tagIdentifier) {
-            case -1 -> new EmptyTag();
-            case 0 -> new TerminatorTag();
-            case 1 -> this.deserializeByte();
-            case 2 -> this.deserializeShort();
-            case 3 -> this.deserializeInt();
-            case 4 -> this.deserializeLong();
-            case 5 -> this.deserializeFloat();
-            case 6 -> this.deserializeDouble();
-            case 7 -> this.deserializeChar();
-            case 8 -> this.deserializeBoolean();
-            case 9 -> this.deserializeString();
-            case 10 -> this.deserializeObject();
-            case 11 -> this.deserializeArray();
-            default -> throw new NotSerializableException("Invalid identifier: " + tagIdentifier);
-        };
+        Tag<?> newTag;
+        if(tagIdentifier == -1) {
+            newTag = new EmptyTag();
+        } else if(tagIdentifier == 0) {
+            newTag = new TerminatorTag();
+        } else if(tagIdentifier == 1) {
+            newTag = this.deserializeByte();
+        } else if(tagIdentifier == 2) {
+            newTag = this.deserializeShort();
+        } else if(tagIdentifier == 3) {
+            newTag = this.deserializeInt();
+        } else if(tagIdentifier == 4){
+            newTag = this.deserializeLong();
+        } else if(tagIdentifier == 5) {
+            newTag = this.deserializeFloat();
+        } else if(tagIdentifier == 6) {
+            newTag = this.deserializeDouble();
+        } else if(tagIdentifier == 7) {
+            newTag = this.deserializeChar();
+        } else if(tagIdentifier == 8) {
+            newTag = this.deserializeBoolean();
+        } else if(tagIdentifier == 9) {
+            newTag = this.deserializeString();
+        } else if(tagIdentifier == 10) {
+            newTag = this.deserializeObject();
+        } else if(tagIdentifier == 11) {
+            newTag = this.deserializeArray();
+        } else {
+            throw new NotSerializableException("Invalid identifier: " + tagIdentifier);
+        }
         this.addOffsetForPrimitiveTypes(newTag, tagIdentifier);
 
         return (Tag<T>) newTag;
@@ -171,7 +185,7 @@ final class Deserializer<T> {
     @SuppressWarnings("unchecked")
     private T objectForClassName(String className) throws NotSerializableException {
         try {
-            var forClass = Class.forName(className);
+            Class<?> forClass = Class.forName(className);
 
             Constructor<Object> fakeConstructor = Object.class.getConstructor((Class<?>[]) null);
             Class<?> reflectionFactoryClass = Class.forName("sun.reflect.ReflectionFactory");

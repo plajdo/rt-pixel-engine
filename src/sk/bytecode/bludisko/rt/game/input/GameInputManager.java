@@ -3,6 +3,7 @@ package sk.bytecode.bludisko.rt.game.input;
 import sk.bytecode.bludisko.rt.game.math.Vector2;
 import sk.bytecode.bludisko.rt.game.util.Config;
 
+import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.function.Consumer;
@@ -18,27 +19,33 @@ public class GameInputManager extends InputManager {
     // MARK: - Private
 
     private void toggleDirectionOn(int keyCode) {
-        this.direction = switch(keyCode) {
-            case Config.Keybinds.UP -> direction | (1 << 3);
-            case Config.Keybinds.LEFT -> direction | (1 << 2);
-            case Config.Keybinds.DOWN -> direction | (1 << 1);
-            case Config.Keybinds.RIGHT -> direction | (1);
-            default -> direction;
-        };
+        if(keyCode == Config.Keybinds.UP) {
+            this.direction = this.direction | (1 << 3);
+        } else if(keyCode == Config.Keybinds.LEFT) {
+            this.direction = this.direction | (1 << 2);
+        } else if(keyCode == Config.Keybinds.DOWN) {
+            this.direction = this.direction | (1 << 1);
+        } else if(keyCode == Config.Keybinds.RIGHT) {
+            this.direction = this.direction | (1);
+        }
     }
 
     private void toggleDirectionOff(int keyCode) {
-        this.direction = switch(keyCode) {
-            case Config.Keybinds.UP -> direction & ~(1 << 3);
-            case Config.Keybinds.LEFT -> direction & ~(1 << 2);
-            case Config.Keybinds.DOWN -> direction & ~(1 << 1);
-            case Config.Keybinds.RIGHT -> direction & ~(1);
-            default -> direction;
-        };
+        if(keyCode == Config.Keybinds.UP) {
+            this.direction = this.direction & ~(1 << 3);
+        } else if(keyCode == Config.Keybinds.LEFT) {
+            this.direction = this.direction & ~(1 << 2);
+        } else if(keyCode == Config.Keybinds.DOWN) {
+            this.direction = this.direction & ~(1 << 1);
+        } else if(keyCode == Config.Keybinds.RIGHT) {
+            this.direction = this.direction & ~(1);
+        } else {
+            this.direction = direction;
+        }
     }
 
     private Vector2 toVector(int direction) {
-        var directionVector = new Vector2();
+        Vector2 directionVector = new Vector2();
         directionVector.add(
                 (direction & 0b1000) > 0 ? 1 : 0,
                 (direction & 0b0100) > 0 ? 1 : 0
@@ -119,7 +126,7 @@ public class GameInputManager extends InputManager {
 
     @Override
     public void mouseMoved(MouseEvent e) {
-        var newPosition = e.getLocationOnScreen();
+        Point newPosition = e.getLocationOnScreen();
         newPosition.translate(-this.windowDimensions.x, this.windowDimensions.y);
         newPosition.translate(-this.windowDimensions.width / 2, -this.windowDimensions.height / 2);
 

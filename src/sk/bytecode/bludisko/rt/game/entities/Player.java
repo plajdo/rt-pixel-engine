@@ -8,6 +8,8 @@ import sk.bytecode.bludisko.rt.game.map.World;
 import sk.bytecode.bludisko.rt.game.math.MathUtils;
 import sk.bytecode.bludisko.rt.game.math.Vector2;
 
+import java.lang.ref.WeakReference;
+
 /**
  * A Player object representing the real player. Handles input and moves the camera accordingly.
  */
@@ -15,7 +17,7 @@ public class Player extends Entity implements GameInputManagerDelegate {
 
     private Map worldWallMap;
 
-    private Camera camera;
+    private WeakReference<Camera> camera = new WeakReference<>(null);
     private Vector2 movementVector;
 
     private float walkingSpeed = 1.75f;
@@ -56,7 +58,7 @@ public class Player extends Entity implements GameInputManagerDelegate {
      * @param camera Camera to control
      */
     public void setCamera(Camera camera) {
-        this.camera = camera;
+        this.camera = new WeakReference<>(camera);
     }
 
     // MARK: - Game loop
@@ -64,7 +66,11 @@ public class Player extends Entity implements GameInputManagerDelegate {
     @Override
     public void tick(float dt) {
         move(dt);
-        camera.bind(this);
+
+        Camera camera = this.camera.get();
+        if(camera != null) {
+            camera.bind(this);
+        }
     }
 
     // MARK: - Input

@@ -36,8 +36,8 @@ public class SideWall extends Block {
 
     @Override
     public RayAction hitAction(Ray ray) {
-        var position = ray.getPosition();
-        var positionInBlock = MathUtils.decimalPart(position);
+        Vector2 position = ray.getPosition();
+        Vector2 positionInBlock = MathUtils.decimalPart(position);
 
         if(this.side == Side.NORTH && positionInBlock.x == 0 && position.x % 2 == getCoordinates().x % 2) {
             return RayAction.ADD;

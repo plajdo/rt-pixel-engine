@@ -53,12 +53,12 @@ public class Portal extends Block {
 
     @Override
     public RayAction hitAction(Ray ray) {
-        var rayPosition = ray.getPosition();
-        var hitSide = getSide(rayPosition);
+        Vector2 rayPosition = ray.getPosition();
+        Side hitSide = getSide(rayPosition);
         if(hitSide == side && otherPortal != null) {
-            var thisExit = this.getExitRotation();
-            var otherExit = otherPortal.getExitRotation();
-            var exitRotation = thisExit.angleRad() - otherExit.angleRad();
+            Vector2 thisExit = this.getExitRotation();
+            Vector2 otherExit = otherPortal.getExitRotation();
+            float exitRotation = thisExit.angleRad() - otherExit.angleRad();
 
             rayPosition.set(MathUtils.decimalPart(rayPosition));
             rayPosition.rotateRad(exitRotation);
@@ -74,23 +74,35 @@ public class Portal extends Block {
     }
 
     private Vector2 getExitOffset() {
-        return switch(side) {
-            case NONE -> null;
-            case NORTH -> null;
-            case EAST -> new Vector2(0f, 1f);
-            case SOUTH -> new Vector2(1f, 0f);
-            case WEST -> null;
-        };
+        switch(this.side) {
+            case NONE:
+                return null;
+            case NORTH:
+                return null;
+            case EAST:
+                return new Vector2(0f, 1f);
+            case SOUTH:
+                return new Vector2(1f, 0f);
+            case WEST:
+                return null;
+        }
+        return null;
     }
 
     private Vector2 getExitRotation() {
-        return switch(side) {
-            case NONE -> null;
-            case NORTH -> null;
-            case EAST -> new Vector2(0f, 1f);
-            case SOUTH -> new Vector2(1f, 0f);
-            case WEST -> null;
-        };
+        switch(this.side) {
+            case NONE:
+                return null;
+            case NORTH:
+                return null;
+            case EAST:
+                return new Vector2(0f, 1f);
+            case SOUTH:
+                return new Vector2(1f, 0f);
+            case WEST:
+                return null;
+        }
+        return null;
     }
 
     /**

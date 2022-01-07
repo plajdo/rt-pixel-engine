@@ -32,7 +32,7 @@ public final class GameMap {
      */
     public static GameMap load(String name) {
         try {
-            var inputStream = new FileInputStream("res/maps/" + name + ".map");
+            FileInputStream inputStream = new FileInputStream("res/maps/" + name + ".map");
             byte[] mapBytes = inputStream.readAllBytes();
             inputStream.close();
 

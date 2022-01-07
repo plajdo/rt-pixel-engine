@@ -574,12 +574,12 @@ public class Vector2 {
     }
 
     public boolean positiveDirectionX() {
-        var angle = this.angleRad();
+        float angle = this.angleRad();
         return angle > -Math.PI / 2 && angle < Math.PI;
     }
 
     public boolean positiveDirectionY() {
-        var angle = this.angleRad();
+        float angle = this.angleRad();
         return angle > 0;
     }
 

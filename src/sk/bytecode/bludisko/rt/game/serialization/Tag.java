@@ -33,7 +33,7 @@ import java.io.NotSerializableException;
  *
  * @param <T> Type of the outermost serialized object
  */
-public abstract sealed class Tag<T> permits EmptyTag, TerminatorTag, PrimitiveTag, StringTag, ArrayTag, ObjectTag {
+public abstract class Tag<T> {
 
     protected final T data;
     protected Tag(T data) {
@@ -56,15 +56,25 @@ public abstract sealed class Tag<T> permits EmptyTag, TerminatorTag, PrimitiveTa
      */
     @SuppressWarnings("unchecked")
     public static <T> Tag<?> fromObject(T o) {
-        return switch(o) {
-            case null -> new EmptyTag();
-            case Number n -> PrimitiveTag.fromNumber(n);
-            case Character c -> new CharTag(c);
-            case Boolean b -> new BooleanTag(b);
-            case String s -> new StringTag(s);
-            case Object obj && obj.getClass().isArray() -> new ArrayTag<>((T[]) obj);
-            case T obj -> new ObjectTag<>(obj);
-        };
+        if(o == null) {
+            return new EmptyTag();
+        } else if(o instanceof Number) {
+            Number n = (Number) o;
+            return PrimitiveTag.fromNumber(n);
+        } else if(o instanceof Character) {
+            Character c = (Character) o;
+            return new CharTag(c);
+        } else if(o instanceof Boolean) {
+            Boolean b = (Boolean) o;
+            return new BooleanTag(b);
+        } else if(o instanceof String) {
+            String s = (String) o;
+            return new StringTag(s);
+        } else if(o.getClass().isArray()) {
+            return new ArrayTag<>((T[]) o);
+        } else {
+            return new ObjectTag<>(o);
+        }
     }
 
     /**
@@ -76,7 +86,7 @@ public abstract sealed class Tag<T> permits EmptyTag, TerminatorTag, PrimitiveTa
      * @throws NotSerializableException If the input is invalid
      */
     public static <T> Tag<T> fromBytes(byte[] bytes, Class<T> type) throws NotSerializableException {
-        var deserializer = new Deserializer<T>(bytes);
+        Deserializer<T> deserializer = new Deserializer<>(bytes);
         return deserializer.deserialize();
     }
 

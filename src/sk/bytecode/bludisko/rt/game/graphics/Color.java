@@ -3,7 +3,14 @@ package sk.bytecode.bludisko.rt.game.graphics;
 /**
  * Color record with handy methods for color blending.
  */
-public record Color(int argb) {
+//public record Color(int argb) {
+public class Color {
+
+    private final int argb;
+
+    public Color(int argb) {
+        this.argb = argb;
+    }
 
     /**
      * Multiplies the color by a given scalar.

@@ -33,11 +33,11 @@ public class HalfWall extends Block {
     }
 
     public RayAction hitAction(Ray ray) {
-        var angle = ray.getDirection().angleRad();
-        var distance = Math.abs((float)(0.5d / Math.sin(angle)));
+        float angle = ray.getDirection().angleRad();
+        float distance = Math.abs((float)(0.5d / Math.sin(angle)));
 
         ray.setTileSize(new Vector2(0.5f, 0.5f));
-        var position = ray.getPosition();
+        Vector2 position = ray.getPosition();
 
         if((position.y % 1) - 0.5f < MathUtils.FLOAT_ROUNDING_ERROR && (position.y % 1) - 0.5f >= 0) {
             return RayAction.ADD;

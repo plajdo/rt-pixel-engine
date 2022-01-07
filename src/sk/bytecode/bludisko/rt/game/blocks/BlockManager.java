@@ -19,30 +19,30 @@ public class BlockManager {
      * @return New block
      */
     public static Block createBlock(int id, int x, int y) {
-        var coordinates = new Vector2(x, y);
-        return switch(id) {
-            default -> new MissingBlock(coordinates);
-            case 0 -> new Air(coordinates);
+        Vector2 coordinates = new Vector2(x, y);
+        switch(id) {
+            default: return new MissingBlock(coordinates);
+            case 0: return new Air(coordinates);
 
-            case 1 -> new WhiteTiles(coordinates);
-            case 2 -> new BlackTiles(coordinates);
+            case 1: return new WhiteTiles(coordinates);
+            case 2: return new BlackTiles(coordinates);
 
-            case 3 -> new GlassPane(Side.SOUTH, coordinates);
-            case 4 -> new GlassPane(Side.WEST, coordinates);
-            case 5 -> new GlassPane(Side.NORTH, coordinates);
-            case 6 -> new GlassPane(Side.EAST, coordinates);
+            case 3: return new GlassPane(Side.SOUTH, coordinates);
+            case 4: return new GlassPane(Side.WEST, coordinates);
+            case 5: return new GlassPane(Side.NORTH, coordinates);
+            case 6: return new GlassPane(Side.EAST, coordinates);
 
-            case 7 -> new Portal(Side.EAST, Portal.Color.ORANGE, coordinates);
-            case 8 -> new Portal(Side.SOUTH, Portal.Color.BLUE, coordinates);
+            case 7: return new Portal(Side.EAST, Portal.Color.ORANGE, coordinates);
+            case 8: return new Portal(Side.SOUTH, Portal.Color.BLUE, coordinates);
 
-            case 9 -> new WallWindow(coordinates, false);
-            case 10 -> new WallWindow(coordinates, true);
-            case 11 -> new Board(coordinates, 0);
+            case 9: return new WallWindow(coordinates, false);
+            case 10: return new WallWindow(coordinates, true);
+            case 11: return new Board(coordinates, 0);
 
-            case 12 -> new FloorTiles(coordinates);
+            case 12: return new FloorTiles(coordinates);
 
-            case 13 -> new Doors(coordinates);
-        };
+            case 13: return new Doors(coordinates);
+        }
     }
 
 }
