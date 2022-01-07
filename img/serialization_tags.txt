@@ -1,0 +1,14 @@
+-1 = EmptyTag
+0 = TerminatorTag
+1 = ByteTag
+2 = ShortTag
+3 = IntTag
+4 = LongTag
+5 = FloatTag
+6 = DoubleTag
+7 = CharTag
+8 = BooleanTag
+
+9 = StringTag
+10 = ObjectTag
+11 = ArrayTag
