@@ -3,7 +3,11 @@ package sk.bytecode.bludisko.rt.game.entities;
 import sk.bytecode.bludisko.rt.game.map.World;
 import sk.bytecode.bludisko.rt.game.math.Vector2;
 
+/**
+ * Class representing an entity in the world. Contains its position.
+ */
 public abstract class Entity {
+
     protected World world;
     protected Vector2 position;
     protected float positionZ;
@@ -13,6 +17,9 @@ public abstract class Entity {
 
     // MARK: - Constructor
 
+    /**
+     * New entity with given parameters.
+     */
     public Entity(World world, Vector2 position, Vector2 direction, float positionZ, float pitch) {
         this.world = world;
         this.position = position;
@@ -21,6 +28,10 @@ public abstract class Entity {
         this.pitch = pitch;
     }
 
+    /**
+     * Notifies the entity to process its tick.
+     * @param dt Time that's passed since the last frame has finished rendering.
+     */
     public abstract void tick(float dt);
 
     // MARK: - Getters

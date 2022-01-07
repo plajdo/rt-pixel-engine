@@ -7,6 +7,14 @@ import java.awt.Robot;
 import java.awt.event.KeyListener;
 import java.lang.ref.WeakReference;
 
+/**
+ * Input manager that is subscribed to events from Window and passes them further
+ * for processing in game.
+ * Default implementation handles mouse locking and should be always called
+ * via super calls when implemented.
+ * @see sk.bytecode.bludisko.rt.game.window.Window
+ * @see GameInputManagerDelegate
+ */
 public abstract class InputManager implements KeyListener, MouseInputListener {
 
     protected WeakReference<GameInputManagerDelegate> delegate;
@@ -18,6 +26,10 @@ public abstract class InputManager implements KeyListener, MouseInputListener {
 
     // MARK: - Constructor
 
+    /**
+     * Creates the Input Manager and a robot object for locking the mouse in the Window.
+     * Might cause a warning/permissions request to show up on macOS systems.
+     */
     public InputManager() {
         createRobot();
     }
@@ -42,20 +54,39 @@ public abstract class InputManager implements KeyListener, MouseInputListener {
 
     // MARK: - Public
 
+    /**
+     * Tick the input manager. Should be called before drawing a frame to
+     * update input information accordingly.
+     * @param dt Time passed since the last frame has finished processing.
+     */
     public void tick(float dt) {
         if(mouseLocked) {
             centerMouse();
         }
     }
 
+    /**
+     * Sets the delegate whose methods are called, when a change in input
+     * is detected.
+     * @param delegate Object implementing the delegate methods.
+     * @see GameInputManagerDelegate
+     */
     public void setDelegate(GameInputManagerDelegate delegate) {
         this.delegate = new WeakReference<>(delegate);
     }
 
+    /**
+     * Notify the Input Manager of new Window dimensions.
+     * @param newDimensions New Window bounds.
+     */
     public void updateWindowDimensions(Rectangle newDimensions) {
         this.windowDimensions = newDimensions;
     }
 
+    /**
+     * Sets the mouse lock on this window.
+     * @param locked Whether the mouse should be locked in the centre.
+     */
     public void setMouseLocked(boolean locked) {
         this.mouseLocked = locked;
     }

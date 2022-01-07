@@ -9,6 +9,11 @@ import java.io.File;
 import java.io.IOException;
 import java.util.function.ToIntBiFunction;
 
+/**
+ * Class representing and holding a texture. Mainly used by TextureManager
+ * to handle textures.
+ * @see TextureManager
+ */
 public class Texture {
 
     private final BufferedImage image;
@@ -70,14 +75,26 @@ public class Texture {
 
     // MARK: - Getters
 
+    /**
+     * @param x x coordinate
+     * @param y y coordinate
+     * @return Color of a pixel at coordinates (x, y)
+     * @see Color
+     */
     public Color getColor(int x, int y) {
         return new Color(image.getRGB(x, y));
     }
 
+    /**
+     * @return Texture width in pixels
+     */
     public int getWidth() {
         return image.getWidth();
     }
 
+    /**
+     * @return Texture height in pixels
+     */
     public int getHeight() {
         return image.getHeight();
     }

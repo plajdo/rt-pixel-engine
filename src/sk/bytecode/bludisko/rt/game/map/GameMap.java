@@ -7,6 +7,11 @@ import sk.bytecode.bludisko.rt.game.serialization.Tag;
 import java.io.FileInputStream;
 import java.io.IOException;
 
+/**
+ * Map of a game world. Contains separate Map objects
+ * holding information about walls, floor tiles, spawn
+ * location, ...
+ */
 public final class GameMap {
 
     @Serializable private final Map walls;
@@ -19,6 +24,12 @@ public final class GameMap {
 
     // MARK: - Static Initializer
 
+    /**
+     * Loads a GameMap from a file inside resources (res/maps) folder.
+     * @param name Map name without extension
+     * @return GameMap loaded from the file
+     * @throws RuntimeException If the map could not be loaded for any reason.
+     */
     public static GameMap load(String name) {
         try {
             var inputStream = new FileInputStream("res/maps/" + name + ".map");
@@ -37,6 +48,10 @@ public final class GameMap {
 
     // MARK: - Constructor
 
+    /**
+     * Creates a map from separate objects. Mainly used for map creation
+     * and not meant to be used inside a game.
+     */
     public GameMap(Map walls, Map floor, Vector2 spawnLocation, Vector2 spawnDirection, int ceilingColor) {
         this.walls = walls;
         this.floor = floor;
@@ -47,10 +62,16 @@ public final class GameMap {
 
     // MARK: - Getters
 
+    /**
+     * @return Map containing walls and 3D objects.
+     */
     public Map walls() {
         return walls;
     }
 
+    /**
+     * @return Map containing floor tiles.
+     */
     public Map floor() {
         return floor;
     }

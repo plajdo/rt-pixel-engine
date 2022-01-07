@@ -4,6 +4,9 @@ import sk.bytecode.bludisko.rt.game.blocks.Block;
 import sk.bytecode.bludisko.rt.game.graphics.*;
 import sk.bytecode.bludisko.rt.game.math.Vector2;
 
+/**
+ * Empty block.
+ */
 public class Air extends Block {
 
     private final Vector2 coordinates;

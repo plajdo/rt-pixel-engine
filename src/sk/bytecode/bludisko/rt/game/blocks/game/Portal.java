@@ -17,6 +17,12 @@ public class Portal extends Block {
     private final Portal.Color color;
     private Portal otherPortal;
 
+    /**
+     * Constructs a new portal.
+     * @param side Side of the portal entrance/exit
+     * @param color {@link Portal.Color Color} of the portal frame (aesthetic only)
+     * @param coordinates Coordinates of this portal
+     */
     public Portal(Side side, Portal.Color color, Vector2 coordinates) {
         this.coordinates = coordinates;
         this.color = color;
@@ -48,7 +54,7 @@ public class Portal extends Block {
     @Override
     public RayAction hitAction(Ray ray) {
         var rayPosition = ray.getPosition();
-        var hitSide = getHitSide(rayPosition);
+        var hitSide = getSide(rayPosition);
         if(hitSide == side && otherPortal != null) {
             var thisExit = this.getExitRotation();
             var otherExit = otherPortal.getExitRotation();
@@ -67,7 +73,7 @@ public class Portal extends Block {
         }
     }
 
-    public Vector2 getExitOffset() {
+    private Vector2 getExitOffset() {
         return switch(side) {
             case NONE -> null;
             case NORTH -> null;
@@ -77,7 +83,7 @@ public class Portal extends Block {
         };
     }
 
-    public Vector2 getExitRotation() {
+    private Vector2 getExitRotation() {
         return switch(side) {
             case NONE -> null;
             case NORTH -> null;
@@ -87,6 +93,10 @@ public class Portal extends Block {
         };
     }
 
+    /**
+     * Link two portals together.
+     * @param otherPortal Paired portal
+     */
     public void setOtherPortal(Portal otherPortal) {
         this.otherPortal = otherPortal;
     }

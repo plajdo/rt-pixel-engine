@@ -2,6 +2,10 @@ package sk.bytecode.bludisko.rt.game.graphics;
 
 import sk.bytecode.bludisko.rt.game.math.MathUtils;
 
+/**
+ * Contains useful methods for texture handling.
+ * Fully static class. Cannot be instantiated.
+ */
 public class TextureManager {
 
     private static Texture[] generatedTextures;
@@ -9,8 +13,16 @@ public class TextureManager {
 
     private static Texture noTexture;
 
+    // MARK: - Constructor
+
+    private TextureManager() {}
+
     // MARK: - Public
 
+    /**
+     * Loads and generates all textures it's defined.
+     * Must be called before any rendering happens.
+     */
     public static void loadAll() {
         generateTextures();
         loadTextures();
@@ -60,14 +72,28 @@ public class TextureManager {
 
     // MARK: - Getters
 
+    /**
+     * Returns a texture with an ID.
+     * @param texture ID - index in an array containing all textures loaded from files
+     * @return Texture
+     */
     public static Texture getTexture(int texture) {
         return loadedTextures[texture];
     }
 
+    /**
+     * Returns a generated texture with an ID.
+     * @param texture ID - index in an array containing all generated textures
+     * @return Texture
+     */
     public static Texture getGenerated(int texture) {
         return generatedTextures[texture];
     }
 
+    /**
+     * Returns an empty, transparent 64x64px texture.
+     * @return Texture
+     */
     public static Texture getEmpty() {
         return noTexture;
     }

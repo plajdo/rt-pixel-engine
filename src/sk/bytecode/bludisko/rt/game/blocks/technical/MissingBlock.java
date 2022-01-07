@@ -4,6 +4,10 @@ import sk.bytecode.bludisko.rt.game.blocks.Block;
 import sk.bytecode.bludisko.rt.game.graphics.*;
 import sk.bytecode.bludisko.rt.game.math.Vector2;
 
+/**
+ * Default block with a famous "missing" (XOR) texture.
+ * Fallback when another block is not found.
+ */
 public class MissingBlock extends Block {
 
     private final Vector2 coordinates;

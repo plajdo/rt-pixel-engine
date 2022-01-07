@@ -7,6 +7,10 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.function.Consumer;
 
+/**
+ * Custom implementation of Input Manager for
+ * a Game Screen.
+ */
 public class GameInputManager extends InputManager {
 
     private int direction = 0b0000;

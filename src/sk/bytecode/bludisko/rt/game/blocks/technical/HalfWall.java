@@ -5,6 +5,10 @@ import sk.bytecode.bludisko.rt.game.graphics.*;
 import sk.bytecode.bludisko.rt.game.math.MathUtils;
 import sk.bytecode.bludisko.rt.game.math.Vector2;
 
+/**
+ * Modification of the wall block that only
+ * renders one sprite in the middle.
+ */
 public class HalfWall extends Block {
 
     private final Vector2 coordinates;

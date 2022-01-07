@@ -1,7 +1,15 @@
 package sk.bytecode.bludisko.rt.game.graphics;
 
+/**
+ * Color record with handy methods for color blending.
+ */
 public record Color(int argb) {
 
+    /**
+     * Multiplies the color by a given scalar.
+     * @param scale Multiplier
+     * @return New Color with a modified value
+     */
     public Color scaled(float scale) {
         int alpha = (int) (((0xFF000000 & argb) >>> 24) * scale) << 24;
         int red = (int) (((0x00FF0000 & argb) >>> 16) * scale) << 16;
@@ -11,6 +19,12 @@ public record Color(int argb) {
         return new Color(alpha | red | green | blue);
     }
 
+    /**
+     * Blends current color with a different color
+     * based on their alpha values.
+     * @param color Other color to blend with
+     * @return New blended Color
+     */
     public Color fade(int color) {
         float alpha1 = ((0xFF000000 & argb) >>> 24) / 255f;
         float red1 = ((0x00FF0000 & argb) >>> 16) * alpha1;

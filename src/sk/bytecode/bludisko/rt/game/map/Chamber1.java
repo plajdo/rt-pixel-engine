@@ -5,6 +5,10 @@ import sk.bytecode.bludisko.rt.game.entities.Player;
 
 import javax.swing.JOptionPane;
 
+/**
+ * First map that loads after opening the game.
+ * Based on zero-th testing chamber from the game Portal.
+ */
 public class Chamber1 extends World {
 
     // MARK: - Constructor

@@ -12,6 +12,20 @@ import java.awt.event.ComponentEvent;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 
+/**
+ * Main application window containing a {@link Canvas} to be drawn on.
+ * Displays a {@link Screen} that splits the rendering pipeline further.
+ * This class invokes every tick and draw call in the game loop
+ * and handles global rendering quality settings. It also listens
+ * for all system I-O events on the main window {@link Frame} and
+ * handles window movement/resize events.
+ *
+ * @see Screen
+ * @see Canvas
+ * @see Graphics
+ * @see JFrame
+ * @see InputManager
+ */
 public final class Window {
 
     private final static int FRAMERATE = 60;
@@ -29,6 +43,12 @@ public final class Window {
 
     // MARK: - Initialize
 
+    /**
+     * Creates main game window with {@link Canvas}.
+     * Default resolution is 640x480px, however that can be
+     * resized later.
+     * @param screen Game screen to show inside the Canvas
+     */
     public Window(@NotNull Screen screen) {
         this.windowSize = new Dimension(640, 480);
         this.frame = new JFrame("rt_portal_demo");
@@ -116,21 +136,38 @@ public final class Window {
 
     // MARK: - Public
 
+    /**
+     * Replaces the currently shown screen inside the Window
+     * with a different one.
+     * @param screen Replacement screen
+     */
     public void setScreen(@NotNull Screen screen) {
         setupScreen(screen);
     }
 
+    /**
+     * Sets cursor visibility over this Window.
+     * @param visible Whether cursor should be visible
+     */
     public void setCursorVisible(boolean visible) {
         this.cursorVisible = visible;
         this.setupCursor();
     }
 
+    /**
+     * Get current screen bounds, including window size and position.
+     * @return Bounds rectangle
+     */
     public Rectangle canvasBounds() {
         return canvas.getBounds();
     }
 
     // MARK: - Game thread
 
+    /**
+     * Starts the game loop on a new Thread.
+     * Does not block, returns immediately.
+     */
     public void start() {
         this.running = true;
         Runnable gameThread = () -> {

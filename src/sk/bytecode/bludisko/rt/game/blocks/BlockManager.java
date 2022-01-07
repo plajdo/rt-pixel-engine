@@ -6,8 +6,18 @@ import sk.bytecode.bludisko.rt.game.blocks.game.*;
 import sk.bytecode.bludisko.rt.game.graphics.Side;
 import sk.bytecode.bludisko.rt.game.math.Vector2;
 
+/**
+ * Helps with creating Block maps from Integer maps loaded from files.
+ * Fully static class. Cannot be instantiated.
+ */
 public class BlockManager {
 
+    private BlockManager(){}
+
+    /**
+     * Creates a new block with a given ID and coordinates in an integer plane.
+     * @return New block
+     */
     public static Block createBlock(int id, int x, int y) {
         var coordinates = new Vector2(x, y);
         return switch(id) {
@@ -34,4 +44,5 @@ public class BlockManager {
             case 13 -> new Doors(coordinates);
         };
     }
+
 }

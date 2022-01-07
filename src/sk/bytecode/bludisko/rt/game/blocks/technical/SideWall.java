@@ -5,6 +5,10 @@ import sk.bytecode.bludisko.rt.game.graphics.*;
 import sk.bytecode.bludisko.rt.game.math.MathUtils;
 import sk.bytecode.bludisko.rt.game.math.Vector2;
 
+/**
+ * Modification of a Block that only renders one side
+ * of the cube.
+ */
 public class SideWall extends Block {
 
     private final Vector2 coordinates;
@@ -49,10 +53,6 @@ public class SideWall extends Block {
         }
 
         return RayAction.SKIP;
-    }
-
-    public Side getSide() {
-        return side;
     }
 
 }

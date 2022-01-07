@@ -13,6 +13,15 @@ import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 import java.util.Arrays;
 
+/**
+ * Virtual three-dimensional camera that draws into a {@link sk.bytecode.bludisko.rt.game.window.Window} canvas.
+ * Can be moved and rotated in a 3D space. Pitch is somewhat limited to prevent image distortion at large angles.
+ *
+ * Uses a traditional raycasting algorithm to calculate sizes of objects to draw on the screen.
+ * Uses affine texture mapping to map textures of objects on a virtual 3D surface.
+ * Can draw on any arbitrary-size canvas with different amount of rays cast and pixels drawn.
+ * Has a separated viewport from screen size to be able to scale the resulting image.
+ */
 public class Camera {
 
     private GameMap map;
@@ -29,6 +38,9 @@ public class Camera {
 
     // MARK: - Constructor
 
+    /**
+     * Constructs a new Camera at position [0, 0] looking in direction [0, -1].
+     */
     public Camera() {
         this.position = new Vector2(0f, 0f);
         this.positionZ = 0f;
@@ -43,6 +55,13 @@ public class Camera {
 
     // MARK: - Game loop
 
+    /**
+     * Main draw method that renders everything into a {@link Graphics} object from a {@link sk.bytecode.bludisko.rt.game.window.screens.Screen}.
+     * This method is very performance-heavy and should be called with caution.
+     * Must be synchronized to prevent multiple objects drawing and changing the rendering information
+     * at the same time, messing up the image.
+     * @param graphics Graphics object to draw into. Must not be finalized in any way.
+     */
     public synchronized void draw(Graphics graphics) {
         BufferedImage bufferedImage = new BufferedImage(
                 (int) viewportSize.x,
@@ -82,7 +101,7 @@ public class Camera {
                 // Fish eye fix
                 float distance = (float) (hit.distance() * Math.abs(Math.sin(plane.angleRad() - rayDirection.angleRad())));
 
-                Side hitSide = hit.result().getHitSide(hit.position());
+                Side hitSide = hit.result().getSide(hit.position());
 
                 Vector2 hitPosition = hit.position();
                 Vector2 wallHitCoordinates = hitPosition.cpy()
@@ -187,10 +206,19 @@ public class Camera {
 
     // MARK: - Modifiers
 
+    /**
+     * Move the camera by a specified amount.
+     * @param length Amount to move
+     */
     public synchronized void move(Vector2 length) {
         position.add(length);
     }
 
+    /**
+     * Rotate the camera's yaw and pitch by the given amount.
+     * @param angleDeg Yaw
+     * @param pitch Pitch
+     */
     public synchronized void rotate(float angleDeg, float pitch) {
         direction.rotateDeg(angleDeg);
         plane.rotateDeg(angleDeg);
@@ -204,6 +232,10 @@ public class Camera {
         }
     }
 
+    /**
+     * Sets the camera to render from an entity's perspective.
+     * @param entity Entity to copy the position data from.
+     */
     public void bind(Entity entity) {
         this.map = entity.getWorld().getMap();
         this.position.set(entity.getPosition());
@@ -217,6 +249,11 @@ public class Camera {
 
     // MARK: - Setters
 
+    /**
+     * Notifies the camera that its Canvas size has changed and
+     * resizes the viewport and Camera plane accordingly.
+     * @param size Updated canvas bounds
+     */
     public synchronized void setScreenSize(Rectangle size) {
         this.screenSize = size;
 

@@ -11,6 +11,13 @@ import sk.bytecode.bludisko.rt.game.window.Window;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
+/**
+ * Implemented main game screen.
+ * Contains Camera for drawing and game World for ticking
+ * and updating the game logic.
+ * @see Camera
+ * @see World
+ */
 public final class GameScreen extends Screen {
 
     private final InputManager gameInput = new GameInputManager();
@@ -21,6 +28,12 @@ public final class GameScreen extends Screen {
 
     // MARK: - Constructor
 
+    /**
+     * Default constructor.
+     * Constructs the GameScreen and sets up the Player and input.
+     * @see Player
+     * @see sk.bytecode.bludisko.rt.game.input.GameInputManagerDelegate
+     */
     public GameScreen() {
         this.currentWorld = new Chamber1();
 
@@ -84,8 +97,13 @@ public final class GameScreen extends Screen {
 
     // MARK: - Public
 
+    /**
+     * Sets the world that the Player is currently in and moves the player
+     * to that world's default spawn location.
+     * @param world New world to set
+     */
     public void setWorld(World world) {
-        // nothing yet
+        throw new UnsupportedOperationException();
     }
 
 }

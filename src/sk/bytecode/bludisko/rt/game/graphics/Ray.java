@@ -1,12 +1,18 @@
 package sk.bytecode.bludisko.rt.game.graphics;
 
-import sk.bytecode.bludisko.rt.game.map.Map;
 import sk.bytecode.bludisko.rt.game.math.MathUtils;
 import sk.bytecode.bludisko.rt.game.math.Vector2;
 
+/**
+ * Ray object. Can be cast in a 2D plane with tiles of a specified size.
+ * Uses a custom implementation of a digital differential analysis algorithm
+ * to move to the nearest cross-point of two axes. Cross-points frequency
+ * is given by the tileSize parameter in one of the constructors, or the
+ * Ray moves in a 2D plane with tiles 1 by 1, stopping only on edges
+ * of those tiles.
+ */
 public class Ray {
 
-    protected Map map;
     protected Vector2 position;
     protected Vector2 startingPosition;
     protected Vector2 direction;
@@ -18,13 +24,25 @@ public class Ray {
 
     // MARK: - Constructor
 
-    public Ray(Map map, Vector2 position, Vector2 direction, Vector2 tileSize) {
-        this(map, position, direction);
+    /**
+     * Constructs a new ray with a given tile-size.
+     * @param position Starting position
+     * @param direction Starting direction
+     * @param tileSize Size of tiles in a 2D plane
+     * @see Ray
+     */
+    public Ray(Vector2 position, Vector2 direction, Vector2 tileSize) {
+        this(position, direction);
         this.tileSize = tileSize;
     }
 
-    public Ray(Map map, Vector2 position, Vector2 direction) {
-        this.map = map;
+    /**
+     * Constructs a new ray with the default tile size of 1 by 1.
+     * @param position Starting position
+     * @param direction Starting direction
+     * @see Ray
+     */
+    public Ray(Vector2 position, Vector2 direction) {
         this.position = position.cpy();
         this.startingPosition = position.cpy();
         this.tileSize = new Vector2(1, 1);
@@ -34,6 +52,12 @@ public class Ray {
 
     // MARK: - Tracing algorithm
 
+    /**
+     * Advances the ray to the next crossing point between X and Y axes.
+     * Uses a custom implementation of DDA algorithm to calculate the
+     * next step size and then adds the difference to the current position.
+     * @see Ray
+     */
     public void step() {
         Vector2 positionInTile;
         if(tileSize.x != 1 || tileSize.y != 1) {
@@ -80,6 +104,11 @@ public class Ray {
 
     // MARK: - Public
 
+    /**
+     * Change the direction of the ray. Do not use
+     * ray.getDirection().set(Vector2), it will result in skewed calculations.
+     * @param direction New direction
+     */
     public void updateDirection(Vector2 direction) {
         this.direction = direction.cpy();
         this.marginalTileDistance = new Vector2(
@@ -102,12 +131,21 @@ public class Ray {
         return this.direction;
     }
 
+    /**
+     * @return Distance the ray had travelled from its origin.
+     */
     public float getDistance() {
         return distance;
     }
 
     // MARK: - Setters
 
+    /**
+     * Sets a new tile size for the ray to continue in. Can be used in
+     * combination with {@link #updateDirection(Vector2)} to get shape
+     * information about more advanced objects.
+     * @param tileSize New tile size
+     */
     public void setTileSize(Vector2 tileSize) {
         this.tileSize = tileSize;
     }

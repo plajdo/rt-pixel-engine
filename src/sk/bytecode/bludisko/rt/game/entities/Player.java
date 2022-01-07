@@ -8,6 +8,9 @@ import sk.bytecode.bludisko.rt.game.map.World;
 import sk.bytecode.bludisko.rt.game.math.MathUtils;
 import sk.bytecode.bludisko.rt.game.math.Vector2;
 
+/**
+ * A Player object representing the real player. Handles input and moves the camera accordingly.
+ */
 public class Player extends Entity implements GameInputManagerDelegate {
 
     private Map worldWallMap;
@@ -19,6 +22,11 @@ public class Player extends Entity implements GameInputManagerDelegate {
 
     // MARK: - Constructor
 
+    /**
+     * Creates a new Player inside a given World.
+     * World information is used to determine movement and initial coordinates.
+     * @param world World to get information from
+     */
     public Player(World world) {
         super(
                 world,
@@ -34,11 +42,19 @@ public class Player extends Entity implements GameInputManagerDelegate {
 
     // MARK: - Public
 
+    /**
+     * Sets a new world for the Player to use.
+     * @param world New world
+     */
     public void setWorld(World world) {
         this.world = world;
         this.worldWallMap = world.getMap().walls();
     }
 
+    /**
+     * Gives this Player a camera to control.
+     * @param camera Camera to control
+     */
     public void setCamera(Camera camera) {
         this.camera = camera;
     }
