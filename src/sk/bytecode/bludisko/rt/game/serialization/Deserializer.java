@@ -210,7 +210,7 @@ final class Deserializer<T> {
             for(int i = 0; i < byteCount; i++) {
                 parsedBits |= Byte.toUnsignedLong(bytes[offset + i]) << (byteCount * 8 - ((i + 1) * 8));
             }
-        }catch (ArrayIndexOutOfBoundsException e) {
+        } catch (ArrayIndexOutOfBoundsException e) {
             throw new NotSerializableException("Invalid input for byte length " + byteCount);
         }
 
