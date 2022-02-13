@@ -1,9 +1,8 @@
 package sk.bytecode.bludisko.rt.game.math;
 
-import java.io.Serializable;
+import sk.bytecode.bludisko.rt.game.serialization.Serializable;
 
-public class Vector2 implements Serializable {
-    private static final long serialVersionUID = 913902788239530931L;
+public class Vector2 {
 
     public final static Vector2 X = new Vector2(1, 0);
     public final static Vector2 Y = new Vector2(0, 1);
@@ -11,9 +10,9 @@ public class Vector2 implements Serializable {
 
 
     /** the x-component of this vector **/
-    public float x;
+    @Serializable public float x;
     /** the y-component of this vector **/
-    public float y;
+    @Serializable public float y;
 
     /** Constructs a new vector at (0,0) */
     public Vector2 () {
@@ -574,5 +573,14 @@ public class Vector2 implements Serializable {
         return this;
     }
 
+    public boolean positiveDirectionX() {
+        var angle = this.angleRad();
+        return angle > -Math.PI / 2 && angle < Math.PI;
+    }
+
+    public boolean positiveDirectionY() {
+        var angle = this.angleRad();
+        return angle > 0;
+    }
 
 }

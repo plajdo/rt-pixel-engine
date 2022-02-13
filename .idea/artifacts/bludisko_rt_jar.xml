@@ -1,0 +1,24 @@
+<component name="ArtifactManager">
+  <artifact name="bludisko_rt:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/bludisko_rt_jar</output-path>
+    <root id="root">
+      <element id="archive" name="bludisko_rt.jar">
+        <element id="module-output" name="bludisko_rt" />
+        <element id="directory" name="libs">
+          <element id="file-copy" path="$MAVEN_REPOSITORY$/org/jetbrains/annotations/20.1.0/annotations-20.1.0.jar" />
+        </element>
+        <element id="directory" name="META-INF">
+          <element id="file-copy" path="$PROJECT_DIR$/res/META-INF/MANIFEST.MF" />
+        </element>
+      </element>
+      <element id="directory" name="res">
+        <element id="directory" name="maps">
+          <element id="dir-copy" path="$PROJECT_DIR$/res/maps" />
+        </element>
+        <element id="directory" name="textures">
+          <element id="dir-copy" path="$PROJECT_DIR$/res/textures" />
+        </element>
+      </element>
+    </root>
+  </artifact>
+</component>
