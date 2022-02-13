@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+Main-Class: sk.bytecode.bludisko.rt.desktop.DesktopLauncher
+Class-Path: libs/annotations-20.1.0.jar
+
