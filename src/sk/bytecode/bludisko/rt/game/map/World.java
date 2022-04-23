@@ -31,8 +31,7 @@ public abstract class World {
     }
 
     /**
-     * Sets the reference to a player created by a Screen.
-     * Reference is weak, so it does not count towards GC.
+     * Set a weak reference to a player created by a Screen.
      * @param playerRef Reference to a player.
      */
     public void setPlayer(@Nullable Player playerRef) {
