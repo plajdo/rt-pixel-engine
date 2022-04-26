@@ -1,5 +1,6 @@
 package sk.bytecode.bludisko.rt.game.graphics;
 
+import org.jetbrains.annotations.NotNull;
 import sk.bytecode.bludisko.rt.game.blocks.Block;
 import sk.bytecode.bludisko.rt.game.entities.Entity;
 import sk.bytecode.bludisko.rt.game.map.GameMap;
@@ -62,7 +63,7 @@ public class Camera {
      * at the same time, messing up the image.
      * @param graphics Graphics object to draw into. Must not be finalized in any way.
      */
-    public synchronized void draw(Graphics graphics) {
+    public synchronized void draw(@NotNull Graphics graphics) {
         BufferedImage bufferedImage = new BufferedImage(
                 (int) viewportSize.x,
                 (int) viewportSize.y,
@@ -233,7 +234,7 @@ public class Camera {
     }
 
     /**
-     * Sets the camera to render from an entity's perspective.
+     * Moves the camera to an entity's perspective.
      * @param entity Entity to copy the position data from.
      */
     public void bind(Entity entity) {

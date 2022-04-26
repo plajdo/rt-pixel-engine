@@ -4,6 +4,7 @@ import sk.bytecode.bludisko.rt.game.entities.Player;
 import sk.bytecode.bludisko.rt.game.graphics.Camera;
 import sk.bytecode.bludisko.rt.game.input.GameInputManager;
 import sk.bytecode.bludisko.rt.game.input.InputManager;
+import sk.bytecode.bludisko.rt.game.items.PortalGun;
 import sk.bytecode.bludisko.rt.game.map.Chamber1;
 import sk.bytecode.bludisko.rt.game.map.World;
 import sk.bytecode.bludisko.rt.game.window.Window;
@@ -47,6 +48,8 @@ public final class GameScreen extends Screen {
 
         player.setCamera(camera);
         currentWorld.setPlayer(player);
+
+        player.equip(new PortalGun());
     }
 
     private void setupInput() {
@@ -93,6 +96,7 @@ public final class GameScreen extends Screen {
     @Override
     public void draw(Graphics graphics) {
         camera.draw(graphics);
+        player.drawItemOverlay(graphics);
     }
 
     // MARK: - Public
