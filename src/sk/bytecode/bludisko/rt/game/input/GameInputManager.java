@@ -2,6 +2,7 @@ package sk.bytecode.bludisko.rt.game.input;
 
 import sk.bytecode.bludisko.rt.game.math.Vector2;
 import sk.bytecode.bludisko.rt.game.util.Config;
+import sk.bytecode.bludisko.rt.game.util.NullSafe;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
@@ -52,14 +53,7 @@ public class GameInputManager extends InputManager {
     }
 
     private void toggleSprint(boolean toggle) {
-        withDelegate(d -> d.didUpdateSprintingStatus(toggle));
-    }
-
-    private void withDelegate(Consumer<GameInputManagerDelegate> action) {
-        GameInputManagerDelegate delegate;
-        if((this.delegate != null) && (delegate = this.delegate.get()) != null) {
-            action.accept(delegate);
-        }
+        NullSafe.acceptWeak(delegate, d -> d.didUpdateSprintingStatus(toggle));
     }
 
     // MARK: - KeyListener
@@ -79,7 +73,7 @@ public class GameInputManager extends InputManager {
             toggleSprint(true);
         }
 
-        withDelegate(d -> d.didUpdateMovementDirection(toVector(this.direction)));
+        NullSafe.acceptWeak(delegate, d -> d.didUpdateMovementDirection(toVector(this.direction)));
     }
 
     @Override
@@ -90,7 +84,7 @@ public class GameInputManager extends InputManager {
             toggleSprint(false);
         }
 
-        withDelegate(d -> d.didUpdateMovementDirection(toVector(this.direction)));
+        NullSafe.acceptWeak(delegate, d -> d.didUpdateMovementDirection(toVector(this.direction)));
     }
 
     // MARK: - MouseListener
@@ -123,7 +117,8 @@ public class GameInputManager extends InputManager {
         newPosition.translate(-this.windowDimensions.x, this.windowDimensions.y);
         newPosition.translate(-this.windowDimensions.width / 2, -this.windowDimensions.height / 2);
 
-        withDelegate(d -> d.didUpdateRotation(new Vector2(-newPosition.x, -newPosition.y)));
+        var rotationVector = new Vector2(newPosition.x, newPosition.y).scl(-1);
+        NullSafe.acceptWeak(delegate, d -> d.didUpdateRotation(rotationVector));
     }
 
 }
