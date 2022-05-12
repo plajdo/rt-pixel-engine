@@ -2,6 +2,7 @@ package sk.bytecode.bludisko.rt.game.map;
 
 import sk.bytecode.bludisko.rt.game.blocks.game.Portal;
 import sk.bytecode.bludisko.rt.game.entities.Player;
+import sk.bytecode.bludisko.rt.game.items.PortalGun;
 
 import javax.swing.JOptionPane;
 

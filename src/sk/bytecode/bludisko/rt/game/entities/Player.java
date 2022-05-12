@@ -1,12 +1,19 @@
 package sk.bytecode.bludisko.rt.game.entities;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import sk.bytecode.bludisko.rt.game.graphics.Camera;
 import sk.bytecode.bludisko.rt.game.graphics.DistanceRay;
 import sk.bytecode.bludisko.rt.game.input.GameInputManagerDelegate;
+import sk.bytecode.bludisko.rt.game.items.Item;
 import sk.bytecode.bludisko.rt.game.map.Map;
 import sk.bytecode.bludisko.rt.game.map.World;
 import sk.bytecode.bludisko.rt.game.math.MathUtils;
 import sk.bytecode.bludisko.rt.game.math.Vector2;
+import sk.bytecode.bludisko.rt.game.util.NullSafe;
+
+import java.awt.*;
+import java.lang.ref.WeakReference;
 
 /**
  * A Player object representing the real player. Handles input and moves the camera accordingly.
@@ -14,9 +21,11 @@ import sk.bytecode.bludisko.rt.game.math.Vector2;
 public class Player extends Entity implements GameInputManagerDelegate {
 
     private Map worldWallMap;
+    private WeakReference<Camera> camera;
+    private Rectangle screenSize;
 
-    private Camera camera;
     private Vector2 movementVector;
+    private Item heldItem;
 
     private float walkingSpeed = 1.75f;
 
@@ -56,7 +65,22 @@ public class Player extends Entity implements GameInputManagerDelegate {
      * @param camera Camera to control
      */
     public void setCamera(Camera camera) {
-        this.camera = camera;
+        this.camera = new WeakReference<>(camera);
+    }
+
+    /**
+     * Equips an item
+     * @param item Item to equip
+     */
+    public void equip(@Nullable Item item) {
+        this.heldItem = item;
+    }
+
+    /**
+     * @return Currently held item or null
+     */
+    public Item getHeldItem() {
+        return heldItem;
     }
 
     // MARK: - Game loop
@@ -64,7 +88,28 @@ public class Player extends Entity implements GameInputManagerDelegate {
     @Override
     public void tick(float dt) {
         move(dt);
-        camera.bind(this);
+        NullSafe.acceptWeak(camera, camera -> camera.bind(this));
+    }
+
+    /**
+     * Draws player overlay - currently held item to current graphics content.
+     * @param graphics Graphics content to draw on
+     */
+    public void drawItemOverlay(@NotNull Graphics graphics) {
+        NullSafe.accept(heldItem, heldItem -> {
+            var texture = heldItem.getOverlay();
+            var image = texture.asImage();
+
+            float resizingRatio = screenSize.height / (float)texture.getHeight();
+            int scaledWidth = (int) (texture.getWidth() * resizingRatio);
+            int offset = (screenSize.width - scaledWidth) / 2;
+
+            graphics.drawImage(image, offset, 0, scaledWidth, screenSize.height, null);
+        });
+    }
+
+    public void setItemOverlayScreenSizeInformation(@NotNull Rectangle bounds) {
+        screenSize = bounds;
     }
 
     // MARK: - Input

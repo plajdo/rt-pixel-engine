@@ -1,5 +1,6 @@
 package sk.bytecode.bludisko.rt.game.graphics;
 
+import org.jetbrains.annotations.NotNull;
 import sk.bytecode.bludisko.rt.game.blocks.Block;
 import sk.bytecode.bludisko.rt.game.entities.Entity;
 import sk.bytecode.bludisko.rt.game.map.GameMap;
@@ -62,7 +63,7 @@ public class Camera {
      * at the same time, messing up the image.
      * @param graphics Graphics object to draw into. Must not be finalized in any way.
      */
-    public synchronized void draw(Graphics graphics) {
+    public synchronized void draw(@NotNull Graphics graphics) {
         BufferedImage bufferedImage = new BufferedImage(
                 (int) viewportSize.x,
                 (int) viewportSize.y,
@@ -74,13 +75,8 @@ public class Camera {
         drawFloor(screenBuffer);
         drawWalls(screenBuffer);
 
-        int width = (int) (viewportSize.x / Config.Display.DRAWING_QUALITY);
-        int height = (int) (viewportSize.y / Config.Display.DRAWING_QUALITY);
-        int imgTopLeftX = (screenSize.width / 2) - (width / 2);
-        int imgTopLeftY = (screenSize.height / 2) - (height / 2);
-
         graphics.setColor(java.awt.Color.green);
-        graphics.drawImage(bufferedImage, imgTopLeftX, imgTopLeftY, width, height, null);
+        graphics.drawImage(bufferedImage, 0, 0, screenSize.width, screenSize.height, null);
         graphics.drawString(this.position.toString(), 0, 50);
     }
 
@@ -233,7 +229,7 @@ public class Camera {
     }
 
     /**
-     * Sets the camera to render from an entity's perspective.
+     * Moves the camera to an entity's perspective.
      * @param entity Entity to copy the position data from.
      */
     public void bind(Entity entity) {

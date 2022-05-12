@@ -4,8 +4,10 @@ import sk.bytecode.bludisko.rt.game.entities.Player;
 import sk.bytecode.bludisko.rt.game.graphics.Camera;
 import sk.bytecode.bludisko.rt.game.input.GameInputManager;
 import sk.bytecode.bludisko.rt.game.input.InputManager;
+import sk.bytecode.bludisko.rt.game.items.PortalGun;
 import sk.bytecode.bludisko.rt.game.map.Chamber1;
 import sk.bytecode.bludisko.rt.game.map.World;
+import sk.bytecode.bludisko.rt.game.util.NullSafe;
 import sk.bytecode.bludisko.rt.game.window.Window;
 
 import java.awt.Graphics;
@@ -42,11 +44,13 @@ public final class GameScreen extends Screen {
     }
 
     private void setupPlayer() {
-        this.player = new Player(currentWorld);
-        this.camera = new Camera();
+        player = new Player(currentWorld);
+        camera = new Camera();
 
-        this.player.setCamera(this.camera);
-        this.currentWorld.setPlayer(player);
+        player.setCamera(camera);
+        currentWorld.setPlayer(player);
+
+        player.equip(new PortalGun());
     }
 
     private void setupInput() {
@@ -65,20 +69,17 @@ public final class GameScreen extends Screen {
     public void screenDidAppear() {
         super.screenDidAppear();
 
-        Window window = this.window.get();
-        if(window != null) {
-            window.setCursorVisible(false);
-        }
+        NullSafe.acceptWeak(window, window -> window.setCursorVisible(false));
     }
 
     @Override
     public void screenDidChangeBounds(Rectangle bounds) {
         super.screenDidChangeBounds(bounds);
 
-        var window = this.window.get();
-        if(window != null) {
+        NullSafe.acceptWeak(window, window -> {
             camera.setScreenSize(window.canvasBounds());
-        }
+            player.setItemOverlayScreenSizeInformation(window.canvasBounds());
+        });
     }
 
     // MARK: - Game loop
@@ -93,6 +94,7 @@ public final class GameScreen extends Screen {
     @Override
     public void draw(Graphics graphics) {
         camera.draw(graphics);
+        player.drawItemOverlay(graphics);
     }
 
     // MARK: - Public
