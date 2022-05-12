@@ -7,6 +7,7 @@ import sk.bytecode.bludisko.rt.game.input.InputManager;
 import sk.bytecode.bludisko.rt.game.items.PortalGun;
 import sk.bytecode.bludisko.rt.game.map.Chamber1;
 import sk.bytecode.bludisko.rt.game.map.World;
+import sk.bytecode.bludisko.rt.game.util.NullSafe;
 import sk.bytecode.bludisko.rt.game.window.Window;
 
 import java.awt.Graphics;
@@ -68,20 +69,17 @@ public final class GameScreen extends Screen {
     public void screenDidAppear() {
         super.screenDidAppear();
 
-        Window window = this.window.get();
-        if(window != null) {
-            window.setCursorVisible(false);
-        }
+        NullSafe.acceptWeak(window, window -> window.setCursorVisible(false));
     }
 
     @Override
     public void screenDidChangeBounds(Rectangle bounds) {
         super.screenDidChangeBounds(bounds);
 
-        var window = this.window.get();
-        if(window != null) {
+        NullSafe.acceptWeak(window, window -> {
             camera.setScreenSize(window.canvasBounds());
-        }
+            player.setItemOverlayScreenSizeInformation(window.canvasBounds());
+        });
     }
 
     // MARK: - Game loop

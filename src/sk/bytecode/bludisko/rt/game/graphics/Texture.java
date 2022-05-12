@@ -105,7 +105,7 @@ public class Texture {
      * overhead.
      * @return BufferedImage from this texture.
      */
-    public BufferedImage toImage() {
+    public BufferedImage asImage() {
         return image;
     }
 
