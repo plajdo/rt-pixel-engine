@@ -75,13 +75,8 @@ public class Camera {
         drawFloor(screenBuffer);
         drawWalls(screenBuffer);
 
-        int width = (int) (viewportSize.x / Config.Display.DRAWING_QUALITY);
-        int height = (int) (viewportSize.y / Config.Display.DRAWING_QUALITY);
-        int imgTopLeftX = (screenSize.width / 2) - (width / 2);
-        int imgTopLeftY = (screenSize.height / 2) - (height / 2);
-
         graphics.setColor(java.awt.Color.green);
-        graphics.drawImage(bufferedImage, imgTopLeftX, imgTopLeftY, width, height, null);
+        graphics.drawImage(bufferedImage, 0, 0, screenSize.width, screenSize.height, null);
         graphics.drawString(this.position.toString(), 0, 50);
     }
 
