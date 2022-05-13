@@ -56,7 +56,7 @@ public class Portal extends Block {
         var rayPosition = ray.getPosition();
         var hitSide = getSide(rayPosition);
         if(hitSide == side && otherPortal != null) {
-            var thisExit = this.getExitRotation();
+            var thisExit = getExitRotation();
             var otherExit = otherPortal.getExitRotation();
             var exitRotation = thisExit.angleRad() - otherExit.angleRad();
 

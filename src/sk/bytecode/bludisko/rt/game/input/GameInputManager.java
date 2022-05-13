@@ -6,13 +6,12 @@ import sk.bytecode.bludisko.rt.game.util.NullSafe;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-import java.util.function.Consumer;
 
 /**
  * Custom implementation of Input Manager for
  * a Game Screen.
  */
-public class GameInputManager extends InputManager {
+public final class GameInputManager extends InputManager {
 
     private int direction = 0b0000;
 
@@ -94,7 +93,10 @@ public class GameInputManager extends InputManager {
 
     @Override
     public void mousePressed(MouseEvent e) {
-
+        switch(e.getButton()) {
+            case Config.Keybinds.USE_PRIMARY -> NullSafe.acceptWeak(delegate, d -> d.didToggleMouseButton(false));
+            case Config.Keybinds.USE_SECONDARY -> NullSafe.acceptWeak(delegate, d -> d.didToggleMouseButton(true));
+        }
     }
 
     @Override
@@ -109,7 +111,9 @@ public class GameInputManager extends InputManager {
     // MARK: - MouseMotionListener
 
     @Override
-    public void mouseDragged(MouseEvent e) {}
+    public void mouseDragged(MouseEvent e) {
+        mouseMoved(e);
+    }
 
     @Override
     public void mouseMoved(MouseEvent e) {

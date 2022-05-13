@@ -26,10 +26,18 @@ public interface GameInputManagerDelegate {
     void didUpdateRotation(Vector2 rotation);
 
     /**
-     * Called when the player starts sprinting.
-     * Check Config to set the key.
+     * Called when player presses the sprinting key.
+     * Check {@link sk.bytecode.bludisko.rt.game.util.Config} to set the key.
      * @param isSprinting Whether the player is sprinting
      */
     void didUpdateSprintingStatus(boolean isSprinting);
+
+    /**
+     * Called when player pushes one of the use buttons.
+     * Check {@link sk.bytecode.bludisko.rt.game.util.Config} to set the
+     * mouse buttons.
+     * @param rmb If the button pushed was a secondary action
+     */
+    void didToggleMouseButton(boolean rmb);
 
 }

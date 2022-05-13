@@ -20,6 +20,9 @@ import java.lang.ref.WeakReference;
  */
 public class Player extends Entity implements GameInputManagerDelegate {
 
+    private static final float WALKING_SPEED = 1.75f;
+    private static final float RUNNING_SPEED = 2.5f;
+
     private Map worldWallMap;
     private WeakReference<Camera> camera;
     private Rectangle screenSize;
@@ -27,7 +30,7 @@ public class Player extends Entity implements GameInputManagerDelegate {
     private Vector2 movementVector;
     private Item heldItem;
 
-    private float walkingSpeed = 1.75f;
+    private float movementSpeed = 1.75f;
 
     // MARK: - Constructor
 
@@ -45,6 +48,7 @@ public class Player extends Entity implements GameInputManagerDelegate {
                 0f
         );
 
+        this.screenSize = new Rectangle(0, 0);
         this.movementVector = new Vector2(0f, 0f);
         this.worldWallMap = world.getMap().walls();
     }
@@ -83,6 +87,16 @@ public class Player extends Entity implements GameInputManagerDelegate {
         return heldItem;
     }
 
+    /**
+     * Updates current screen size information. This is used to draw
+     * currently equipped item overlay to screen.
+     * @see Player#drawItemOverlay(Graphics)
+     * @param bounds New screen size
+     */
+    public void setItemOverlayScreenSizeInformation(@NotNull Rectangle bounds) {
+        screenSize = bounds;
+    }
+
     // MARK: - Game loop
 
     @Override
@@ -92,7 +106,8 @@ public class Player extends Entity implements GameInputManagerDelegate {
     }
 
     /**
-     * Draws player overlay - currently held item to current graphics content.
+     * Draws currently held item overlay to current graphics context.
+     * Uses screen size information from {@link Player#setItemOverlayScreenSizeInformation(Rectangle)}
      * @param graphics Graphics content to draw on
      */
     public void drawItemOverlay(@NotNull Graphics graphics) {
@@ -106,10 +121,6 @@ public class Player extends Entity implements GameInputManagerDelegate {
 
             graphics.drawImage(image, offset, 0, scaledWidth, screenSize.height, null);
         });
-    }
-
-    public void setItemOverlayScreenSizeInformation(@NotNull Rectangle bounds) {
-        screenSize = bounds;
     }
 
     // MARK: - Input
@@ -126,14 +137,19 @@ public class Player extends Entity implements GameInputManagerDelegate {
 
     @Override
     public void didUpdateSprintingStatus(boolean isSprinting) {
-        this.walkingSpeed = isSprinting ? 2.5f : 1.75f;
+        this.movementSpeed = isSprinting ? Player.RUNNING_SPEED : Player.WALKING_SPEED;
+    }
+
+    @Override
+    public void didToggleMouseButton(boolean rmb) {
+        NullSafe.accept(heldItem, rmb ? Item::useSecondary : Item::use);
     }
 
     // MARK: - Private
 
     private void move(float dt) {
         var movementVector = this.movementVector.cpy()
-                .scl(walkingSpeed)
+                .scl(movementSpeed)
                 .scl(dt)
                 .rotateRad(direction.angleRad());
 
