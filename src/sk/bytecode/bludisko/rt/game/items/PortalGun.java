@@ -24,6 +24,17 @@ public class PortalGun extends Item {
 
     @Override
     public void use() {
+        placePortal(Portal.Color.ORANGE);
+    }
+
+    @Override
+    public void useSecondary() {
+        placePortal(Portal.Color.BLUE);
+    }
+
+    // MARK: - Private
+
+    private void placePortal(Portal.Color color) {
         NullSafe.acceptWeak(player, player -> {
             var map = player.getWorld().getMap();
             var ray = new BlockRay(map.walls(), player.getPosition(), player.getDirection());
@@ -32,13 +43,8 @@ public class PortalGun extends Item {
             hitList.stream()
                     .findFirst()
                     .map(RayHit::position)
-                    .ifPresent(position -> PortalManager.createPortal(map, position, Portal.Color.ORANGE));
+                    .ifPresent(position -> PortalManager.createPortal(map, position, color));
         });
-    }
-
-    @Override
-    public void useSecondary() {
-        System.out.println("RMB");
     }
 
 }

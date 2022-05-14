@@ -59,9 +59,9 @@ public class Portal extends Block {
         var rayPosition = ray.getPosition();
         var hitSide = getSide(rayPosition);
         if(hitSide == side && otherPortal != null) {
-            var thisExit = getExitRotation();
-            var otherExit = otherPortal.getExitRotation();
-            var exitRotation = thisExit.angleRad() - otherExit.angleRad();
+            // var thisExit = getExitRotation();
+            // var otherExit = otherPortal.getExitRotation();
+            var exitRotation = getEntryRotation() - otherPortal.getExitRotation();
 
             rayPosition.set(MathUtils.decimalPart(rayPosition));
             rayPosition.rotateRad(exitRotation);
@@ -79,20 +79,30 @@ public class Portal extends Block {
     private Vector2 getExitOffset() {
         return switch(side) {
             case NONE -> null;
-            case NORTH -> null;
+            case NORTH -> new Vector2(-1f, 0f);
             case EAST -> new Vector2(0f, 1f);
             case SOUTH -> new Vector2(1f, 0f);
-            case WEST -> null;
+            case WEST -> new Vector2(0f, -1f);
         };
     }
 
-    private Vector2 getExitRotation() {
+    private float getEntryRotation() {
         return switch(side) {
-            case NONE -> null;
-            case NORTH -> null;
-            case EAST -> new Vector2(0f, 1f);
-            case SOUTH -> new Vector2(1f, 0f);
-            case WEST -> null;
+            case NONE -> 0f;
+            case NORTH -> 0f;
+            case EAST -> MathUtils.PI / 2f;
+            case SOUTH -> MathUtils.PI;
+            case WEST -> 3 * MathUtils.PI / 2f;
+        };
+    }
+
+    private float getExitRotation() {
+        return switch(side) {
+            case NONE -> 0f;
+            case NORTH -> MathUtils.PI;
+            case EAST -> 3 * MathUtils.PI / 2f;
+            case SOUTH -> 0f;
+            case WEST -> MathUtils.PI / 2;
         };
     }
 
