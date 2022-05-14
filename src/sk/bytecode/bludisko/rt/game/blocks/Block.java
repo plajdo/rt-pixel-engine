@@ -63,7 +63,6 @@ public abstract class Block {
             } else {
                 return Side.SOUTH;
             }
-
         }
         if(position.y % 1 == 0) {
             // East-West
@@ -73,7 +72,6 @@ public abstract class Block {
                 return Side.EAST;
             }
         }
-
         return Side.NONE;
     }
 

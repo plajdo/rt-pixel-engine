@@ -50,7 +50,7 @@ public final class GameScreen extends Screen {
         player.setCamera(camera);
         currentWorld.setPlayer(player);
 
-        player.equip(new PortalGun());
+        player.equip(new PortalGun(player));
     }
 
     private void setupInput() {

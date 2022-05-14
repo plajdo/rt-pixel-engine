@@ -1,6 +1,7 @@
 package sk.bytecode.bludisko.rt.game.blocks.game;
 
 import sk.bytecode.bludisko.rt.game.blocks.Block;
+import sk.bytecode.bludisko.rt.game.blocks.group.PortalPlaceable;
 import sk.bytecode.bludisko.rt.game.graphics.*;
 import sk.bytecode.bludisko.rt.game.math.MathUtils;
 import sk.bytecode.bludisko.rt.game.math.Vector2;
@@ -16,6 +17,8 @@ public class Portal extends Block {
     private final Side side;
     private final Portal.Color color;
     private Portal otherPortal;
+
+    private Block originalWall;
 
     /**
      * Constructs a new portal.
@@ -93,6 +96,10 @@ public class Portal extends Block {
         };
     }
 
+    public Portal getOtherPortal() {
+        return otherPortal;
+    }
+
     /**
      * Link two portals together.
      * @param otherPortal Paired portal
@@ -100,4 +107,21 @@ public class Portal extends Block {
     public void setOtherPortal(Portal otherPortal) {
         this.otherPortal = otherPortal;
     }
+
+    public Block getOriginalWall() {
+        return originalWall;
+    }
+
+    public void setOriginalWall(Block originalWall) {
+        if(originalWall instanceof PortalPlaceable) {
+            this.originalWall = originalWall;
+        } else {
+            throw new IllegalArgumentException("Cannot put a portal here!");
+        }
+    }
+
+    public Portal.Color getColor() {
+        return color;
+    }
+
 }
