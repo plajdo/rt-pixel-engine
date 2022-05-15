@@ -32,9 +32,6 @@ public class BlockManager {
             case 5 -> new GlassPane(Side.NORTH, coordinates);
             case 6 -> new GlassPane(Side.EAST, coordinates);
 
-            case 7 -> new Portal(Side.EAST, Portal.Color.ORANGE, coordinates);
-            case 8 -> new Portal(Side.SOUTH, Portal.Color.BLUE, coordinates);
-
             case 9 -> new WallWindow(coordinates, false);
             case 10 -> new WallWindow(coordinates, true);
             case 11 -> new Board(coordinates, 0);

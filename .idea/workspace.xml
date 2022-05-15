@@ -10,7 +10,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b56b9792-09b5-4a62-8384-5317f301f33f" name="Default Changelist" comment="" />
+    <list default="true" id="b56b9792-09b5-4a62-8384-5317f301f33f" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/aseprite/crosshair.aseprite" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/textures/other/crosshair.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bludisko_rt.iml" beforeDir="false" afterPath="$PROJECT_DIR$/bludisko_rt.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/blocks/BlockManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/blocks/BlockManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/blocks/game/Portal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/blocks/game/Portal.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/graphics/Overlay.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/graphics/Overlay.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/graphics/TextureManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sk/bytecode/bludisko/rt/game/graphics/TextureManager.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -39,6 +49,9 @@
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
   </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
   <component name="ProjectId" id="21WQzoyXcmwZh7e9WCUBowlYY2d" />
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="1" id="Add" />
@@ -47,43 +60,30 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">
-    <property name="Downloaded.Files.Path.Enabled" value="false" />
-    <property name="Repository.Attach.Annotations" value="true" />
-    <property name="Repository.Attach.JavaDocs" value="false" />
-    <property name="Repository.Attach.Sources" value="true" />
-    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="TODO_SCOPE" value="All Places" />
-    <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit5" />
-    <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5" value="" />
-    <property name="create.test.in.the.same.root" value="true" />
-    <property name="ignore.preview.features.used" value="true" />
-    <property name="jdk.selected.JAVA_MODULE" value="17" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/lib/annotations-20.1.0.jar" />
-    <property name="node.js.detected.package.eslint" value="true" />
-    <property name="node.js.detected.package.tslint" value="true" />
-    <property name="node.js.selected.package.eslint" value="(autodetect)" />
-    <property name="node.js.selected.package.tslint" value="(autodetect)" />
-    <property name="nodejs_package_manager_path" value="npm" />
-    <property name="project.structure.last.edited" value="Modules" />
-    <property name="project.structure.proportion" value="0.15" />
-    <property name="project.structure.side.proportion" value="0.2954023" />
-    <property name="settings.editor.selected.configurable" value="preferences.sourceCode.Java" />
-  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "WebServerToolWindowFactoryState": "false",
+    "ignore.preview.features.used": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "inlay.hints"
+  }
+}]]></component>
   <component name="RecentsManager">
     <key name="CreateTestDialog.Recents.Supers">
       <recent name="" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Github\bludisko_rt\res\textures\other" />
       <recent name="D:\Github\bludisko_rt" />
       <recent name="D:\Github\bludisko_rt\res\textures\wall" />
       <recent name="D:\Github\bludisko_rt\res\textures\floor" />
       <recent name="D:\Github\bludisko_rt\res\textures\portal" />
-      <recent name="D:\Github\bludisko_rt\res\textures\glass" />
     </key>
     <key name="MoveInnerDialog.RECENTS_KEY">
       <recent name="sk.bytecode.bludisko.rt.game.graphics" />
@@ -236,7 +236,11 @@
       <workItem from="1652372506759" duration="10584000" />
       <workItem from="1652437088282" duration="3472000" />
       <workItem from="1652520918729" duration="25985000" />
-      <workItem from="1652609204582" duration="18325000" />
+      <workItem from="1652609204582" duration="20219000" />
+      <workItem from="1652632580562" duration="30000" />
+      <workItem from="1652632620913" duration="100000" />
+      <workItem from="1652632752824" duration="245000" />
+      <workItem from="1652633117494" duration="620000" />
     </task>
     <servers />
   </component>
@@ -264,7 +268,6 @@
         </entry>
       </map>
     </option>
-    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

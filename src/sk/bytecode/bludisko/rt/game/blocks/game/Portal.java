@@ -1,8 +1,11 @@
 package sk.bytecode.bludisko.rt.game.blocks.game;
 
 import sk.bytecode.bludisko.rt.game.blocks.Block;
-import sk.bytecode.bludisko.rt.game.blocks.group.PortalPlaceable;
-import sk.bytecode.bludisko.rt.game.graphics.*;
+import sk.bytecode.bludisko.rt.game.graphics.Ray;
+import sk.bytecode.bludisko.rt.game.graphics.RayAction;
+import sk.bytecode.bludisko.rt.game.graphics.Side;
+import sk.bytecode.bludisko.rt.game.graphics.Texture;
+import sk.bytecode.bludisko.rt.game.graphics.TextureManager;
 import sk.bytecode.bludisko.rt.game.math.MathUtils;
 import sk.bytecode.bludisko.rt.game.math.Vector2;
 
@@ -64,7 +67,7 @@ public class Portal extends Block {
     public RayAction hitAction(Ray ray) {
         var rayPosition = ray.getPosition();
         var hitSide = getSide(rayPosition);
-        if(hitSide == side && otherPortal != null) {
+        if(hitSide == side && otherPortal != null && insidePortalFrame(rayPosition)) {
             var rotation = getRotation(side) - getPiComplementaryRotation(otherPortal.side);
             var offset = getOffset(side, otherPortal.side);
 
@@ -149,6 +152,17 @@ public class Portal extends Block {
             case SOUTH -> 0f;
             case WEST -> MathUtils.PI / 2;
         };
+    }
+
+    private static boolean insidePortalFrame(Vector2 location) {
+        final float frameSize = 0.2f;
+
+        var decimalPart = MathUtils.decimalPart(location);
+        if(decimalPart.x == 0) {
+            return decimalPart.y > frameSize && decimalPart.y < 1f - frameSize;
+        } else {
+            return decimalPart.x > frameSize && decimalPart.x < 1f - frameSize;
+        }
     }
 
     // MARK: - Public

@@ -53,6 +53,7 @@ public class TextureManager {
         loadedTextures[12] = new Texture("wall/doors");
 
         loadedTextures[13] = new Texture("items/portalGun");
+        loadedTextures[14] = new Texture("other/crosshair");
     }
 
     private static void generateTextures() {
