@@ -118,7 +118,7 @@ public final class GameInputManager extends InputManager {
     @Override
     public void mouseMoved(MouseEvent e) {
         var newPosition = e.getLocationOnScreen();
-        newPosition.translate(-this.windowDimensions.x, this.windowDimensions.y);
+        newPosition.translate(-this.windowDimensions.x, -this.windowDimensions.y);
         newPosition.translate(-this.windowDimensions.width / 2, -this.windowDimensions.height / 2);
 
         var rotationVector = new Vector2(newPosition.x, newPosition.y).scl(-1);
