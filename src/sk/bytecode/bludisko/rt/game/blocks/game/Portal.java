@@ -13,12 +13,16 @@ public class Portal extends Block {
         ORANGE
     }
 
+    // MARK: - Attributes
+
     private final Vector2 coordinates;
     private final Side side;
     private final Portal.Color color;
     private Portal otherPortal;
 
     private Block originalWall;
+
+    // MARK: - Constructor
 
     /**
      * Constructs a new portal.
@@ -31,6 +35,8 @@ public class Portal extends Block {
         this.color = color;
         this.side = side;
     }
+
+    // MARK: - Override
 
     @Override
     public Texture getTexture(Side side) {
@@ -59,16 +65,15 @@ public class Portal extends Block {
         var rayPosition = ray.getPosition();
         var hitSide = getSide(rayPosition);
         if(hitSide == side && otherPortal != null) {
-            // var thisExit = getExitRotation();
-            // var otherExit = otherPortal.getExitRotation();
-            var exitRotation = getEntryRotation() - otherPortal.getExitRotation();
+            var rotation = getRotation(side) - getPiComplementaryRotation(otherPortal.side);
+            var offset = getOffset(side, otherPortal.side);
 
             rayPosition.set(MathUtils.decimalPart(rayPosition));
-            rayPosition.rotateRad(exitRotation);
+            rayPosition.rotateRad(rotation);
             rayPosition.add(otherPortal.getCoordinates());
-            rayPosition.add(otherPortal.getExitOffset());
+            rayPosition.add(offset);
 
-            ray.updateDirection(ray.getDirection().cpy().rotateRad(exitRotation));
+            ray.updateDirection(ray.getDirection().cpy().rotateRad(rotation));
 
             return RayAction.TELEPORT;
         } else {
@@ -76,17 +81,45 @@ public class Portal extends Block {
         }
     }
 
-    private Vector2 getExitOffset() {
-        return switch(side) {
+    // MARK: - Static
+
+    /**
+     * When moving a ray from one portal to another and when the portals are on
+     * different sides, the ray will end up misaligned. Adding this offset
+     * corrects the difference.
+     * @param entrySide Side of a block the entrance portal is on
+     * @param exitSide Side of a block the exit portal is on
+     * @return [x, y] offset to add
+     * @see Side
+     * @see Portal#getRotation(Side)
+     */
+    private static Vector2 getOffset(Side entrySide, Side exitSide) {
+        return switch(entrySide) {
             case NONE -> null;
-            case NORTH -> new Vector2(-1f, 0f);
-            case EAST -> new Vector2(0f, 1f);
-            case SOUTH -> new Vector2(1f, 0f);
-            case WEST -> new Vector2(0f, -1f);
+            case NORTH, EAST -> switch(exitSide) {
+                case NONE -> null;
+                case NORTH -> new Vector2(0f, 1f);
+                case EAST -> new Vector2(1f, 1f);
+                case SOUTH -> new Vector2(1f, 0f);
+                case WEST -> new Vector2(0f, 0f);
+            };
+            case SOUTH, WEST -> switch(exitSide) {
+                case NONE -> null;
+                case NORTH -> new Vector2(0f, 0f);
+                case EAST -> new Vector2(0f, 1f);
+                case SOUTH -> new Vector2(1f, 1f);
+                case WEST -> new Vector2(1f, 0f);
+            };
         };
     }
 
-    private float getEntryRotation() {
+    /**
+     * Converts {@link Side} to rotation. North is at 0°, rotation increases in
+     * a clockwise direction.
+     * @param side Side of the block the portal is on
+     * @return Rotation of the side in radians
+     */
+    private static float getRotation(Side side) {
         return switch(side) {
             case NONE -> 0f;
             case NORTH -> 0f;
@@ -96,7 +129,19 @@ public class Portal extends Block {
         };
     }
 
-    private float getExitRotation() {
+    /**
+     * Degrees of rotation left to the nearest n*PI value where n*PI ≠ 0.<br><br>
+     * When used in combination <br>
+     * {@link Portal#getRotation(Side)} - {@link Portal#getPiComplementaryRotation(Side)},
+     * results in degrees required to rotate from facing one side to another.
+     *
+     * @param side Side of the block the portal is on
+     * @return Rotation in radians
+     *
+     * @see Side
+     * @see Portal#getRotation(Side)
+     */
+    private static float getPiComplementaryRotation(Side side) {
         return switch(side) {
             case NONE -> 0f;
             case NORTH -> MathUtils.PI;
@@ -105,6 +150,8 @@ public class Portal extends Block {
             case WEST -> MathUtils.PI / 2;
         };
     }
+
+    // MARK: - Public
 
     public Portal getOtherPortal() {
         return otherPortal;
@@ -123,11 +170,7 @@ public class Portal extends Block {
     }
 
     public void setOriginalWall(Block originalWall) {
-        if(originalWall instanceof PortalPlaceable) {
-            this.originalWall = originalWall;
-        } else {
-            throw new IllegalArgumentException("Cannot put a portal here!");
-        }
+        this.originalWall = originalWall;
     }
 
     public Portal.Color getColor() {
