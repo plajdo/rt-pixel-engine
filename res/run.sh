@@ -1,2 +1,3 @@
-#!/usr/bin/env bash
+#!/bin/bash
+
 java --enable-preview -jar bludisko_rt.jar

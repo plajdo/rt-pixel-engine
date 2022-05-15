@@ -8,6 +8,7 @@ import sk.bytecode.bludisko.rt.game.graphics.Texture;
 import sk.bytecode.bludisko.rt.game.graphics.TextureManager;
 import sk.bytecode.bludisko.rt.game.math.MathUtils;
 import sk.bytecode.bludisko.rt.game.math.Vector2;
+import sk.bytecode.bludisko.rt.game.util.NullSafe;
 
 public class Portal extends Block {
 
@@ -21,8 +22,8 @@ public class Portal extends Block {
     private final Vector2 coordinates;
     private final Side side;
     private final Portal.Color color;
-    private Portal otherPortal;
 
+    private Portal otherPortal;
     private Block originalWall;
 
     // MARK: - Constructor
@@ -68,12 +69,13 @@ public class Portal extends Block {
         var rayPosition = ray.getPosition();
         var hitSide = getSide(rayPosition);
         if(hitSide == side && otherPortal != null && insidePortalFrame(rayPosition)) {
+            var coordinates = otherPortal.getCoordinates();
             var rotation = getRotation(side) - getPiComplementaryRotation(otherPortal.side);
             var offset = getOffset(side, otherPortal.side);
 
             rayPosition.set(MathUtils.decimalPart(rayPosition));
             rayPosition.rotateRad(rotation);
-            rayPosition.add(otherPortal.getCoordinates());
+            rayPosition.add(coordinates);
             rayPosition.add(offset);
 
             ray.updateDirection(ray.getDirection().cpy().rotateRad(rotation));
@@ -97,23 +99,29 @@ public class Portal extends Block {
      * @see Portal#getRotation(Side)
      */
     private static Vector2 getOffset(Side entrySide, Side exitSide) {
-        return switch(entrySide) {
-            case NONE -> null;
+        return (switch(entrySide) {
+            case NONE -> new Vector2();
             case NORTH, EAST -> switch(exitSide) {
-                case NONE -> null;
+                case NONE -> new Vector2();
                 case NORTH -> new Vector2(0f, 1f);
                 case EAST -> new Vector2(1f, 1f);
                 case SOUTH -> new Vector2(1f, 0f);
                 case WEST -> new Vector2(0f, 0f);
             };
             case SOUTH, WEST -> switch(exitSide) {
-                case NONE -> null;
+                case NONE -> new Vector2();
                 case NORTH -> new Vector2(0f, 0f);
                 case EAST -> new Vector2(0f, 1f);
                 case SOUTH -> new Vector2(1f, 1f);
                 case WEST -> new Vector2(1f, 0f);
             };
-        };
+        }).add(switch(exitSide) {
+            case NONE -> new Vector2();
+            case NORTH -> new Vector2(-MathUtils.FLOAT_ROUNDING_ERROR, 0f);
+            case EAST -> new Vector2(0f, MathUtils.FLOAT_ROUNDING_ERROR);
+            case SOUTH -> new Vector2(MathUtils.FLOAT_ROUNDING_ERROR, 0f);
+            case WEST -> new Vector2(0f, -MathUtils.FLOAT_ROUNDING_ERROR);
+        });
     }
 
     /**
@@ -133,10 +141,10 @@ public class Portal extends Block {
     }
 
     /**
-     * Degrees of rotation left to the nearest n*PI value where n*PI ≠ 0.<br><br>
-     * When used in combination <br>
-     * {@link Portal#getRotation(Side)} - {@link Portal#getPiComplementaryRotation(Side)},
-     * results in degrees required to rotate from facing one side to another.
+     * Degrees of rotation left to the nearest n*PI value where n*PI &ne; 0.<br><br>
+     * When used in combination as <br>
+     * {@link Portal#getRotation(Side)} - getPiComplementaryRotation(Side),
+     * result is the angle required to rotate from facing entrance side to exit side.
      *
      * @param side Side of the block the portal is on
      * @return Rotation in radians

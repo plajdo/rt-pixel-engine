@@ -102,7 +102,7 @@ public class Player extends Entity implements GameInputManagerDelegate {
 
     @Override
     public void didUpdateRotation(Vector2 rotation) {
-        this.rotate(rotation.x * MathUtils.degreesToRadians, rotation.y * 0.1f);
+        rotate(rotation.x * MathUtils.degreesToRadians, rotation.y * 0.1f);
     }
 
     @Override
@@ -127,8 +127,10 @@ public class Player extends Entity implements GameInputManagerDelegate {
         var nextHitDistance = movementRay.cast(movementVector.len());
 
         if(Float.isNaN(nextHitDistance)) {
+            var portalRotation = movementRay.getDirection().angleRad() - movementVector.angleRad();
+
             position.set(movementRay.getPosition());
-            direction.set(movementRay.getDirection());
+            direction.rotateRad(portalRotation);
         } else if(nextHitDistance == -1) {
             position.add(movementVector);
         }
