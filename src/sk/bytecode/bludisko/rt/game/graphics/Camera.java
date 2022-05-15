@@ -16,12 +16,12 @@ import java.util.Arrays;
 
 /**
  * Virtual three-dimensional camera that draws into a {@link sk.bytecode.bludisko.rt.game.window.Window} canvas.
- * Can be moved and rotated in a 3D space. Pitch is somewhat limited to prevent image distortion at large angles.
- *
- * Uses a traditional raycasting algorithm to calculate sizes of objects to draw on the screen.
+ * Can be moved and rotated in a 3D space. Pitch is limited to prevent image distortion at large angles.
+ * <br>
+ * Uses raycasting algorithm to calculate sizes of objects to draw on the screen.
  * Uses affine texture mapping to map textures of objects on a virtual 3D surface.
  * Can draw on any arbitrary-size canvas with different amount of rays cast and pixels drawn.
- * Has a separated viewport from screen size to be able to scale the resulting image.
+ * Has separate viewport from screen size to be able to scale the resulting image.
  */
 public class Camera {
 

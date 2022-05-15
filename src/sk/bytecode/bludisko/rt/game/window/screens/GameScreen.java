@@ -1,24 +1,27 @@
 package sk.bytecode.bludisko.rt.game.window.screens;
 
+import org.jetbrains.annotations.NotNull;
 import sk.bytecode.bludisko.rt.game.entities.Player;
 import sk.bytecode.bludisko.rt.game.graphics.Camera;
+import sk.bytecode.bludisko.rt.game.graphics.Overlay;
 import sk.bytecode.bludisko.rt.game.input.GameInputManager;
 import sk.bytecode.bludisko.rt.game.input.InputManager;
 import sk.bytecode.bludisko.rt.game.items.PortalGun;
 import sk.bytecode.bludisko.rt.game.map.Chamber1;
 import sk.bytecode.bludisko.rt.game.map.World;
 import sk.bytecode.bludisko.rt.game.util.NullSafe;
-import sk.bytecode.bludisko.rt.game.window.Window;
 
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
 /**
- * Implemented main game screen.
- * Contains Camera for drawing and game World for ticking
- * and updating the game logic.
+ * Main game screen. Is responsible for managing all rendering and ticking
+ * of the game world. Provides concrete implementation of InputManager.
  * @see Camera
+ * @see Player
+ * @see Overlay
  * @see World
+ * @see InputManager
  */
 public final class GameScreen extends Screen {
 
@@ -27,6 +30,7 @@ public final class GameScreen extends Screen {
 
     private Player player;
     private Camera camera;
+    private Overlay overlay;
 
     // MARK: - Constructor
 
@@ -46,8 +50,11 @@ public final class GameScreen extends Screen {
     private void setupPlayer() {
         player = new Player(currentWorld);
         camera = new Camera();
+        overlay = new Overlay();
 
         player.setCamera(camera);
+
+        overlay.connectPlayer(player);
         currentWorld.setPlayer(player);
 
         player.equip(new PortalGun(player));
@@ -58,7 +65,7 @@ public final class GameScreen extends Screen {
         gameInput.setMouseLocked(true);
     }
 
-    // MARK: - Screen
+    // MARK: - Override
 
     @Override
     public InputManager getInputManager() {
@@ -73,13 +80,11 @@ public final class GameScreen extends Screen {
     }
 
     @Override
-    public void screenDidChangeBounds(Rectangle bounds) {
+    public void screenDidChangeBounds(@NotNull Rectangle bounds) {
         super.screenDidChangeBounds(bounds);
 
-        NullSafe.acceptWeak(window, window -> {
-            camera.setScreenSize(window.canvasBounds());
-            player.setItemOverlayScreenSizeInformation(window.canvasBounds());
-        });
+        camera.setScreenSize(bounds);
+        overlay.screenDidChangeBounds(bounds);
     }
 
     // MARK: - Game loop
@@ -87,14 +92,16 @@ public final class GameScreen extends Screen {
     @Override
     public void tick(float dt) {
         super.tick(dt);
+
         player.tick(dt);
+        overlay.tick(dt);
         currentWorld.tick(dt);
     }
 
     @Override
-    public void draw(Graphics graphics) {
+    public void draw(@NotNull Graphics graphics) {
         camera.draw(graphics);
-        player.drawItemOverlay(graphics);
+        overlay.draw(graphics);
     }
 
     // MARK: - Public

@@ -25,7 +25,6 @@ public class Player extends Entity implements GameInputManagerDelegate {
 
     private Map worldWallMap;
     private WeakReference<Camera> camera;
-    private Rectangle screenSize;
 
     private Vector2 movementVector;
     private Item heldItem;
@@ -48,7 +47,6 @@ public class Player extends Entity implements GameInputManagerDelegate {
                 0f
         );
 
-        this.screenSize = new Rectangle(0, 0);
         this.movementVector = new Vector2(0f, 0f);
         this.worldWallMap = world.getMap().walls();
     }
@@ -87,40 +85,12 @@ public class Player extends Entity implements GameInputManagerDelegate {
         return heldItem;
     }
 
-    /**
-     * Updates current screen size information. This is used to draw
-     * currently equipped item overlay to screen.
-     * @see Player#drawItemOverlay(Graphics)
-     * @param bounds New screen size
-     */
-    public void setItemOverlayScreenSizeInformation(@NotNull Rectangle bounds) {
-        screenSize = bounds;
-    }
-
     // MARK: - Game loop
 
     @Override
     public void tick(float dt) {
         move(dt);
         NullSafe.acceptWeak(camera, camera -> camera.bind(this));
-    }
-
-    /**
-     * Draws currently held item overlay to current graphics context.
-     * Uses screen size information from {@link Player#setItemOverlayScreenSizeInformation(Rectangle)}
-     * @param graphics Graphics content to draw on
-     */
-    public void drawItemOverlay(@NotNull Graphics graphics) {
-        NullSafe.accept(heldItem, heldItem -> {
-            var texture = heldItem.getOverlay();
-            var image = texture.asImage();
-
-            float resizingRatio = screenSize.height / (float)texture.getHeight();
-            int scaledWidth = (int) (texture.getWidth() * resizingRatio);
-            int offset = (screenSize.width - scaledWidth) / 2;
-
-            graphics.drawImage(image, offset, 0, scaledWidth, screenSize.height, null);
-        });
     }
 
     // MARK: - Input
