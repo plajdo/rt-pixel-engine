@@ -6,14 +6,21 @@ import sk.bytecode.bludisko.rt.game.util.Config;
 import sk.bytecode.bludisko.rt.game.util.NullSafe;
 import sk.bytecode.bludisko.rt.game.window.screens.Screen;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JFrame;
+import java.awt.Canvas;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Cursor;
+import java.awt.Dimension;
+import java.awt.Frame;
+import java.awt.Graphics;
+import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.util.ArrayDeque;
-import java.util.Queue;
 
 /**
  * Main application window containing a {@link Canvas} to be drawn on.
@@ -38,8 +45,8 @@ public final class Window {
     private final Canvas canvas;
     private final JFrame frame;
 
+    private final ArrayDeque<Screen> screenQueue;
     private Screen screen;
-    private ArrayDeque<Screen> screenQueue;
 
     private InputManager inputManager;
 
