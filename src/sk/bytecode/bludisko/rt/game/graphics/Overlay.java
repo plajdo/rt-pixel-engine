@@ -2,7 +2,6 @@ package sk.bytecode.bludisko.rt.game.graphics;
 
 import org.jetbrains.annotations.NotNull;
 import sk.bytecode.bludisko.rt.game.entities.Player;
-import sk.bytecode.bludisko.rt.game.math.Vector2;
 import sk.bytecode.bludisko.rt.game.util.NullSafe;
 
 import java.awt.Graphics;
@@ -31,14 +30,13 @@ public final class Overlay implements Actor {
     // MARK: - Override
 
     @Override
-    public void tick(float dt) {
-
-    }
+    public void tick(float dt) {}
 
     @Override
     public void draw(@NotNull Graphics graphics) {
         drawItemOverlay(graphics);
         drawCrosshair(graphics);
+        drawCoordinates(graphics);
     }
 
     @Override
@@ -50,8 +48,6 @@ public final class Overlay implements Actor {
                 (screenSize.width / 2) - (crosshairTexture.getWidth() / 2),
                 (screenSize.height / 2) - (crosshairTexture.getHeight() / 2)
         );
-
-
     }
 
     // MARK: - Private
@@ -78,6 +74,13 @@ public final class Overlay implements Actor {
                 crosshairSize.height,
                 null
         );
+    }
+
+    private void drawCoordinates(Graphics graphics) {
+        NullSafe.acceptWeak(player, player -> {
+            graphics.setColor(java.awt.Color.green);
+            graphics.drawString(player.getPosition().toString(), 0, 50);
+        });
     }
 
     // MARK: - Public

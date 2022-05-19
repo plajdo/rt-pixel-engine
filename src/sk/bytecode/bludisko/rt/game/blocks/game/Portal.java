@@ -8,10 +8,12 @@ import sk.bytecode.bludisko.rt.game.graphics.Texture;
 import sk.bytecode.bludisko.rt.game.graphics.TextureManager;
 import sk.bytecode.bludisko.rt.game.math.MathUtils;
 import sk.bytecode.bludisko.rt.game.math.Vector2;
-import sk.bytecode.bludisko.rt.game.util.NullSafe;
 
 public class Portal extends Block {
 
+    /**
+     * Color of the portal. Also serves as a portal pair identifier.
+     */
     public enum Color {
         BLUE,
         ORANGE
@@ -91,7 +93,10 @@ public class Portal extends Block {
     /**
      * When moving a ray from one portal to another and when the portals are on
      * different sides, the ray will end up misaligned. Adding this offset
-     * corrects the difference.
+     * corrects the difference. Since the ray will then also end up inside a wall
+     * (on a coordinate exactly divisible by an integer, a block edge), the
+     * smallest possible float-expressible value will be added to the result
+     * to fix Z-fighting.
      * @param entrySide Side of a block the entrance portal is on
      * @param exitSide Side of a block the exit portal is on
      * @return [x, y] offset to add

@@ -19,8 +19,6 @@ import java.lang.ref.WeakReference;
  */
 public abstract class InputManager implements Tickable, KeyListener, MouseInputListener {
 
-    protected WeakReference<GameInputManagerDelegate> delegate;
-
     protected Robot robot;
     protected Rectangle windowDimensions;
 
@@ -66,16 +64,6 @@ public abstract class InputManager implements Tickable, KeyListener, MouseInputL
         if(mouseLocked) {
             centerMouse();
         }
-    }
-
-    /**
-     * Sets the delegate whose methods are called, when a change in input
-     * is detected.
-     * @param delegate Object implementing the delegate methods.
-     * @see GameInputManagerDelegate
-     */
-    public void setDelegate(GameInputManagerDelegate delegate) {
-        this.delegate = new WeakReference<>(delegate);
     }
 
     /**

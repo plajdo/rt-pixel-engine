@@ -79,7 +79,32 @@ public final class MathUtils {
      * @return Clamped number
      */
     public static int clamp(int value, int min, int max) {
-        return value > max ? max : Math.max(value, min);
+        return Math.min(Math.max(value, min), max);
+    }
+
+    /**
+     * Clamps a value between two values, rounding them to min/max if they exceed
+     * the interval, or returning the same value if it's inside the interval.
+     * @param value Value to clamp
+     * @param min Lower bound of the interval
+     * @param max Upper bound of the interval
+     * @return Clamped number
+     */
+    public static float clamp(float value, float min, float max) {
+        return Math.min(Math.max(value, min), max);
+    }
+
+    /**
+     * Re-maps a number from one range to another.
+     * @param x The number to map
+     * @param fromLowest Smallest value of the input range
+     * @param fromHighest Highest value of the input range
+     * @param toLowest Smallest value of the output range
+     * @param toHighest Highest value of the output range
+     * @return Value scaled from one range to another one
+     */
+    public static float map(float x, float fromLowest, float fromHighest, float toLowest, float toHighest) {
+        return (x - fromLowest) * (toHighest - toLowest) / (fromHighest - fromLowest) + toLowest;
     }
 
 }

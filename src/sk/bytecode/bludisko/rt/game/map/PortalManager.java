@@ -11,6 +11,14 @@ public final class PortalManager {
 
     private PortalManager() {}
 
+    /**
+     * Force-creates a new pair of portals between given coordinates.
+     * Equivalent to REST-POST.
+     * @param map {@link GameMap} to create portals in
+     * @param orangePortalCoordinates Coordinates of the {@link Portal.Color#ORANGE} portal
+     * @param bluePortalCoordinates Coordinates of the {@link Portal.Color#BLUE} portal
+     * @see Portal
+     */
     public static void createPortal(GameMap map, Vector2 orangePortalCoordinates, Vector2 bluePortalCoordinates) {
         removeAllPortals(map);
         var walls = map.walls();
@@ -49,6 +57,14 @@ public final class PortalManager {
         });
     }
 
+    /**
+     * Creates a new portal or moves an existing one to a new location. Portal
+     * is identified by its {@link Portal.Color}.
+     * Equivalent to REST-PUT.
+     * @param map {@link GameMap} to create the portal in
+     * @param portalCoordinates Coordinates of the portal
+     * @param portalColor Color of the portal
+     */
     public static void createPortal(GameMap map, Vector2 portalCoordinates, Portal.Color portalColor) {
         var walls = map.walls();
         var portalBlocks = walls.getBlocksAt(portalCoordinates);
@@ -79,6 +95,11 @@ public final class PortalManager {
         NullSafe.accept(otherPortal, newPortal, Portal::setOtherPortal);
     }
 
+    /**
+     * Removes a portal of a given color from a map.
+     * @param map {@link GameMap} to remove a portal from
+     * @param portalColor {@link Portal.Color} of the portal
+     */
     public static void removePortal(GameMap map, Portal.Color portalColor) {
         var walls = map.walls();
         var portalWall = walls.blockStream()
@@ -93,6 +114,10 @@ public final class PortalManager {
         });
     }
 
+    /**
+     * Removes all portals from a {@link GameMap}.
+     * @param map GameMap to remove all portals from
+     */
     public static void removeAllPortals(GameMap map) {
         var walls = map.walls();
         walls.blockStream()

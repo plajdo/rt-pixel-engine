@@ -6,6 +6,7 @@ import sk.bytecode.bludisko.rt.game.util.NullSafe;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.lang.ref.WeakReference;
 
 /**
  * Custom implementation of Input Manager for
@@ -13,7 +14,21 @@ import java.awt.event.MouseEvent;
  */
 public final class GameInputManager extends InputManager {
 
+    private WeakReference<GameInputManagerDelegate> delegate;
+
     private int direction = 0b0000;
+
+    // MARK: - Public
+
+    /**
+     * Sets the delegate whose methods are called, when a change in input
+     * is detected.
+     * @param delegate Object implementing the delegate methods.
+     * @see GameInputManagerDelegate
+     */
+    public void setDelegate(GameInputManagerDelegate delegate) {
+        this.delegate = new WeakReference<>(delegate);
+    }
 
     // MARK: - Private
 

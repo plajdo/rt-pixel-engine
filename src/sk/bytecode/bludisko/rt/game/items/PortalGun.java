@@ -1,7 +1,6 @@
 package sk.bytecode.bludisko.rt.game.items;
 
 import sk.bytecode.bludisko.rt.game.blocks.game.Portal;
-import sk.bytecode.bludisko.rt.game.blocks.group.PortalPlaceable;
 import sk.bytecode.bludisko.rt.game.entities.Player;
 import sk.bytecode.bludisko.rt.game.graphics.BlockRay;
 import sk.bytecode.bludisko.rt.game.graphics.RayHit;

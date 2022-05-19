@@ -1,6 +1,5 @@
 package sk.bytecode.bludisko.rt.game.entities;
 
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import sk.bytecode.bludisko.rt.game.graphics.Camera;
 import sk.bytecode.bludisko.rt.game.graphics.DistanceRay;
@@ -12,7 +11,6 @@ import sk.bytecode.bludisko.rt.game.math.MathUtils;
 import sk.bytecode.bludisko.rt.game.math.Vector2;
 import sk.bytecode.bludisko.rt.game.util.NullSafe;
 
-import java.awt.*;
 import java.lang.ref.WeakReference;
 
 /**
@@ -102,7 +100,7 @@ public class Player extends Entity implements GameInputManagerDelegate {
 
     @Override
     public void didUpdateRotation(Vector2 rotation) {
-        rotate(rotation.x * MathUtils.degreesToRadians, rotation.y * 0.1f);
+        rotate(rotation.x * MathUtils.degreesToRadians, rotation.y * 0.1f/*MathUtils.degreesToRadians*/);
     }
 
     @Override
@@ -146,6 +144,7 @@ public class Player extends Entity implements GameInputManagerDelegate {
         if(this.pitch > 200) {
             this.pitch = 200;
         }
+        // this.pitch = MathUtils.clamp(this.pitch + pitch, -22.5f * MathUtils.degreesToRadians, 22.5f * MathUtils.degreesToRadians);
     }
 
 }

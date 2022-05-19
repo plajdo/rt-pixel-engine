@@ -3,6 +3,7 @@ package sk.bytecode.bludisko.rt.game.window;
 import org.jetbrains.annotations.NotNull;
 import sk.bytecode.bludisko.rt.game.input.InputManager;
 import sk.bytecode.bludisko.rt.game.util.Config;
+import sk.bytecode.bludisko.rt.game.util.NullSafe;
 import sk.bytecode.bludisko.rt.game.window.screens.Screen;
 
 import javax.swing.*;
@@ -11,6 +12,8 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
+import java.util.ArrayDeque;
+import java.util.Queue;
 
 /**
  * Main application window containing a {@link Canvas} to be drawn on.
@@ -34,7 +37,9 @@ public final class Window {
     private final Dimension windowSize;
     private final Canvas canvas;
     private final JFrame frame;
+
     private Screen screen;
+    private ArrayDeque<Screen> screenQueue;
 
     private InputManager inputManager;
 
@@ -54,6 +59,8 @@ public final class Window {
         this.frame = new JFrame("rt_portal_demo");
         this.canvas = new Canvas();
 
+        this.screenQueue = new ArrayDeque<>(2);
+
         this.setupCanvas();
         this.setupFrame();
         this.setupScreen(screen);
@@ -68,7 +75,7 @@ public final class Window {
 
     private void setupFrame() {
         this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.frame.addComponentListener(getResizeListener());
+        this.canvas.addComponentListener(getResizeListener());
 
         this.frame.add(this.canvas);
 
@@ -81,10 +88,14 @@ public final class Window {
         this.canvas.removeMouseListener(this.inputManager);
         this.canvas.removeMouseMotionListener(this.inputManager);
 
-        screen.screenWillAppear(this);
-
         this.inputManager = screen.getInputManager();
         this.screen = screen;
+
+        synchronized(frame.getTreeLock()) {
+            this.updateBounds(frame.getComponent(0));
+        }
+
+        screen.screenWillAppear(this);
 
         this.canvas.addKeyListener(this.inputManager);
         this.canvas.addMouseListener(this.inputManager);
@@ -142,7 +153,7 @@ public final class Window {
      * @param screen Replacement screen
      */
     public void setScreen(@NotNull Screen screen) {
-        setupScreen(screen);
+        screenQueue.addLast(screen);
     }
 
     /**
@@ -183,6 +194,8 @@ public final class Window {
     private void startGameCycle() throws InterruptedException {
         long lastFrameTime = 0;
         while(running) {
+            NullSafe.accept(screenQueue.pollFirst(), this::setupScreen);
+
             long currentTime = System.currentTimeMillis();
 
             float deltaMilliseconds = currentTime - lastFrameTime;
@@ -192,6 +205,7 @@ public final class Window {
                 lastFrameTime = System.currentTimeMillis();
 
                 float deltaSeconds = deltaMilliseconds * 0.001f;
+
                 tick(deltaSeconds);
                 drawFrame();
             } else {

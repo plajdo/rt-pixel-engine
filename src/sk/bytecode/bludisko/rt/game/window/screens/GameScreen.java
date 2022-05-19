@@ -25,7 +25,7 @@ import java.awt.Rectangle;
  */
 public final class GameScreen extends Screen {
 
-    private final InputManager gameInput = new GameInputManager();
+    private final GameInputManager gameInputManager = new GameInputManager();
     private World currentWorld;
 
     private Player player;
@@ -52,6 +52,11 @@ public final class GameScreen extends Screen {
         camera = new Camera();
         overlay = new Overlay();
 
+        // camera.setMap(currentWorld.getMap());
+        // camera.move(player.getPosition().cpy().add(2, 1));
+        // camera.rotate(270, 100);
+        // camera.move(500);
+
         player.setCamera(camera);
 
         overlay.connectPlayer(player);
@@ -61,15 +66,15 @@ public final class GameScreen extends Screen {
     }
 
     private void setupInput() {
-        gameInput.setDelegate(this.player);
-        gameInput.setMouseLocked(true);
+        gameInputManager.setDelegate(this.player);
+        gameInputManager.setMouseLocked(true);
     }
 
     // MARK: - Override
 
     @Override
     public InputManager getInputManager() {
-        return gameInput;
+        return gameInputManager;
     }
 
     @Override
