@@ -25,7 +25,7 @@ public class Ray {
     // MARK: - Constructor
 
     /**
-     * Constructs a new ray with a given tile-size.
+     * Constructs a new ray with a given tile size (step size).
      * @param position Starting position
      * @param direction Starting direction
      * @param tileSize Size of tiles in a 2D plane

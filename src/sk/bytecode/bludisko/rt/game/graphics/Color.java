@@ -37,9 +37,9 @@ public record Color(int argb) {
         float blue2 = (0x000000FF & color) * alpha2;
 
         int alpha = 255 << 24;
-        int red = (int)(red1 + red2) << 16;
-        int green = (int)(green1 + green2) << 8;
-        int blue = (int)(blue1 + blue2);
+        int red = (int) (red1 + red2) << 16;
+        int green = (int) (green1 + green2) << 8;
+        int blue = (int) (blue1 + blue2);
 
         return new Color(alpha | red | green | blue);
     }

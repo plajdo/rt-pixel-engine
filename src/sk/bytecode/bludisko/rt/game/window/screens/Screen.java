@@ -1,9 +1,10 @@
 package sk.bytecode.bludisko.rt.game.window.screens;
 
-import sk.bytecode.bludisko.rt.game.window.Window;
+import org.jetbrains.annotations.NotNull;
+import sk.bytecode.bludisko.rt.game.graphics.Actor;
 import sk.bytecode.bludisko.rt.game.input.InputManager;
+import sk.bytecode.bludisko.rt.game.window.Window;
 
-import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.lang.ref.WeakReference;
@@ -12,34 +13,16 @@ import java.lang.ref.WeakReference;
  * Empty screen with basic logic implemented. Contains default controls
  * of an InputManager.
  */
-public abstract class Screen {
+public abstract class Screen implements Actor {
 
     protected WeakReference<Window> window;
 
     // MARK: - Game loop
 
-    /**
-     * Game loop - logic.
-     * Called every frame before rendering. Should contain
-     * logic that's used to update information for renderer to draw
-     * a new frame.
-     * @param dt
-     */
+    @Override
     public void tick(float dt) {
-        getInputManager().tick(dt);
+        this.getInputManager().tick(dt);
     }
-
-    /**
-     * Game loop - graphics.
-     * Called every frame after updating drawing information.
-     * Graphics object should not be finalized or closed inside draw() methods,
-     * in case another object wants to draw more information into Canvas.
-     * Finalizing and showing the image is handled automatically by Window.
-     * @param graphics Java AWT graphics to draw into. Will be displayed on the Window's Canvas.
-     * @see Window
-     * @see Screen#tick(float)
-     */
-    public abstract void draw(Graphics graphics);
 
     // MARK: - Public
 
@@ -69,8 +52,9 @@ public abstract class Screen {
      * @param bounds Updated Window bounds.
      * @see Window#canvasBounds()
      */
-    public void screenDidChangeBounds(Rectangle bounds) {
-        this.getInputManager().updateWindowDimensions(bounds);
+    @Override
+    public void screenDidChangeBounds(@NotNull Rectangle bounds) {
+        this.getInputManager().screenDidChangeBounds(bounds);
     }
 
 }

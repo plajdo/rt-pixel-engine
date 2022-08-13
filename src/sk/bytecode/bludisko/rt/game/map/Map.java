@@ -1,11 +1,16 @@
 package sk.bytecode.bludisko.rt.game.map;
 
+import org.jetbrains.annotations.NotNull;
 import sk.bytecode.bludisko.rt.game.blocks.Block;
 import sk.bytecode.bludisko.rt.game.blocks.BlockManager;
+import sk.bytecode.bludisko.rt.game.blocks.game.Portal;
 import sk.bytecode.bludisko.rt.game.blocks.technical.Air;
 import sk.bytecode.bludisko.rt.game.math.MathUtils;
 import sk.bytecode.bludisko.rt.game.math.Vector2;
 import sk.bytecode.bludisko.rt.game.serialization.Serializable;
+
+import java.util.Arrays;
+import java.util.stream.Stream;
 
 /**
  * Map object containing Blocks. Used for serialization
@@ -71,6 +76,10 @@ public final class Map {
         return blocks.length;
     }
 
+    public boolean coordinateValid(int x, int y) {
+        return (x >= 0 && y >= 0) && (x < getHeight() && y < getWidth());
+    }
+
     /**
      * Returns block at coordinates [x, y] or returns an Air block
      * if it does not exist/the position is invalid.
@@ -79,13 +88,10 @@ public final class Map {
      * @return Block at given coordinates
      */
     public Block getBlock(int x, int y) {
-        if(x < 0 || y < 0) {
-            return new Air(new Vector2(x, y));
+        if(coordinateValid(x, y)) {
+            return blocks[x][y];
         }
-        if(x >= getHeight() || y >= getWidth()) {
-            return new Air(new Vector2(x, y));
-        }
-        return blocks[x][y];
+        return new Air(new Vector2(x, y));
     }
 
     /**
@@ -109,6 +115,60 @@ public final class Map {
             Block neighbouringBlockY = getBlock((int) position.x, (int) position.y - 1);
             return new Block[] { centerBlock, neighbouringBlockY };
         }
+    }
+
+    /**
+     * @return A stream of all blocks in a map
+     */
+    public Stream<Block> blockStream() {
+        return Arrays.stream(blocks).flatMap(Arrays::stream);
+    }
+
+    // MARK: - Setters
+
+    /**
+     * Sets block at coordinates [X, Y] to a new block.
+     * @param x x coordinate
+     * @param y y coordinate
+     * @param newBlock Block to set
+     * @return true if action succeeded, false otherwise
+     */
+    public boolean setBlock(int x, int y, Block newBlock) {
+        if(coordinateValid(x, y)) {
+            blocks[x][y] = newBlock;
+            return true;
+        }
+        return false;
+    }
+
+    // MARK: - Block manipulation
+
+    /**
+     * General function to replace a block in a map. Swaps a block
+     * for another one as long as coordinates of the first block are valid.
+     * @param oldBlock Block to replace
+     * @param newBlock Block to be replaced by
+     * @return true if action succeeded, false otherwise
+     */
+    public boolean replaceBlock(@NotNull Block oldBlock, @NotNull Block newBlock) {
+        var coordinates = oldBlock.getCoordinates();
+        var oldX = (int) coordinates.x;
+        var oldY = (int) coordinates.y;
+
+        return setBlock(oldX, oldY, newBlock);
+    }
+
+    /**
+     * Specific overload when a block is being replaced by a Portal. Stores the
+     * original block reference inside a Portals' attribute.
+     * @param oldBlock Block to replace
+     * @param portal Portal to be replaced by
+     * @return true if action succeeded, false otherwise
+     * @see Portal#setOriginalWall(Block)
+     */
+    public boolean replaceBlock(@NotNull Block oldBlock, @NotNull Portal portal) {
+        portal.setOriginalWall(oldBlock);
+        return replaceBlock(oldBlock, (Block) portal);
     }
 
 }

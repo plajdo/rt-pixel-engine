@@ -1,6 +1,5 @@
 package sk.bytecode.bludisko.rt.game.entities;
 
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import sk.bytecode.bludisko.rt.game.graphics.Camera;
 import sk.bytecode.bludisko.rt.game.graphics.DistanceRay;
@@ -12,7 +11,6 @@ import sk.bytecode.bludisko.rt.game.math.MathUtils;
 import sk.bytecode.bludisko.rt.game.math.Vector2;
 import sk.bytecode.bludisko.rt.game.util.NullSafe;
 
-import java.awt.*;
 import java.lang.ref.WeakReference;
 
 /**
@@ -20,14 +18,16 @@ import java.lang.ref.WeakReference;
  */
 public class Player extends Entity implements GameInputManagerDelegate {
 
+    private static final float WALKING_SPEED = 1.75f;
+    private static final float RUNNING_SPEED = 2.5f;
+
     private Map worldWallMap;
     private WeakReference<Camera> camera;
-    private Rectangle screenSize;
 
     private Vector2 movementVector;
     private Item heldItem;
 
-    private float walkingSpeed = 1.75f;
+    private float movementSpeed = 1.75f;
 
     // MARK: - Constructor
 
@@ -91,27 +91,6 @@ public class Player extends Entity implements GameInputManagerDelegate {
         NullSafe.acceptWeak(camera, camera -> camera.bind(this));
     }
 
-    /**
-     * Draws player overlay - currently held item to current graphics content.
-     * @param graphics Graphics content to draw on
-     */
-    public void drawItemOverlay(@NotNull Graphics graphics) {
-        NullSafe.accept(heldItem, heldItem -> {
-            var texture = heldItem.getOverlay();
-            var image = texture.asImage();
-
-            float resizingRatio = screenSize.height / (float)texture.getHeight();
-            int scaledWidth = (int) (texture.getWidth() * resizingRatio);
-            int offset = (screenSize.width - scaledWidth) / 2;
-
-            graphics.drawImage(image, offset, 0, scaledWidth, screenSize.height, null);
-        });
-    }
-
-    public void setItemOverlayScreenSizeInformation(@NotNull Rectangle bounds) {
-        screenSize = bounds;
-    }
-
     // MARK: - Input
 
     @Override
@@ -121,19 +100,24 @@ public class Player extends Entity implements GameInputManagerDelegate {
 
     @Override
     public void didUpdateRotation(Vector2 rotation) {
-        this.rotate(rotation.x * MathUtils.degreesToRadians, rotation.y * 0.1f);
+        rotate(rotation.x * MathUtils.degreesToRadians, rotation.y * 0.1f/*MathUtils.degreesToRadians*/);
     }
 
     @Override
     public void didUpdateSprintingStatus(boolean isSprinting) {
-        this.walkingSpeed = isSprinting ? 2.5f : 1.75f;
+        this.movementSpeed = isSprinting ? Player.RUNNING_SPEED : Player.WALKING_SPEED;
+    }
+
+    @Override
+    public void didToggleMouseButton(boolean rmb) {
+        NullSafe.accept(heldItem, rmb ? Item::useSecondary : Item::use);
     }
 
     // MARK: - Private
 
     private void move(float dt) {
         var movementVector = this.movementVector.cpy()
-                .scl(walkingSpeed)
+                .scl(movementSpeed)
                 .scl(dt)
                 .rotateRad(direction.angleRad());
 
@@ -141,8 +125,10 @@ public class Player extends Entity implements GameInputManagerDelegate {
         var nextHitDistance = movementRay.cast(movementVector.len());
 
         if(Float.isNaN(nextHitDistance)) {
+            var portalRotation = movementRay.getDirection().angleRad() - movementVector.angleRad();
+
             position.set(movementRay.getPosition());
-            direction.set(movementRay.getDirection());
+            direction.rotateRad(portalRotation);
         } else if(nextHitDistance == -1) {
             position.add(movementVector);
         }
@@ -158,6 +144,7 @@ public class Player extends Entity implements GameInputManagerDelegate {
         if(this.pitch > 200) {
             this.pitch = 200;
         }
+        // this.pitch = MathUtils.clamp(this.pitch + pitch, -22.5f * MathUtils.degreesToRadians, 22.5f * MathUtils.degreesToRadians);
     }
 
 }

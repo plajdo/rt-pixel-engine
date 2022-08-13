@@ -16,12 +16,12 @@ import java.util.Arrays;
 
 /**
  * Virtual three-dimensional camera that draws into a {@link sk.bytecode.bludisko.rt.game.window.Window} canvas.
- * Can be moved and rotated in a 3D space. Pitch is somewhat limited to prevent image distortion at large angles.
- *
- * Uses a traditional raycasting algorithm to calculate sizes of objects to draw on the screen.
+ * Can be moved and rotated in a 3D space. Pitch is limited to prevent image distortion at large angles.
+ * <br>
+ * Uses raycasting algorithm to calculate sizes of objects to draw on the screen.
  * Uses affine texture mapping to map textures of objects on a virtual 3D surface.
  * Can draw on any arbitrary-size canvas with different amount of rays cast and pixels drawn.
- * Has a separated viewport from screen size to be able to scale the resulting image.
+ * Has separate viewport from screen size to be able to scale the resulting image.
  */
 public class Camera {
 
@@ -75,9 +75,7 @@ public class Camera {
         drawFloor(screenBuffer);
         drawWalls(screenBuffer);
 
-        graphics.setColor(java.awt.Color.green);
         graphics.drawImage(bufferedImage, 0, 0, screenSize.width, screenSize.height, null);
-        graphics.drawString(this.position.toString(), 0, 50);
     }
 
     private void drawWalls(final int[] screenBuffer) {
@@ -107,8 +105,8 @@ public class Camera {
                 int textureWidth = texture.getWidth();
                 int textureHeight = texture.getHeight();
 
-                int texelX_X = textureWidth - (int)(wallHitCoordinates.x * textureWidth) - 1;
-                int texelX_Y = textureWidth - (int)(wallHitCoordinates.y * textureWidth) - 1;
+                int texelX_X = textureWidth - (int) (wallHitCoordinates.x * textureWidth) - 1;
+                int texelX_Y = textureWidth - (int) (wallHitCoordinates.y * textureWidth) - 1;
                 int texelX = Math.min(texelX_X, texelX_Y);
 
                 int screenWidth = (int) viewportSize.x;
@@ -132,7 +130,7 @@ public class Camera {
                 float colorScale = 1 - ((hitSide == Side.EAST || hitSide == Side.WEST ? 0 : 1) * 0.33f);
 
                 for(int k = loopStart; k < loopEnd; k++) {
-                    int texelY = (int)texelPosition & (textureHeight - 1);
+                    int texelY = (int) texelPosition & (textureHeight - 1);
                     texelPosition += texelStep;
 
                     Color color = texture.getColor(texelX, texelY);
@@ -156,7 +154,7 @@ public class Camera {
         int horizon = screenHeight / 2;
 
         for(int y = horizon + (int) pitch; y < (int) viewportSize.y; y++) {
-            if(y < 0) continue;
+            if(y < 0) { y = 0; }
 
             float cameraY = y - (screenHeight / 2f) - pitch;
             float cameraZ = (screenHeight / 2f) + positionZ;
@@ -192,12 +190,16 @@ public class Camera {
     // MARK: - Private
 
     private void updateCameraPlane() {
-        this.plane.set(
-                direction.cpy()
-                        .rotate90(-1)
-                        .scl(2f / 3f)
-                        .scl((float) screenSize.width / (float) screenSize.height / 1.33333f)
+        this.plane.set(direction.cpy()
+                .rotate90(-1)
+                .scl(1f / 2f)
+                .scl((float) screenSize.width / (float) screenSize.height)
         );
+    }
+
+    private float pitchAngleToPixelOffset(float angle) {
+        // var result = (float) Math.tan(angle);
+        return angle;
     }
 
     // MARK: - Modifiers
@@ -211,21 +213,23 @@ public class Camera {
     }
 
     /**
+     * Moves camera up or down by the given amount.
+     * @param height Height distance to move by
+     */
+    public synchronized void move(float height) {
+        positionZ += height;
+    }
+
+    /**
      * Rotate the camera's yaw and pitch by the given amount.
      * @param angleDeg Yaw
-     * @param pitch Pitch
+     * @param pitchPx Pitch
      */
-    public synchronized void rotate(float angleDeg, float pitch) {
+    public synchronized void rotate(float angleDeg, float pitchPx) {
         direction.rotateDeg(angleDeg);
         plane.rotateDeg(angleDeg);
-
-        this.pitch += pitch;
-        if(this.pitch < -200) {
-            this.pitch = -200;
-        }
-        if(this.pitch > 200) {
-            this.pitch = 200;
-        }
+        pitch += pitchAngleToPixelOffset(pitchPx);
+        updateCameraPlane();
     }
 
     /**
@@ -238,9 +242,27 @@ public class Camera {
         this.direction.set(entity.getDirection());
 
         this.positionZ = entity.getPositionZ();
-        this.pitch = entity.getPitch();
+        this.pitch = pitchAngleToPixelOffset(entity.getPitch());
 
         updateCameraPlane();
+    }
+
+    // MARK: - Getters
+
+    public Vector2 getPosition() {
+        return position;
+    }
+
+    public Vector2 getDirection() {
+        return direction;
+    }
+
+    public float getPitch() {
+        return pitch;
+    }
+
+    public float getPositionZ() {
+        return positionZ;
     }
 
     // MARK: - Setters
@@ -252,15 +274,20 @@ public class Camera {
      */
     public synchronized void setScreenSize(Rectangle size) {
         this.screenSize = size;
-
-        var width = Math.max(size.width, size.height);
-        var height = width / 1.33333f;
-
         this.viewportSize.set(
-                width * Config.Display.DRAWING_QUALITY,
-                height * Config.Display.DRAWING_QUALITY
+                size.width * Config.Display.DRAWING_QUALITY,
+                size.height * Config.Display.DRAWING_QUALITY
         );
         updateCameraPlane();
+    }
+
+    /**
+     * Sets a map for the camera to use. Camera depends on a GameMap
+     * to be able to draw images from it.
+     * @param map Map to set
+     */
+    public synchronized void setMap(GameMap map) {
+        this.map = map;
     }
 
 }
