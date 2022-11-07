@@ -1,14 +1,14 @@
 package sk.bytecode.bludisko.rt.game.math;
 
-import static java.lang.Math.PI;
-
 /**
  * Collection of handy Math constants and shortcuts.
  */
 public final class MathUtils {
 
-    public static final float radiansToDegrees = (float) (180f / PI);
-    public static final float degreesToRadians = (float) (PI / 180f);
+    public static final float PI = (float) Math.PI;
+
+    public static final float radiansToDegrees = 180f / PI;
+    public static final float degreesToRadians = PI / 180f;
 
     public static final float FLOAT_ROUNDING_ERROR = 0.000001f;
     public static final int INT_MSB_MASK = 0xFF000000;
@@ -79,7 +79,7 @@ public final class MathUtils {
      * @return Clamped number
      */
     public static int clamp(int value, int min, int max) {
-        return value > max ? max : Math.max(value, min);
+        return Math.min(Math.max(value, min), max);
     }
 
 }

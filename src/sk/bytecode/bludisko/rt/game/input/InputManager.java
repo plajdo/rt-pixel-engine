@@ -1,5 +1,7 @@
 package sk.bytecode.bludisko.rt.game.input;
 
+import sk.bytecode.bludisko.rt.game.graphics.Tickable;
+
 import javax.swing.event.MouseInputListener;
 import java.awt.AWTException;
 import java.awt.Rectangle;
@@ -15,9 +17,7 @@ import java.lang.ref.WeakReference;
  * @see sk.bytecode.bludisko.rt.game.window.Window
  * @see GameInputManagerDelegate
  */
-public abstract class InputManager implements KeyListener, MouseInputListener {
-
-    protected WeakReference<GameInputManagerDelegate> delegate;
+public abstract class InputManager implements Tickable, KeyListener, MouseInputListener {
 
     protected Robot robot;
     protected Rectangle windowDimensions;
@@ -59,6 +59,7 @@ public abstract class InputManager implements KeyListener, MouseInputListener {
      * update input information accordingly.
      * @param dt Time passed since the last frame has finished processing.
      */
+    @Override
     public void tick(float dt) {
         if(mouseLocked) {
             centerMouse();
@@ -66,21 +67,11 @@ public abstract class InputManager implements KeyListener, MouseInputListener {
     }
 
     /**
-     * Sets the delegate whose methods are called, when a change in input
-     * is detected.
-     * @param delegate Object implementing the delegate methods.
-     * @see GameInputManagerDelegate
-     */
-    public void setDelegate(GameInputManagerDelegate delegate) {
-        this.delegate = new WeakReference<>(delegate);
-    }
-
-    /**
      * Notify the Input Manager of new Window dimensions.
-     * @param newDimensions New Window bounds.
+     * @param canvas New Window bounds.
      */
-    public void updateWindowDimensions(Rectangle newDimensions) {
-        this.windowDimensions = newDimensions;
+    public void screenDidChangeBounds(Rectangle canvas) {
+        this.windowDimensions = canvas;
     }
 
     /**

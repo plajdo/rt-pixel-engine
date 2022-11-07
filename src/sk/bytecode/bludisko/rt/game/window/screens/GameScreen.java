@@ -1,30 +1,36 @@
 package sk.bytecode.bludisko.rt.game.window.screens;
 
+import org.jetbrains.annotations.NotNull;
 import sk.bytecode.bludisko.rt.game.entities.Player;
 import sk.bytecode.bludisko.rt.game.graphics.Camera;
+import sk.bytecode.bludisko.rt.game.graphics.Overlay;
 import sk.bytecode.bludisko.rt.game.input.GameInputManager;
 import sk.bytecode.bludisko.rt.game.input.InputManager;
+import sk.bytecode.bludisko.rt.game.items.PortalGun;
 import sk.bytecode.bludisko.rt.game.map.Chamber1;
 import sk.bytecode.bludisko.rt.game.map.World;
-import sk.bytecode.bludisko.rt.game.window.Window;
+import sk.bytecode.bludisko.rt.game.util.NullSafe;
 
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
 /**
- * Implemented main game screen.
- * Contains Camera for drawing and game World for ticking
- * and updating the game logic.
+ * Main game screen. Is responsible for managing all rendering and ticking
+ * of the game world. Provides concrete implementation of InputManager.
  * @see Camera
+ * @see Player
+ * @see Overlay
  * @see World
+ * @see InputManager
  */
 public final class GameScreen extends Screen {
 
-    private final InputManager gameInput = new GameInputManager();
+    private final GameInputManager gameInputManager = new GameInputManager();
     private World currentWorld;
 
     private Player player;
     private Camera camera;
+    private Overlay overlay;
 
     // MARK: - Constructor
 
@@ -42,43 +48,43 @@ public final class GameScreen extends Screen {
     }
 
     private void setupPlayer() {
-        this.player = new Player(currentWorld);
-        this.camera = new Camera();
+        player = new Player(currentWorld);
+        camera = new Camera();
+        overlay = new Overlay();
 
-        this.player.setCamera(this.camera);
-        this.currentWorld.setPlayer(player);
+        player.setCamera(camera);
+
+        overlay.connectPlayer(player);
+        currentWorld.setPlayer(player);
+
+        player.equip(new PortalGun(player));
     }
 
     private void setupInput() {
-        gameInput.setDelegate(this.player);
-        gameInput.setMouseLocked(true);
+        gameInputManager.setDelegate(this.player);
+        gameInputManager.setMouseLocked(true);
     }
 
-    // MARK: - Screen
+    // MARK: - Override
 
     @Override
     public InputManager getInputManager() {
-        return gameInput;
+        return gameInputManager;
     }
 
     @Override
     public void screenDidAppear() {
         super.screenDidAppear();
 
-        Window window = this.window.get();
-        if(window != null) {
-            window.setCursorVisible(false);
-        }
+        NullSafe.acceptWeak(window, window -> window.setCursorVisible(false));
     }
 
     @Override
-    public void screenDidChangeBounds(Rectangle bounds) {
+    public void screenDidChangeBounds(@NotNull Rectangle bounds) {
         super.screenDidChangeBounds(bounds);
 
-        var window = this.window.get();
-        if(window != null) {
-            camera.setScreenSize(window.canvasBounds());
-        }
+        camera.setScreenSize(bounds);
+        overlay.screenDidChangeBounds(bounds);
     }
 
     // MARK: - Game loop
@@ -86,13 +92,16 @@ public final class GameScreen extends Screen {
     @Override
     public void tick(float dt) {
         super.tick(dt);
+
         player.tick(dt);
+        overlay.tick(dt);
         currentWorld.tick(dt);
     }
 
     @Override
-    public void draw(Graphics graphics) {
+    public void draw(@NotNull Graphics graphics) {
         camera.draw(graphics);
+        overlay.draw(graphics);
     }
 
     // MARK: - Public

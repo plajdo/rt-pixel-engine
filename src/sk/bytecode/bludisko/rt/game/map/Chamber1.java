@@ -1,7 +1,7 @@
 package sk.bytecode.bludisko.rt.game.map;
 
-import sk.bytecode.bludisko.rt.game.blocks.game.Portal;
 import sk.bytecode.bludisko.rt.game.entities.Player;
+import sk.bytecode.bludisko.rt.game.math.Vector2;
 
 import javax.swing.JOptionPane;
 
@@ -39,11 +39,7 @@ public class Chamber1 extends World {
 
     private void setupMap() {
         this.map = GameMap.load("chamber1");
-        var p1 = ((Portal) map.walls().getBlock(7, 7));
-        var p2 = ((Portal) map.walls().getBlock(4, 9));
-
-        p1.setOtherPortal(p2);
-        p2.setOtherPortal(p1);
+        PortalManager.createPortal(map, new Vector2(7.5f, 8.0f), new Vector2(5.0f, 9.5f));
     }
 
     private boolean playerAtDoors(Player player) {

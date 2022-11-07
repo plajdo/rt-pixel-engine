@@ -1,24 +1,33 @@
 package sk.bytecode.bludisko.rt.game.entities;
 
+import org.jetbrains.annotations.Nullable;
 import sk.bytecode.bludisko.rt.game.graphics.Camera;
 import sk.bytecode.bludisko.rt.game.graphics.DistanceRay;
 import sk.bytecode.bludisko.rt.game.input.GameInputManagerDelegate;
+import sk.bytecode.bludisko.rt.game.items.Item;
 import sk.bytecode.bludisko.rt.game.map.Map;
 import sk.bytecode.bludisko.rt.game.map.World;
 import sk.bytecode.bludisko.rt.game.math.MathUtils;
 import sk.bytecode.bludisko.rt.game.math.Vector2;
+import sk.bytecode.bludisko.rt.game.util.NullSafe;
+
+import java.lang.ref.WeakReference;
 
 /**
  * A Player object representing the real player. Handles input and moves the camera accordingly.
  */
 public class Player extends Entity implements GameInputManagerDelegate {
 
+    private static final float WALKING_SPEED = 1.75f;
+    private static final float RUNNING_SPEED = 2.5f;
+
     private Map worldWallMap;
+    private WeakReference<Camera> camera;
 
-    private Camera camera;
     private Vector2 movementVector;
+    private Item heldItem;
 
-    private float walkingSpeed = 1.75f;
+    private float movementSpeed = 1.75f;
 
     // MARK: - Constructor
 
@@ -56,7 +65,22 @@ public class Player extends Entity implements GameInputManagerDelegate {
      * @param camera Camera to control
      */
     public void setCamera(Camera camera) {
-        this.camera = camera;
+        this.camera = new WeakReference<>(camera);
+    }
+
+    /**
+     * Equips an item
+     * @param item Item to equip
+     */
+    public void equip(@Nullable Item item) {
+        this.heldItem = item;
+    }
+
+    /**
+     * @return Currently held item or null
+     */
+    public Item getHeldItem() {
+        return heldItem;
     }
 
     // MARK: - Game loop
@@ -64,7 +88,7 @@ public class Player extends Entity implements GameInputManagerDelegate {
     @Override
     public void tick(float dt) {
         move(dt);
-        camera.bind(this);
+        NullSafe.acceptWeak(camera, camera -> camera.bind(this));
     }
 
     // MARK: - Input
@@ -76,19 +100,24 @@ public class Player extends Entity implements GameInputManagerDelegate {
 
     @Override
     public void didUpdateRotation(Vector2 rotation) {
-        this.rotate(rotation.x * MathUtils.degreesToRadians, rotation.y * 0.1f);
+        rotate(rotation.x * MathUtils.degreesToRadians, rotation.y * 0.1f/*MathUtils.degreesToRadians*/);
     }
 
     @Override
     public void didUpdateSprintingStatus(boolean isSprinting) {
-        this.walkingSpeed = isSprinting ? 2.5f : 1.75f;
+        this.movementSpeed = isSprinting ? Player.RUNNING_SPEED : Player.WALKING_SPEED;
+    }
+
+    @Override
+    public void didToggleMouseButton(boolean rmb) {
+        NullSafe.accept(heldItem, rmb ? Item::useSecondary : Item::use);
     }
 
     // MARK: - Private
 
     private void move(float dt) {
         var movementVector = this.movementVector.cpy()
-                .scl(walkingSpeed)
+                .scl(movementSpeed)
                 .scl(dt)
                 .rotateRad(direction.angleRad());
 
@@ -96,8 +125,10 @@ public class Player extends Entity implements GameInputManagerDelegate {
         var nextHitDistance = movementRay.cast(movementVector.len());
 
         if(Float.isNaN(nextHitDistance)) {
+            var portalRotation = movementRay.getDirection().angleRad() - movementVector.angleRad();
+
             position.set(movementRay.getPosition());
-            direction.set(movementRay.getDirection());
+            direction.rotateRad(portalRotation);
         } else if(nextHitDistance == -1) {
             position.add(movementVector);
         }
@@ -113,6 +144,7 @@ public class Player extends Entity implements GameInputManagerDelegate {
         if(this.pitch > 200) {
             this.pitch = 200;
         }
+        // this.pitch = MathUtils.clamp(this.pitch + pitch, -22.5f * MathUtils.degreesToRadians, 22.5f * MathUtils.degreesToRadians);
     }
 
 }

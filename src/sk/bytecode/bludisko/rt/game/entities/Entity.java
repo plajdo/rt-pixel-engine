@@ -1,12 +1,13 @@
 package sk.bytecode.bludisko.rt.game.entities;
 
+import sk.bytecode.bludisko.rt.game.graphics.Tickable;
 import sk.bytecode.bludisko.rt.game.map.World;
 import sk.bytecode.bludisko.rt.game.math.Vector2;
 
 /**
  * Class representing an entity in the world. Contains its position.
  */
-public abstract class Entity {
+public abstract class Entity implements Tickable {
 
     protected World world;
     protected Vector2 position;

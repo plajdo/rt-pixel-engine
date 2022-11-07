@@ -99,4 +99,14 @@ public class Texture {
         return image.getHeight();
     }
 
+    /**
+     * Returns BufferedImage from this texture. Texture is stored as
+     * a BufferedImage internally, thus method has no performance
+     * overhead.
+     * @return BufferedImage from this texture.
+     */
+    public BufferedImage asImage() {
+        return image;
+    }
+
 }
